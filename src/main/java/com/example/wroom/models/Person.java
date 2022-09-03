@@ -1,5 +1,7 @@
 package com.example.wroom.models;
-
+/**
+ * @author:Marek Uibo
+ */
 public class Person {
     private String firstName;
     private String lastName;

@@ -1,5 +1,8 @@
 package com.example.wroom.models;
 
+/**
+ * @author:Marek Uibo
+ */
 public class Booking {
     private String dateOfBooking;
     private String customer;
