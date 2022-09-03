@@ -3,6 +3,7 @@ package com.example.wroom.models;
 
 
 public class Car {
+    private String carRegistrationNumber;
     private String mark;
     private String model;
     private String bodyType;
@@ -11,6 +12,5 @@ public class Car {
     private String mileage;
     private String status;
     private String amount;
-
 
 }
