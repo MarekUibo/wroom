@@ -33,30 +33,29 @@ public interface CarService {
      * @param carRegistrationNumber CarRegistrationNumber of the car
      * @return Car
      */
-    Car findCarByCarRegistrationNumber(String carRegistrationNumber) throws CarNotFoundException;
+    Branch findCarBy(String address) throws BranchNotFoundException;
 
     /**
-     * To find all cars
-     * @return List of cars
+     * To find all branches
+     * @return List of branches
      */
-    List<Car> findAllCars();
+    List<Branch> findAllBranches();
 
     /**
-     * To update an existing car
-     * @param car Car
+     * To update an existing branch
+     * @param branch Branch
      */
-    void updateCar(Car car) throws CarNotFoundException;
+    void updateBranch(Branch branch) throws BranchNotFoundException;
 
     /**
-     * To delete a car by its ID
-     * @param id id of the car
+     * To delete a branch by its ID
+     * @param id id of the branch
      */
-    void deleteCarById(UUID id) throws CarNotFoundException;
+    void deleteBranchById(UUID id) throws BranchNotFoundException;
 
     /**
-     * To restore a car by its ID
+     * To restore a branch by its ID
      * @param id
      */
-    void restoreCarById(UUID id) throws CarNotFoundException;
-
+    void restoreBranchById(UUID id) throws BranchNotFoundException;
 }
