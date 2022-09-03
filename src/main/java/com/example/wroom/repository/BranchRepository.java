@@ -2,18 +2,12 @@ package com.example.wroom.repository;
 /**
  * @author:Marek Uibo
  */
+import com.example.wroom.models.Branch;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.example.wroom.models.Booking;
-
-import java.util.UUID;
 
 @Repository
-public interface BookingRepository extends JpaRepository<Booking, UUID> {
+public interface BranchRepository extends JpaRepository<Branch, Long> {
+    Branch findByName(String name);
 }
-//comments:
-
-
-
-
 
