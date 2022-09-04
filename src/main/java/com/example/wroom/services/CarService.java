@@ -30,7 +30,7 @@ public interface CarService {
      * @param carRegistrationNumber CarRegistrationNumber of the car
      * @return Car
      */
-    Car findCarBy(String carRegistrationNumber) throws CarNotFoundException;
+    Car findCarByCarRegistrationNumber(String carRegistrationNumber) throws CarNotFoundException;
 
     /**
      * To find all cars

@@ -35,7 +35,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car findCarBy(String carRegistrationNumber) throws CarNotFoundException {
+    public Car findCarByCarRegistrationNumber(String carRegistrationNumber) throws CarNotFoundException {
         return null;
     }
 
