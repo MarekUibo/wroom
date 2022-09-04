@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.UUID;
+
 /**
  * @author:Marek Uibo
  */
@@ -34,15 +36,15 @@ public class CarController {
     @PostMapping
     public String createCar(Car car, RedirectAttributes redirectAttributes) {
         try {
-            Car searchSchool = carService.findCarByName(car.getName());
+            Car searchSchool = carService.findCarBy(car.getCarRegistrationNumber());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Car(%s) already exists!", searchSchool.getName()));
+                    String.format("Car(%s) already exists!", searchSchool.getCarRegistrationNumber()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/car/create";
         } catch (CarNotFoundException e) {
             carService.createCar(car);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Car(%s) created successfully!", car.getName()));
+                    String.format("Car(%s) created successfully!", car.getCarRegistrationNumber()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/car/create";
         }
@@ -50,19 +52,22 @@ public class CarController {
     @PostMapping("/update")
     public String updateCar(Car car, RedirectAttributes redirectAttributes) {
             try {
-                model.addAttribute("car", carService.findCarById(id));
+                carService.updateCar(car);
+                redirectAttributes.addFlashAttribute("message",
+                        String.format("Car(%s) updated successfully!", car.getCarRegistrationNumber()));
+                redirectAttributes.addFlashAttribute("messageType", "success");
+                return "redirect:/car";
             } catch (CarNotFoundException e) {
                 redirectAttributes.addFlashAttribute("message", e.getMessage());
                 redirectAttributes.addFlashAttribute("messageType", "error");
                 return "redirect:/car";
             }
-        }
     }
 
     @GetMapping("/delete")
     public String deleteCar(Long id, RedirectAttributes redirectAttributes) {
         try {
-            carService.deleteCar(id);
+            carService.deleteCarById(UUID id);
             redirectAttributes.addFlashAttribute("message", "Car deleted successfully!");
             redirectAttributes.addFlashAttribute("messageType", "success");
         } catch (CarNotFoundException e) {
@@ -74,7 +79,7 @@ public class CarController {
     @GetMapping ("/restore")
     public String restoreCar(Long id, RedirectAttributes redirectAttributes) {
         try {
-            carService.restoreCar(id);
+            carService.restoreCarById(UUID id);
             redirectAttributes.addFlashAttribute("message", "Car restored successfully!");
             redirectAttributes.addFlashAttribute("messageType", "success");
         } catch (CarNotFoundException e) {
