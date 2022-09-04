@@ -3,7 +3,10 @@ package com.example.wroom.services.implementations;
 import com.example.wroom.exceptions.RentalEndNotFoundException;
 import com.example.wroom.models.Person;
 import com.example.wroom.models.RentalEnd;
+import com.example.wroom.repository.BookingRepository;
+import com.example.wroom.repository.RentalEndRepository;
 import com.example.wroom.services.RentalEndService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,6 +21,10 @@ import java.util.UUID;
 @Service
 @Transactional
 public class RentalEndServiceImpl implements RentalEndService {
+
+    @Autowired
+    private RentalEndRepository rentalEndRepository;
+
     @Override
     public void createRentalEnd(RentalEnd rentalEnd) {
 

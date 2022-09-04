@@ -11,6 +11,5 @@ public class RentalOffice {
     private String owner;
     private String logotype;
     private List<Branch> branches;
-
-
+    private boolean isActive;
 }

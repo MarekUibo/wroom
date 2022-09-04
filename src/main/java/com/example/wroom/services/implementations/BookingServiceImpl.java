@@ -3,7 +3,9 @@ package com.example.wroom.services.implementations;
 import com.example.wroom.exceptions.BookingNotFoundException;
 import com.example.wroom.models.Booking;
 import com.example.wroom.models.Customer;
+import com.example.wroom.repository.BookingRepository;
 import com.example.wroom.services.BookingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,9 +20,14 @@ import java.util.UUID;
 @Service
 @Transactional
 public class BookingServiceImpl implements BookingService {
+
+    @Autowired
+    private BookingRepository bookingRepository;
+
     @Override
     public void createBooking(Booking booking) {
-
+        booking.setActive(true);
+        bookingRepository.save(booking);
     }
 
     @Override

@@ -3,7 +3,10 @@ package com.example.wroom.services.implementations;
 import com.example.wroom.exceptions.EmployeeNotFoundException;
 import com.example.wroom.models.Employee;
 import com.example.wroom.models.Person;
+import com.example.wroom.repository.BookingRepository;
+import com.example.wroom.repository.EmployeeRepository;
 import com.example.wroom.services.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,6 +21,10 @@ import java.util.UUID;
 @Service
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     @Override
     public void createEmployee(Employee employee) {
 

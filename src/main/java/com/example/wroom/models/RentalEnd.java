@@ -10,4 +10,5 @@ public class RentalEnd {
     private String booking;
     private String additionalPayment;
     private String comments;
+    private boolean isActive;
 }

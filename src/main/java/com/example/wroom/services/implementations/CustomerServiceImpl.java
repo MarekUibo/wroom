@@ -3,7 +3,10 @@ package com.example.wroom.services.implementations;
 import com.example.wroom.exceptions.CustomerNotFoundException;
 import com.example.wroom.models.Customer;
 import com.example.wroom.models.Person;
+import com.example.wroom.repository.BookingRepository;
+import com.example.wroom.repository.CustomerRepository;
 import com.example.wroom.services.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,6 +21,10 @@ import java.util.UUID;
 @Service
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
     @Override
     public void createCustomer(Customer customer) {
 
