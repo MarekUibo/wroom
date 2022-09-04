@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<Customer> optionalCustomer = customerRepository.findByCustomerEmail(email);
 
         if(optionalCustomer.isEmpty()) {
-            throw new CustomerNotFoundException(String.valueOf(email));
+            throw new CustomerNotFoundException(email);
         }
         return optionalCustomer.get();
     }
