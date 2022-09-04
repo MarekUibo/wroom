@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author:Marek Uibo
  */
 @Controller
-@RequestMapping("/return")
+@RequestMapping("/returnEnd")
 public class RentalEndController {
 }
