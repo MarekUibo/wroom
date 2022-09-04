@@ -24,5 +24,6 @@ public class Booking {
     private String rentalBranch;
     private String returnBranch;
     private String amount;
+    private boolean isActive;
 
 }

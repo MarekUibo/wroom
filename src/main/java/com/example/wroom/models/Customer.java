@@ -16,5 +16,6 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID customerId;
+    private boolean isActive;
 
 }

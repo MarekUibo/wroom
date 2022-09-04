@@ -22,5 +22,5 @@ public class Person {
     private String phoneNumber;
     private String address;
     private String role;
-
+    private boolean isActive;
 }

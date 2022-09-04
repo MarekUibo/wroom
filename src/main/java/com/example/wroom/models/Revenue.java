@@ -16,4 +16,5 @@ public class Revenue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String sumOfAmountsForCarRental;
+    private boolean isActive;
 }
