@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -27,36 +28,53 @@ public class RentalStartServiceImpl implements RentalStartService {
 
     @Override
     public void createRentalStart(RentalStart rentalStart) {
-
+        rentalStart.setActive(true);
+        rentalStartRepository.save(rentalStart);
     }
 
     @Override
     public RentalStart findRentalStartById(UUID id) throws RentalStartNotFoundException {
-        return null;
+        Optional<RentalStart> optionalRentalStart = rentalStartRepository.findById(id);
+
+        if(optionalRentalStart.isEmpty()) {
+            throw new RentalStartNotFoundException(id);
+        }
+        return optionalRentalStart.get();
     }
 
     @Override
     public RentalStart findRentalStartByCustomerEmail(Person email) throws RentalStartNotFoundException {
-        return null;
+        Optional<RentalStart> optionalRentalStart = rentalStartRepository.findByCustomerEmail(email);
+
+        if(optionalRentalStart.isEmpty()) {
+            throw new RentalStartNotFoundException(email);
+        }
+        return optionalRentalStart.get();
     }
 
     @Override
     public List<RentalStart> findAllRentalStarts() {
-        return null;
+        return rentalStartRepository.findAll();
     }
 
     @Override
     public void updateRentalStart(RentalStart rentalStart) throws RentalStartNotFoundException {
-
+        if(findRentalStartById(rentalStart.getId()) != null) {
+            rentalStartRepository.saveAndFlush(rentalStart);
+        }
     }
 
     @Override
     public void deleteRentalStartById(UUID id) throws RentalStartNotFoundException {
-
+        RentalStart rentalStart = findRentalStartById(id);
+        rentalStart.setActive(false);
+        rentalStartRepository.saveAndFlush(rentalStart);
     }
 
     @Override
     public void restoreRentalStartById(UUID id) throws RentalStartNotFoundException {
-
+        RentalStart rentalStart = findRentalStartById(id);
+        rentalStart.setActive(true);
+        rentalStartRepository.saveAndFlush(rentalStart);
     }
 }

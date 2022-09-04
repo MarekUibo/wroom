@@ -32,7 +32,7 @@ public interface EmployeeService {
      * @param email Email of the employee
      * @return Employee
      */
-    Employee findEmployeeByAddress(Person email) throws EmployeeNotFoundException;
+    Employee findEmployeeByEmail(Person email) throws EmployeeNotFoundException;
 
     /**
      * To find all employees

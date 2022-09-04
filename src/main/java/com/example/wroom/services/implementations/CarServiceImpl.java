@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -26,36 +27,53 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void createCar(Car car) {
-
+        car.setActive(true);
+        carRepository.save(car);
     }
 
     @Override
     public Car findCarById(UUID id) throws CarNotFoundException {
-        return null;
+        Optional<Car> optionalCar = carRepository.findById(id);
+
+        if(optionalCar.isEmpty()) {
+            throw new CarNotFoundException(id);
+        }
+        return optionalCar.get();
     }
 
     @Override
-    public Car findCarBy(String carRegistrationNumber) throws CarNotFoundException {
-        return null;
+    public Car findCarByCarRegistrationNumber(String carRegistrationNumber) throws CarNotFoundException {
+        Optional<Car> optionalCar = carRepository.findByCarRegistrationNumber(carRegistrationNumber);
+
+        if(optionalCar.isEmpty()) {
+            throw new CarNotFoundException(carRegistrationNumber);
+        }
+        return optionalCar.get();
     }
 
     @Override
     public List<Car> findAllCars() {
-        return null;
+        return carRepository.findAll();
     }
 
     @Override
     public void updateCar(Car car) throws CarNotFoundException {
-
+        if(findCarById(car.getId()) != null) {
+            carRepository.saveAndFlush(car);
+        }
     }
 
     @Override
     public void deleteCarById(UUID id) throws CarNotFoundException {
-
+        Car car = findCarById(id);
+        car.setActive(false);
+        carRepository.saveAndFlush(car);
     }
 
     @Override
     public void restoreCarById(UUID id) throws CarNotFoundException {
-
+        Car car = findCarById(id);
+        car.setActive(true);
+        carRepository.saveAndFlush(car);
     }
 }

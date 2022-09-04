@@ -23,7 +23,7 @@ public interface RentalOfficeService {
      * @param id id of the branch
      * @return RentalOffice
      */
-    RentalOffice findRentalOfficehById(UUID id) throws RentalOfficeNotFoundException;
+    RentalOffice findRentalOfficeById(UUID id) throws RentalOfficeNotFoundException;
 
     /**
      * To find a rental office by its name

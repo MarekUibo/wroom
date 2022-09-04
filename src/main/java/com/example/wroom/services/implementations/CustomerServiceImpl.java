@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -27,36 +28,53 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void createCustomer(Customer customer) {
-
+        customer.setActive(true);
+        customerRepository.save(customer);
     }
 
     @Override
     public Customer findCustomerById(UUID id) throws CustomerNotFoundException {
-        return null;
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+
+        if(optionalCustomer.isEmpty()) {
+            throw new CustomerNotFoundException(id);
+        }
+        return optionalCustomer.get();
     }
 
     @Override
     public Customer findCustomerByEmail(Person email) throws CustomerNotFoundException {
-        return null;
+        Optional<Customer> optionalCustomer = customerRepository.findByCustomerEmail(email);
+
+        if(optionalCustomer.isEmpty()) {
+            throw new CustomerNotFoundException(email);
+        }
+        return optionalCustomer.get();
     }
 
     @Override
     public List<Customer> findAllCustomers() {
-        return null;
+        return customerRepository.findAll();
     }
 
     @Override
     public void updateCustomer(Customer customer) throws CustomerNotFoundException {
-
+        if(findCustomerById(customer.getId()) != null) {
+            customerRepository.saveAndFlush(customer);
+        }
     }
 
     @Override
     public void deleteCustomerById(UUID id) throws CustomerNotFoundException {
-
+        Customer customer = findCustomerById(id);
+        customer.setActive(false);
+        customerRepository.saveAndFlush(customer);
     }
 
     @Override
     public void restoreCustomerById(UUID id) throws CustomerNotFoundException {
-
+        Customer customer = findCustomerById(id);
+        customer.setActive(true);
+        customerRepository.saveAndFlush(customer);
     }
 }

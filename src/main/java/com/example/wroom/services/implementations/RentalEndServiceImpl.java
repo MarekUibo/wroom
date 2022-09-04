@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -27,37 +28,54 @@ public class RentalEndServiceImpl implements RentalEndService {
 
     @Override
     public void createRentalEnd(RentalEnd rentalEnd) {
-
+        rentalEnd.setActive(true);
+        rentalEndRepository.save(rentalEnd);
     }
 
     @Override
     public RentalEnd findRentalEndById(UUID id) throws RentalEndNotFoundException {
-        return null;
+        Optional<RentalEnd> optionalRentalEnd = rentalEndRepository.findById(id);
+
+        if(optionalRentalEnd.isEmpty()) {
+            throw new RentalEndNotFoundException(id);
+        }
+        return optionalRentalEnd.get();
     }
 
     @Override
     public RentalEnd findRentalEndByCustomerEmail(Person email) throws RentalEndNotFoundException {
-        return null;
+        Optional<RentalEnd> optionalRentalEnd = rentalEndRepository.findByCustomerEmail(email);
+
+        if(optionalRentalEnd.isEmpty()) {
+            throw new RentalEndNotFoundException(email);
+        }
+        return optionalRentalEnd.get();
     }
 
     @Override
     public List<RentalEnd> findAllRentalEnds() {
-        return null;
+        return rentalEndRepository.findAll();
     }
 
     @Override
     public void updateRentalEnd(RentalEnd rentalEnd) throws RentalEndNotFoundException {
-
+        if(findRentalEndById(rentalEnd.getId()) != null) {
+            rentalEndRepository.saveAndFlush(rentalEnd);
+        }
     }
 
     @Override
     public void deleteRentalEndById(UUID id) throws RentalEndNotFoundException {
-
+        RentalEnd rentalEnd = findRentalEndById(id);
+        rentalEnd.setActive(false);
+        rentalEndRepository.saveAndFlush(rentalEnd);
     }
 
     @Override
     public void restoreRentalEndById(UUID id) throws RentalEndNotFoundException {
-
+        RentalEnd rentalEnd = findRentalEndById(id);
+        rentalEnd.setActive(true);
+        rentalEndRepository.saveAndFlush(rentalEnd);
     }
 
 }

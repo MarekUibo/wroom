@@ -14,6 +14,8 @@ import java.util.UUID;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
     private UUID employeeId;
     private String jobPosition; //Employee/Manager
     private UUID branchId;
