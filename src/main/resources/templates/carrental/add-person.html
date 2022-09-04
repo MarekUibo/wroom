@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add car</title>
+    <title>Add person</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
@@ -21,7 +21,7 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/carrental">Branch</a>
+                        <a class="nav-link" href="#">Branch</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">List of cars</a>
@@ -32,6 +32,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Sign up</a>
                     </li>
+
                 </ul>
             </div>
         </div>
@@ -40,51 +41,35 @@
     <div class="container py-4">
         <div class="p-5 mb-4 bg-light rounded-3">
             <div class="container-fluid py-5">
-                <h1 class="display-5 fw-bold">Add car</h1>
+                <h1 class="display-5 fw-bold">Sign up</h1>
                 <div class="alert alert-danger" role="alert" th:if="${messageType} == 'error'">
                     <span th:text="${message}"></span>
                 </div>
 
                 <form action="#" method="post" th:action="@{/carrental}" th:object="${car}">
                     <div class="form-group mb-3">
-                        <label for="carRegistrationNumber">Car registration number</label>
-                        <input class="form-control" id="carRegistrationNumber" th:field="*{carRegistrationNumber}" type="text" required>
+                        <label for="firstName">First name</label>
+                        <input class="form-control" id="firstName" th:field="*{firstName}" type="text" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="mark">Car mark</label>
-                        <input class="form-control" id="mark" th:field="*{mark}" type="text" required>
+                        <label for="lastName">Last name</label>
+                        <input class="form-control" id="lastName" th:field="*{lastName}" type="text" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="model">Car model</label>
-                        <input class="form-control" id="model" th:field="*{model}" type="text" required>
+                        <label for="email">E-mail address</label>
+                        <input class="form-control" id="email" th:field="*{email}" type="text" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="bodyType">Car bodytype</label>
-                        <input class="form-control" id="bodyType" th:field="*{bodyType}" type="text" required>
+                        <label for="phoneNumber">Phonenumber</label>
+                        <input class="form-control" id="phoneNumber" th:field="*{phoneNumber}" type="text" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="yearOfProduction">Year of production</label>
-                        <input class="form-control" id="yearOfProduction" th:field="*{yearOfProduction}" type="text" required>
+                        <label for="address">Address</label>
+                        <input class="form-control" id="address" th:field="*{address}" type="text" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="color">Color of car</label>
-                        <input class="form-control" id="color" th:field="*{color}" type="text" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="mileage">Car mileage</label>
-                        <input class="form-control" id="mileage" th:field="*{mileage}" type="text" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="status">Status of car</label>
-                        <input class="form-control" id="status" th:field="*{status}" type="text" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="amount">Price of rental</label>
-                        <input class="form-control" id="amount" th:field="*{amount}" type="text" required>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="isActive">Car availability</label>
-                        <input class="form-control" id="isActive" th:field="*{isActive}" type="text" required>
+                        <label for="role">Role</label>
+                        <input class="form-control" id="role" th:field="*{role}" type="text" required>
                     </div>
                     <a class="btn btn-light mb-3" type="button" href="/school">Cancel</a>
                     <button class="btn btn-outline-primary mb-3" type="submit">Create</button>
