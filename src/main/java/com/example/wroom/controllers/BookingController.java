@@ -11,6 +11,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.UUID;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 /**
  * @author:Marek Uibo
  */
@@ -28,7 +30,7 @@ public class BookingController {
         return "booking/list-booking";
     }
     @GetMapping ("/create")
-    public String showCreateBookingPage(@ModelAttribute("school")Booking booking,
+    public String showCreateBookingPage(@ModelAttribute("booking")Booking booking,
                                         @ModelAttribute("message") String message,
                                         @ModelAttribute("messageType") String messageType){
         return "booking/create-booking";
@@ -36,15 +38,15 @@ public class BookingController {
     @PostMapping
     public String createBooking(Booking booking, RedirectAttributes redirectAttributes) {
         try {
-            Booking searchBooking = bookingService.findBookingByName(booking.getName());
+            Booking findBookingById = bookingService.findBookingById(UUID);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Booking(%s) already exists!", searchBooking.getName()));
+                    String.format("Booking(%s) already exists!", booking.getDateOfBooking()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/booking/create";
         } catch (BookingNotFoundException e) {
             bookingService.createBooking(booking);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Booking(%s) created successfully!", booking.getName()));
+                    String.format("Booking(%s) created successfully!", booking.getDateOfBooking()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/booking";
         }
@@ -55,19 +57,18 @@ public class BookingController {
             try {
                bookingService.updateBooking(booking);
                redirectAttributes.addFlashAttribute("message",
-                       String.format("Booking(%s) updated successfully!", booking.getName()));
+                       String.format("Booking(%s) updated successfully!", booking.getDateOfBooking()));
             } catch (BookingNotFoundException e) {
                 redirectAttributes.addFlashAttribute("message", e.getMessage());
                 redirectAttributes.addFlashAttribute("messageType", "error");
                 return "redirect:/booking";
-            }
-        }
-        return "booking/update-booking";
+    }
+        return null;
     }
     @GetMapping("/delete")
     public String deleteBooking(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
-            bookingService.deleteBooking(id);
+            bookingService.deleteBookingById(id);
             redirectAttributes.addFlashAttribute("message", "Booking deleted successfully!");
             redirectAttributes.addFlashAttribute("messageType", "success");
         } catch (BookingNotFoundException e) {
@@ -79,7 +80,7 @@ public class BookingController {
     @GetMapping("/restore")
     public String restoreBooking(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
-            bookingService.restoreBooking(id);
+            bookingService.restoreBookingById(id);
             redirectAttributes.addFlashAttribute("message", "Booking restored successfully!");
             redirectAttributes.addFlashAttribute("messageType", "success");
         } catch (BookingNotFoundException e) {
