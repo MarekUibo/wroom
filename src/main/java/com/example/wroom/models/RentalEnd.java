@@ -15,6 +15,8 @@ import java.util.UUID;
 public class RentalEnd {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
     private UUID employeeId;
     private String dateOfReturn;
     private String booking;

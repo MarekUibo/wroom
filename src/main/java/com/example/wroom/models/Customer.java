@@ -15,6 +15,8 @@ import java.util.UUID;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+
     private UUID customerId;
     private boolean isActive;
 
