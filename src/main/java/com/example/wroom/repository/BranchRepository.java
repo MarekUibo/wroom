@@ -1,13 +1,19 @@
 package com.example.wroom.repository;
-/**
- * @author:Marek Uibo
- */
+
 import com.example.wroom.models.Branch;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface BranchRepository extends JpaRepository<Branch, Long> {
-    Branch findByName(String name);
-}
+import java.util.Optional;
+import java.util.UUID;
 
+/**
+ * Repository to handle branch related DB operations
+ *
+ * @author: Marek Uibo & Jonathan Rigottier
+ */
+@Repository
+public interface BranchRepository extends JpaRepository<Branch, UUID> {
+
+    Optional<Branch> findByAddress(String address);
+}

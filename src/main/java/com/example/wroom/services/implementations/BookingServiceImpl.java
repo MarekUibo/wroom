@@ -4,10 +4,19 @@ import com.example.wroom.exceptions.BookingNotFoundException;
 import com.example.wroom.models.Booking;
 import com.example.wroom.models.Customer;
 import com.example.wroom.services.BookingService;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Implementation of Booking Service
+ *
+ * @author Jonathan Rigottier
+ */
+@Service
+@Transactional
 public class BookingServiceImpl implements BookingService {
     @Override
     public void createBooking(Booking booking) {
