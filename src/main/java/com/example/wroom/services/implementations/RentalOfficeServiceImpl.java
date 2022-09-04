@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -26,36 +27,53 @@ public class RentalOfficeServiceImpl implements RentalOfficeService {
 
     @Override
     public void createRentalOffice(RentalOffice rentalOffice) {
-
+        rentalOffice.setActive(true);
+        rentalOfficeRepository.save(rentalOffice);
     }
 
     @Override
-    public RentalOffice findRentalOfficehById(UUID id) throws RentalOfficeNotFoundException {
-        return null;
+    public RentalOffice findRentalOfficeById(UUID id) throws RentalOfficeNotFoundException {
+        Optional<RentalOffice> optionalRentalOffice = rentalOfficeRepository.findById(id);
+
+        if(optionalRentalOffice.isEmpty()) {
+            throw new RentalOfficeNotFoundException(id);
+        }
+        return optionalRentalOffice.get();
     }
 
     @Override
     public RentalOffice findRentalOfficeByName(String name) throws RentalOfficeNotFoundException {
-        return null;
+        Optional<RentalOffice> optionalRentalOffice = rentalOfficeRepository.findByName(name);
+
+        if(optionalRentalOffice.isEmpty()) {
+            throw new RentalOfficeNotFoundException(name);
+        }
+        return optionalRentalOffice.get();
     }
 
     @Override
     public List<RentalOffice> findAllRentalOffices() {
-        return null;
+        return rentalOfficeRepository.findAll();
     }
 
     @Override
     public void updateRentalOffice(RentalOffice rentalOffice) throws RentalOfficeNotFoundException {
-
+        if(findRentalOfficeById(rentalOffice.getId()) != null) {
+            rentalOfficeRepository.saveAndFlush(rentalOffice);
+        }
     }
 
     @Override
     public void deleteRentalOfficeById(UUID id) throws RentalOfficeNotFoundException {
-
+        RentalOffice rentalOffice = findRentalOfficeById(id);
+        rentalOffice.setActive(false);
+        rentalOfficeRepository.saveAndFlush(rentalOffice);
     }
 
     @Override
     public void restoreRentalOfficeById(UUID id) throws RentalOfficeNotFoundException {
-
+        RentalOffice rentalOffice = findRentalOfficeById(id);
+        rentalOffice.setActive(true);
+        rentalOfficeRepository.saveAndFlush(rentalOffice);
     }
 }
