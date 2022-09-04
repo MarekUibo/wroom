@@ -3,10 +3,19 @@ package com.example.wroom.services.implementations;
 import com.example.wroom.exceptions.CarNotFoundException;
 import com.example.wroom.models.Car;
 import com.example.wroom.services.CarService;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Implementation of Car Service
+ *
+ * @author Jonathan Rigottier
+ */
+@Service
+@Transactional
 public class CarServiceImpl implements CarService {
     @Override
     public void createCar(Car car) {

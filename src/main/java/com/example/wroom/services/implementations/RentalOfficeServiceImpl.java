@@ -3,10 +3,19 @@ package com.example.wroom.services.implementations;
 import com.example.wroom.exceptions.RentalOfficeNotFoundException;
 import com.example.wroom.models.RentalOffice;
 import com.example.wroom.services.RentalOfficeService;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Implementation of RentalOffice
+ *
+ * @author Jonathan Rigottier
+ */
+@Service
+@Transactional
 public class RentalOfficeServiceImpl implements RentalOfficeService {
     @Override
     public void createRentalOffice(RentalOffice rentalOffice) {

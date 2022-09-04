@@ -3,10 +3,19 @@ package com.example.wroom.services.implementations;
 import com.example.wroom.exceptions.PersonNotFoundException;
 import com.example.wroom.models.Person;
 import com.example.wroom.services.PersonService;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Implementation of Person Service
+ *
+ * @author Jonathan Rigottier
+ */
+@Service
+@Transactional
 public class PersonServiceImpl implements PersonService {
     @Override
     public void createPerson(Person person) {

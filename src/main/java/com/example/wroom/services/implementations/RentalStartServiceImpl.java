@@ -4,10 +4,19 @@ import com.example.wroom.exceptions.RentalStartNotFoundException;
 import com.example.wroom.models.Person;
 import com.example.wroom.models.RentalStart;
 import com.example.wroom.services.RentalStartService;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Implementation of RentalStart Service
+ *
+ * @author Jonathan Rigottier
+ */
+@Service
+@Transactional
 public class RentalStartServiceImpl implements RentalStartService {
     @Override
     public void createRentalStart(RentalStart rentalStart) {

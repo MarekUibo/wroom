@@ -4,10 +4,19 @@ import com.example.wroom.exceptions.CustomerNotFoundException;
 import com.example.wroom.models.Customer;
 import com.example.wroom.models.Person;
 import com.example.wroom.services.CustomerService;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Implementation of customer Service
+ *
+ * @author Jonathan Rigottier
+ */
+@Service
+@Transactional
 public class CustomerServiceImpl implements CustomerService {
     @Override
     public void createCustomer(Customer customer) {

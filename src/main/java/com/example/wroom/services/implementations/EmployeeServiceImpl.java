@@ -4,10 +4,19 @@ import com.example.wroom.exceptions.EmployeeNotFoundException;
 import com.example.wroom.models.Employee;
 import com.example.wroom.models.Person;
 import com.example.wroom.services.EmployeeService;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Implementation of Employee Service
+ *
+ * @author Jonathan Rigottier
+ */
+@Service
+@Transactional
 public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void createEmployee(Employee employee) {
