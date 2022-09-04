@@ -17,4 +17,3 @@ public class PersonNotFoundException extends Exception {
         super(String.format("Person not found for email: %s", email));
     }
 }
-

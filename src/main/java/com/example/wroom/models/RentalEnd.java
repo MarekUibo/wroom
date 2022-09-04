@@ -4,7 +4,7 @@ package com.example.wroom.models;
  */
 import java.util.UUID;
 
-public class Return {
+public class RentalEnd {
     private UUID employeeId;
     private String dateOfReturn;
     private String booking;

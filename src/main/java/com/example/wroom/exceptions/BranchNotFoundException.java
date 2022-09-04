@@ -17,4 +17,3 @@ public class BranchNotFoundException extends Exception {
         super(String.format("Branch not found for address: %s", address));
     }
 }
-
