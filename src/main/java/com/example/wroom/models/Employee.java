@@ -4,14 +4,11 @@ package com.example.wroom.models;
  */
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 @Entity
 @Data
-public class Employee {
+public class Employee extends Person{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -21,4 +18,7 @@ public class Employee {
     private UUID branchId;
     private String branch;
     private boolean isActive;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Person person;
 }

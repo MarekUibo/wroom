@@ -36,7 +36,7 @@ public class CarController {
     @PostMapping
     public String createCar(Car car, RedirectAttributes redirectAttributes) {
         try {
-            Car searchSchool = carService.findCarBy(car.getCarRegistrationNumber());
+            Car searchSchool = carService.findCarByCarRegistrationNumber(car.getCarRegistrationNumber());
             redirectAttributes.addFlashAttribute("message",
                     String.format("Car(%s) already exists!", searchSchool.getCarRegistrationNumber()));
             redirectAttributes.addFlashAttribute("messageType", "error");
@@ -65,9 +65,9 @@ public class CarController {
     }
 
     @GetMapping("/delete")
-    public String deleteCar(Long id, RedirectAttributes redirectAttributes) {
+    public String deleteCar(UUID id, RedirectAttributes redirectAttributes) {
         try {
-            carService.deleteCarById(UUID id);
+            carService.deleteCarById(id);
             redirectAttributes.addFlashAttribute("message", "Car deleted successfully!");
             redirectAttributes.addFlashAttribute("messageType", "success");
         } catch (CarNotFoundException e) {
@@ -77,9 +77,9 @@ public class CarController {
         return "redirect:/car";
     }
     @GetMapping ("/restore")
-    public String restoreCar(Long id, RedirectAttributes redirectAttributes) {
+    public String restoreCar(UUID id, RedirectAttributes redirectAttributes) {
         try {
-            carService.restoreCarById(UUID id);
+            carService.restoreCarById(id);
             redirectAttributes.addFlashAttribute("message", "Car restored successfully!");
             redirectAttributes.addFlashAttribute("messageType", "success");
         } catch (CarNotFoundException e) {

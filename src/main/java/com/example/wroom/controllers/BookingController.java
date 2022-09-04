@@ -38,7 +38,7 @@ public class BookingController {
     @PostMapping
     public String createBooking(Booking booking, RedirectAttributes redirectAttributes) {
         try {
-            Booking findBookingById = bookingService.findBookingById(UUID);
+            Booking searchBooking = bookingService.findBookingById(booking.getId());
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) already exists!", booking.getDateOfBooking()));
             redirectAttributes.addFlashAttribute("messageType", "error");

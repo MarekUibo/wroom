@@ -24,7 +24,6 @@ public class Booking {
     private UUID id;
 
     private String dateOfBooking;
-    private String customer;
     private String car;
     private String dateFrom;
     private String dateTo;
@@ -32,5 +31,8 @@ public class Booking {
     private String returnBranch;
     private String amount;
     private boolean isActive;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Customer customer;
 
 }

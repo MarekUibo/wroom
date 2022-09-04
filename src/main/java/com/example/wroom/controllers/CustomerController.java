@@ -37,15 +37,15 @@ public class CustomerController {
     @PostMapping
     public String createCustomer(Customer customer, RedirectAttributes redirectAttributes) {
         try {
-            Customer searchCustomer = customerService.findCustomerById(UUID id);
+            Customer searchCustomer = customerService.findCustomerById(customer.getId());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Customer(%s) already exists!");
+                    String.format("Customer(%s) already exists!", searchCustomer.getId()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/customer/create";
         } catch (CustomerNotFoundException e) {
             customerService.createCustomer(customer);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Customer(%s) created successfully!");
+                    String.format("Customer(%s) created successfully!", customer.getId()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/customer/create";
         }
@@ -55,41 +55,47 @@ public class CustomerController {
         try {
             customerService.updateCustomer(customer);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Customer(%s) updated successfully!");
+                    String.format("Customer(%s) updated successfully!"));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/customer";
         } catch (CustomerNotFoundException e) {
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Customer(%s) not found!");
+                    String.format("Customer(%s) not found!"));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/customer";
         }
     }
 
-    @GetMapping("/delete")
-    public String deleteCustomer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @GetMapping("/delete/{id}")
+    public String deleteCustomer(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
-            customerService.deleteCustomerById(UUID id);
+            customerService.deleteCustomerById(id);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Customer(%s) deleted successfully!", UUID id));
+                    String.format("Customer(%s) deleted successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/customer";
         } catch (CustomerNotFoundException e) {
-            return new CustomerNotFoundException(UUID id, redirectAttributes);
+            return handleCustomerNotFoundExceptionByID(id, redirectAttributes);
         }
     }
-    @GetMapping("/restore")
-    public String restoreCustomer(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @GetMapping("/restore/{id}")
+    public String restoreCustomer(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
-            customerService.restoreCustomerById(UUID id);
+            customerService.restoreCustomerById(id);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Customer(%s) restored successfully!", UUID id));
+                    String.format("Customer(%s) restored successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/customer";
         } catch (CustomerNotFoundException e) {
-            return new CustomerNotFoundException(UUID id, redirectAttributes);
+            return handleCustomerNotFoundExceptionByID(id, redirectAttributes);
         }
     }
-
+    // PRIVATE METHODS //
+    private String handleCustomerNotFoundExceptionByID(UUID id, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("message",
+                String.format("Customer(id=%s) not found!", id));
+        redirectAttributes.addFlashAttribute("messageType", "error");
+        return "redirect:/customer";
+    }
 
 }

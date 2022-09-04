@@ -4,10 +4,7 @@ package com.example.wroom.models;
  */
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -23,4 +20,7 @@ public class RentalEnd {
     private String additionalPayment;
     private String comments;
     private boolean isActive;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Person person;
 }

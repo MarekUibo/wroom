@@ -2,6 +2,7 @@ package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.BranchNotFoundException;
 import com.example.wroom.models.Branch;
+import com.example.wroom.services.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +19,12 @@ import java.util.UUID;
 public class BranchController {
 
     @Autowired
-    private BranchController branchController;
+    private BranchService branchService;
 
     @GetMapping
     public String showBranchListPage(Model model, @ModelAttribute("message") String message,
                                      @ModelAttribute("messageType") String messageType) {
-        model.addAttribute("message", branchController.findAllBranches());
+        model.addAttribute("message", branchService.findAllBranches());
         return "branch/list-branch";
     }
 
@@ -37,60 +38,71 @@ public class BranchController {
     @PostMapping
     public String createBranch(Branch branch, RedirectAttributes redirectAttributes) {
         try {
-            Branch searchBranch = branchController.findBranchById(UUID id);
+            Branch searchBranch = branchService.findBranchById(branch.getId());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Branch(%s) already exists!");
+                    String.format("Branch(%s) already exists!"));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/branch/create";
         } catch (BranchNotFoundException e) {
-            branchController.createBranch(branch);
+            branchService.createBranch(branch);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Branch(%s) created successfully!");
+                    String.format("Branch(%s) created successfully!"));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/branch/create";
         }
     }
+
     public String updateBranch(Branch branch, RedirectAttributes redirectAttributes) {
         try {
-            branchController.updateBranch(branch);
+            branchService.updateBranch(branch);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Branch(%s) updated successfully!");
+                    String.format("Branch(%s) updated successfully!"));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/branch";
         } catch (BranchNotFoundException e) {
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Branch(%s) not found!");
+                    String.format("Branch(%s) not found!"));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/branch";
         }
     }
-    @GetMapping ("/delete")
+
+    @GetMapping("/delete/{id}")
     public String deleteBranch(@PathVariable("id") UUID id, RedirectAttributes redirectAttributes) {
         try {
-            branchController.deleteBranch(id);
+            branchService.deleteBranchById(id);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Branch(%s) deleted successfully!");
+                    String.format("Branch(%s) deleted successfully!"));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/branch";
         } catch (BranchNotFoundException e) {
 
-            return BranchNotFoundException(UUID id,redirectAttributes);
+            return handleBranchNotFoundExceptionById(id, redirectAttributes);
         }
     }
 
-    public String restoreBranch(@PathVariable("id") UUID id, RedirectAttributes redirectAttributes) {
+    @GetMapping("/restore/{id}")
+    public String restoreBranch(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
-            branchController.restoreBranch(id);
+            branchService.restoreBranchById(id);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Branch(%s) restored successfully!");
+                    String.format("Branch(%s) restored successfully!"));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/branch";
         } catch (BranchNotFoundException e) {
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Branch(%s) not found!");
+                    String.format("Branch(%s) not found!"));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/branch";
         }
     }
 
+
+    // PRIVATE METHODS //
+    private String handleBranchNotFoundExceptionById(UUID id, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("message",
+                String.format("School(id=%s) not found!", id));
+        redirectAttributes.addFlashAttribute("messageType", "error");
+        return "redirect:/branch";
+    }
 }
