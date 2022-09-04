@@ -2,6 +2,8 @@ package com.example.wroom.models;
 /**
  * @author:Marek Uibo
  */
+
+
 public class RentalStart {
     private String employee;
     private String rentalDate;
