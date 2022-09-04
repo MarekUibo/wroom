@@ -9,5 +9,5 @@ public class RentalStart {
     private String rentalDate;
     private String booking;
     private String comments;
-
+    private boolean isActive;
 }

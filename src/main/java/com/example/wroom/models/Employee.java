@@ -9,4 +9,5 @@ public class Employee {
     private String jobPosition; //Employee/Manager
     private UUID branchId;
     private String branch;
+    private boolean isActive;
 }
