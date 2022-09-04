@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/return")
-public class ReturnController {
+public class RentalEndController {
 }

@@ -2,11 +2,11 @@ package com.example.wroom.repository;
 /**
  * @author:Marek Uibo
  */
-import com.example.wroom.models.Rental;
+import com.example.wroom.models.RentalEnd;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RentalRepository extends JpaRepository<Rental, Long> {
+public interface RentalEndRepository extends JpaRepository<RentalEnd, Long> {
 }
 

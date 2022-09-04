@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/rental")
-public class RentalController {
+public class RentalStartController {
 }
