@@ -40,28 +40,28 @@ public class BranchController {
         try {
             Branch searchBranch = branchService.findBranchById(branch.getId());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Branch(%s) already exists!"));
+                    String.format("Branch(id=%d) already exists!", branch.getId()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/branch/create";
         } catch (BranchNotFoundException e) {
             branchService.createBranch(branch);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Branch(%s) created successfully!"));
+                    String.format("Branch(id=%d) created successfully!", branch.getId()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/branch/create";
         }
     }
-
+    @GetMapping("/update")
     public String updateBranch(Branch branch, RedirectAttributes redirectAttributes) {
         try {
             branchService.updateBranch(branch);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Branch(%s) updated successfully!"));
+                    String.format("Branch(id=%d) updated successfully!", branch.getId()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/branch";
         } catch (BranchNotFoundException e) {
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Branch(%s) not found!"));
+                    String.format("Branch(id=%d) not found!", branch.getId()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/branch";
         }
@@ -72,7 +72,7 @@ public class BranchController {
         try {
             branchService.deleteBranchById(id);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Branch(%s) deleted successfully!"));
+                    String.format("Branch(id=%d) deleted successfully!"));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/branch";
         } catch (BranchNotFoundException e) {
@@ -86,7 +86,7 @@ public class BranchController {
         try {
             branchService.restoreBranchById(id);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Branch(%s) restored successfully!"));
+                    String.format("Branch(id=%d) restored successfully!"));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/branch";
         } catch (BranchNotFoundException e) {
@@ -101,7 +101,7 @@ public class BranchController {
     // PRIVATE METHODS //
     private String handleBranchNotFoundExceptionById(UUID id, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("message",
-                String.format("School(id=%s) not found!", id));
+                String.format("Branch(id=%d) not found!", id));
         redirectAttributes.addFlashAttribute("messageType", "error");
         return "redirect:/branch";
     }
