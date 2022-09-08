@@ -69,25 +69,33 @@ public class BookingController {
     public String deleteBooking(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
             bookingService.deleteBookingById(id);
-            redirectAttributes.addFlashAttribute("message", "Booking deleted successfully!");
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("Booking(%s) deleted successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/booking";
         } catch (BookingNotFoundException e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-            redirectAttributes.addFlashAttribute("messageType", "error");
+           return handleBookingNotFoundExceptionById(id, redirectAttributes);
         }
-        return "redirect:/booking";
     }
     @GetMapping("/restore")
     public String restoreBooking(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
             bookingService.restoreBookingById(id);
-            redirectAttributes.addFlashAttribute("message", "Booking restored successfully!");
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("Booking(%s) restored successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/booking";
         } catch (BookingNotFoundException e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-            redirectAttributes.addFlashAttribute("messageType", "error");
+            return handleBookingNotFoundExceptionById(id, redirectAttributes);
         }
-        return "redirect:/booking";
     }
+    //Private methods//
+    private String handleBookingNotFoundExceptionById(UUID id, RedirectAttributes redirectAttributes) {
+       redirectAttributes.addFlashAttribute("message",
+               String.format("Booking(%s) not found!", id));
+       redirectAttributes.addFlashAttribute("messageType", "error");
+       return "redirect:/booking";
+    }
+
 
 }

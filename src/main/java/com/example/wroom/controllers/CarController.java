@@ -38,13 +38,13 @@ public class CarController {
         try {
             Car searchSchool = carService.findCarByCarRegistrationNumber(car.getCarRegistrationNumber());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Car(%s) already exists!", searchSchool.getCarRegistrationNumber()));
+                    String.format("Car(id=%d) already exists!", searchSchool.getCarRegistrationNumber()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/car/create";
         } catch (CarNotFoundException e) {
             carService.createCar(car);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Car(%s) created successfully!", car.getCarRegistrationNumber()));
+                    String.format("Car(id=%d) created successfully!", car.getCarRegistrationNumber()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/car/create";
         }
@@ -54,7 +54,7 @@ public class CarController {
             try {
                 carService.updateCar(car);
                 redirectAttributes.addFlashAttribute("message",
-                        String.format("Car(%s) updated successfully!", car.getCarRegistrationNumber()));
+                        String.format("Car(id=%d) updated successfully!", car.getCarRegistrationNumber()));
                 redirectAttributes.addFlashAttribute("messageType", "success");
                 return "redirect:/car";
             } catch (CarNotFoundException e) {
@@ -65,27 +65,35 @@ public class CarController {
     }
 
     @GetMapping("/delete")
-    public String deleteCar(UUID id, RedirectAttributes redirectAttributes) {
+    public String deleteCar(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
             carService.deleteCarById(id);
-            redirectAttributes.addFlashAttribute("message", "Car deleted successfully!");
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("Car(id=%d) deleted successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/car";
         } catch (CarNotFoundException e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-            redirectAttributes.addFlashAttribute("messageType", "error");
+            return handleCarNotFoundExceptionById(id, redirectAttributes);
         }
-        return "redirect:/car";
     }
     @GetMapping ("/restore")
-    public String restoreCar(UUID id, RedirectAttributes redirectAttributes) {
+    public String restoreCar(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
             carService.restoreCarById(id);
-            redirectAttributes.addFlashAttribute("message", "Car restored successfully!");
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("Car(id=%d) restored successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/car";
         } catch (CarNotFoundException e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-            redirectAttributes.addFlashAttribute("messageType", "error");
-        }
+            return handleCarNotFoundExceptionById(id, redirectAttributes);
+    }
+    }
+    //Private methods//
+
+    private String handleCarNotFoundExceptionById(UUID id, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("message",
+                String.format("Car(id=%d) not found!", id));
+        redirectAttributes.addFlashAttribute("messageType", "error");
         return "redirect:/car";
     }
 }
