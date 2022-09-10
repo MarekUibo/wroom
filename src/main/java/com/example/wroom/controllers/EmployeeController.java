@@ -2,7 +2,6 @@ package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.EmployeeNotFoundException;
 import com.example.wroom.models.Employee;
-import com.example.wroom.models.Person;
 import com.example.wroom.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

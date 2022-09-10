@@ -2,8 +2,6 @@ package com.example.wroom.services.implementations;
 
 import com.example.wroom.exceptions.CustomerNotFoundException;
 import com.example.wroom.models.Customer;
-import com.example.wroom.models.Person;
-import com.example.wroom.repository.BookingRepository;
 import com.example.wroom.repository.CustomerRepository;
 import com.example.wroom.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +41,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer findCustomerByEmail(Person email) throws CustomerNotFoundException {
-        Optional<Customer> optionalCustomer = customerRepository.findByCustomerEmail(email);
+    public Customer findCustomerByEmail(String email) throws CustomerNotFoundException {
+        Optional<Customer> optionalCustomer = customerRepository.findByEmail(email);
 
         if(optionalCustomer.isEmpty()) {
             throw new CustomerNotFoundException(email);

@@ -2,7 +2,6 @@ package com.example.wroom.services;
 
 import com.example.wroom.exceptions.CustomerNotFoundException;
 import com.example.wroom.models.Customer;
-import com.example.wroom.models.Person;
 
 import java.util.List;
 import java.util.UUID;
@@ -31,7 +30,7 @@ public interface CustomerService {
      * @param email Email of the customer
      * @return Customer
      */
-    Customer findCustomerByEmail(Person email) throws CustomerNotFoundException;
+    Customer findCustomerByEmail(String email) throws CustomerNotFoundException;
 
     /**
      * To find all customers

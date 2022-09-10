@@ -1,7 +1,6 @@
 package com.example.wroom.repository;
 
 import com.example.wroom.models.Employee;
-import com.example.wroom.models.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +15,6 @@ import java.util.UUID;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
 
-    Optional<Employee> findByEmployeeEmail(Person email);
+    Optional<Employee> findByEmail(String email);
 }
 

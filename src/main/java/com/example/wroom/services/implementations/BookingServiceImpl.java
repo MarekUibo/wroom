@@ -1,10 +1,12 @@
 package com.example.wroom.services.implementations;
 
 import com.example.wroom.exceptions.BookingNotFoundException;
+import com.example.wroom.exceptions.CustomerNotFoundException;
 import com.example.wroom.models.Booking;
-import com.example.wroom.models.Person;
+import com.example.wroom.models.Customer;
 import com.example.wroom.repository.BookingRepository;
 import com.example.wroom.services.BookingService;
+import com.example.wroom.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,9 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
+    @Autowired
+    private CustomerService customerService;
+
     @Override
     public void createBooking(Booking booking) {
         booking.setActive(true);
@@ -43,11 +48,13 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking findBookingByCustomerEmail(Person email) throws BookingNotFoundException {
-        Optional<Booking> optionalBooking = bookingRepository.findByCustomerEmail(email);
+    public Booking findBookingByCustomerEmail(String email) throws BookingNotFoundException, CustomerNotFoundException {
+        Customer customer = customerService.findCustomerByEmail(email);
+
+        Optional<Booking> optionalBooking = bookingRepository.findByCustomer(customer);
 
         if(optionalBooking.isEmpty()) {
-            throw new BookingNotFoundException(email);
+            throw new BookingNotFoundException(customer);
         }
 
         return optionalBooking.get();

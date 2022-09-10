@@ -1,6 +1,6 @@
 package com.example.wroom.exceptions;
 
-import com.example.wroom.models.Person;
+import com.example.wroom.models.Customer;
 
 import java.util.UUID;
 
@@ -15,7 +15,7 @@ public class BookingNotFoundException extends Exception {
         super(String.format("Booking not found for id: %s", id));
     }
 
-    public BookingNotFoundException(Person email) {
-        super(String.format("Customer not found for email: %s", email));
+    public BookingNotFoundException(Customer customer) {
+        super(String.format("Booking not found for customer id: %s", customer.getId()));
     }
 }

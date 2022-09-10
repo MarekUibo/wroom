@@ -42,11 +42,11 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car findCarByCarRegistrationNumber(String carRegistrationNumber) throws CarNotFoundException {
-        Optional<Car> optionalCar = carRepository.findByCarRegistrationNumber(carRegistrationNumber);
+    public Car findCarByRegistrationNumber(String registrationNumber) throws CarNotFoundException {
+        Optional<Car> optionalCar = carRepository.findByRegistrationNumber(registrationNumber);
 
         if(optionalCar.isEmpty()) {
-            throw new CarNotFoundException(carRegistrationNumber);
+            throw new CarNotFoundException(registrationNumber);
         }
         return optionalCar.get();
     }

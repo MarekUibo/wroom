@@ -2,8 +2,6 @@ package com.example.wroom.services.implementations;
 
 import com.example.wroom.exceptions.EmployeeNotFoundException;
 import com.example.wroom.models.Employee;
-import com.example.wroom.models.Person;
-import com.example.wroom.repository.BookingRepository;
 import com.example.wroom.repository.EmployeeRepository;
 import com.example.wroom.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +41,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee findEmployeeByEmail(Person email) throws EmployeeNotFoundException {
-        Optional<Employee> optionalEmployee = employeeRepository.findByEmployeeEmail(email);
+    public Employee findEmployeeByEmail(String email) throws EmployeeNotFoundException {
+        Optional<Employee> optionalEmployee = employeeRepository.findByEmail(email);
 
         if(optionalEmployee.isEmpty()) {
             throw new EmployeeNotFoundException(email);

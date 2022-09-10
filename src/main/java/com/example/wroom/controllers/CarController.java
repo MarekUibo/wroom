@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.UUID;
 
 /**
- * @author:Marek Uibo
+ * @author Marek Uibo
  */
 @Controller
 @RequestMapping("/car")
@@ -36,9 +36,9 @@ public class CarController {
     @PostMapping
     public String createCar(Car car, RedirectAttributes redirectAttributes) {
         try {
-            Car searchSchool = carService.findCarByCarRegistrationNumber(car.getRegistrationNumber());
+            Car searchSchool = carService.findCarByRegistrationNumber(car.getRegistrationNumber());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Car(id=%d) already exists!", searchSchool.getRegistrationNumber()));
+                    String.format("Car(registration number=%s) already exists!", car.getRegistrationNumber()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/car/create";
         } catch (CarNotFoundException e) {
@@ -64,24 +64,24 @@ public class CarController {
             }
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/delete/{id}")
     public String deleteCar(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
             carService.deleteCarById(id);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Car(id=%d) deleted successfully!", id));
+                    String.format("Car(id=%s) deleted successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/car";
         } catch (CarNotFoundException e) {
             return handleCarNotFoundExceptionById(id, redirectAttributes);
         }
     }
-    @GetMapping ("/restore")
+    @GetMapping ("/restore/{id}")
     public String restoreCar(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
             carService.restoreCarById(id);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Car(id=%d) restored successfully!", id));
+                    String.format("Car(id=%s) restored successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/car";
         } catch (CarNotFoundException e) {
@@ -92,7 +92,7 @@ public class CarController {
 
     private String handleCarNotFoundExceptionById(UUID id, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("message",
-                String.format("Car(id=%d) not found!", id));
+                String.format("Car(id=%s) not found!", id));
         redirectAttributes.addFlashAttribute("messageType", "error");
         return "redirect:/car";
     }

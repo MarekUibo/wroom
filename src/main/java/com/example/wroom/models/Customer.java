@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Entity
 @Data
-public class Customer extends Person implements Serializable {
+public class Customer implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -23,4 +23,14 @@ public class Customer extends Person implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
+    private String address;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    private boolean isActive;
 }

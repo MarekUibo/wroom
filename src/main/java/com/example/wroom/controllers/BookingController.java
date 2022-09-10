@@ -40,13 +40,13 @@ public class BookingController {
         try {
             Booking searchBooking = bookingService.findBookingById(booking.getId());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Booking(%s) already exists!", booking.getDateOfBooking()));
+                    String.format("Booking(%s) already exists!", booking.getId()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/booking/create";
         } catch (BookingNotFoundException e) {
             bookingService.createBooking(booking);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Booking(%s) created successfully!", booking.getDateOfBooking()));
+                    String.format("Booking(%s) created successfully!", booking.getId()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/booking";
         }
@@ -57,7 +57,7 @@ public class BookingController {
             try {
                bookingService.updateBooking(booking);
                redirectAttributes.addFlashAttribute("message",
-                       String.format("Booking(%s) updated successfully!", booking.getDateOfBooking()));
+                       String.format("Booking(%s) updated successfully!", booking.getId()));
             } catch (BookingNotFoundException e) {
                 redirectAttributes.addFlashAttribute("message", e.getMessage());
                 redirectAttributes.addFlashAttribute("messageType", "error");

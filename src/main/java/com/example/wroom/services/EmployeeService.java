@@ -2,7 +2,6 @@ package com.example.wroom.services;
 
 import com.example.wroom.exceptions.EmployeeNotFoundException;
 import com.example.wroom.models.Employee;
-import com.example.wroom.models.Person;
 
 import java.util.List;
 import java.util.UUID;
@@ -32,7 +31,7 @@ public interface EmployeeService {
      * @param email Email of the employee
      * @return Employee
      */
-    Employee findEmployeeByEmail(Person email) throws EmployeeNotFoundException;
+    Employee findEmployeeByEmail(String email) throws EmployeeNotFoundException;
 
     /**
      * To find all employees
