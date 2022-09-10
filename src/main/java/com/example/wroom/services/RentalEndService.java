@@ -2,7 +2,6 @@ package com.example.wroom.services;
 
 import com.example.wroom.exceptions.RentalEndNotFoundException;
 import com.example.wroom.models.Person;
-import com.example.wroom.models.RentalEnd;
 
 import java.util.List;
 import java.util.UUID;

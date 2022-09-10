@@ -2,7 +2,6 @@ package com.example.wroom.services;
 
 import com.example.wroom.exceptions.RentalStartNotFoundException;
 import com.example.wroom.models.Person;
-import com.example.wroom.models.RentalStart;
 
 import java.util.List;
 import java.util.UUID;

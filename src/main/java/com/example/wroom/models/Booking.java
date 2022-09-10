@@ -6,6 +6,9 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -13,7 +16,7 @@ import java.util.UUID;
  */
 @Entity
 @Data
-public class Booking {
+public class Booking implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -23,16 +26,32 @@ public class Booking {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    private String dateOfBooking;
-    private String car;
-    private String dateFrom;
-    private String dateTo;
-    private String rentalBranch;
-    private String returnBranch;
-    private String amount;
+    private LocalDateTime dateOfBooking;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Car car;
+
+    private LocalDateTime dateFrom;
+    private LocalDateTime dateTo;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Branch rentalBranch;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Branch returnBranch;
+
+    private BigDecimal amount;
     private boolean isActive;
 
     @OneToOne(cascade = CascadeType.MERGE)
     private Customer customer;
 
+    private BigDecimal additionalPayment;
+    private String comments;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Employee  rentalEmployee;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Employee returnEmployee;
 }

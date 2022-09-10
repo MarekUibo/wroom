@@ -3,23 +3,33 @@ package com.example.wroom.models;
  * @author:Marek Uibo
  */
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Data
-public class Branch {
+public class Branch implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "UUID")
+    @Column(updatable = false, nullable = false)
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
     private String address;
+
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Employee> employee;
-    private List <Car> cars;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Car> cars;
+
     private boolean isActive;
 }

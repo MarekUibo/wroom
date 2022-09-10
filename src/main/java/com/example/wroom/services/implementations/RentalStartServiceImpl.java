@@ -2,8 +2,6 @@ package com.example.wroom.services.implementations;
 
 import com.example.wroom.exceptions.RentalStartNotFoundException;
 import com.example.wroom.models.Person;
-import com.example.wroom.models.RentalStart;
-import com.example.wroom.repository.BookingRepository;
 import com.example.wroom.repository.RentalStartRepository;
 import com.example.wroom.services.RentalStartService;
 import org.springframework.beans.factory.annotation.Autowired;
