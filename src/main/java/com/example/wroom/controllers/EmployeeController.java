@@ -37,15 +37,15 @@ public class EmployeeController {
     @PostMapping
     public String createEmployee(Employee employee, RedirectAttributes redirectAttributes) {
         try {
-            Employee searchEmployee = employeeService.findEmployeeById(employee.getEmployeeId());
+            Employee searchEmployee = employeeService.findEmployeeById(employee.getId());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Employee(id=%d) already exists!", searchEmployee.getEmployeeId()));
+                    String.format("Employee(id=%d) already exists!", searchEmployee.getId()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/employee/create";
         } catch (EmployeeNotFoundException e) {
             employeeService.createEmployee(employee);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Employee(id=%d) created successfully!", employee.getEmployeeId()));
+                    String.format("Employee(id=%d) created successfully!", employee.getId()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/employee/create";
         }
@@ -55,12 +55,12 @@ public class EmployeeController {
         try {
             employeeService.updateEmployee(employee);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Employee(id=%d) updated successfully!", employee.getEmployeeId()));
+                    String.format("Employee(id=%d) updated successfully!", employee.getId()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/employee";
         } catch (EmployeeNotFoundException e) {
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Employee(id=%d) not found!", employee.getEmployeeId()));
+                    String.format("Employee(id=%d) not found!", employee.getId()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/employee";
         }

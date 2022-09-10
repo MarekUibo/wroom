@@ -35,7 +35,7 @@ public class PersonController {
     @PostMapping
     public String createPerson(Person person, RedirectAttributes redirectAttributes) {
         try {
-            Person searchPerson = personService.findPersonById(person.getId());
+            Person searchPerson = personService.findPersonById(person.getId(UUID));
             redirectAttributes.addFlashAttribute("message",
                     String.format("Person(id=%d) already exists!"));
             redirectAttributes.addFlashAttribute("messageType", "error");

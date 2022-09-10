@@ -36,15 +36,15 @@ public class CarController {
     @PostMapping
     public String createCar(Car car, RedirectAttributes redirectAttributes) {
         try {
-            Car searchSchool = carService.findCarByCarRegistrationNumber(car.getCarRegistrationNumber());
+            Car searchSchool = carService.findCarByCarRegistrationNumber(car.getRegistrationNumber());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Car(id=%d) already exists!", searchSchool.getCarRegistrationNumber()));
+                    String.format("Car(id=%d) already exists!", searchSchool.getRegistrationNumber()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/car/create";
         } catch (CarNotFoundException e) {
             carService.createCar(car);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Car(id=%d) created successfully!", car.getCarRegistrationNumber()));
+                    String.format("Car(id=%d) created successfully!", car.getRegistrationNumber()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/car/create";
         }
@@ -54,7 +54,7 @@ public class CarController {
             try {
                 carService.updateCar(car);
                 redirectAttributes.addFlashAttribute("message",
-                        String.format("Car(id=%d) updated successfully!", car.getCarRegistrationNumber()));
+                        String.format("Car(id=%d) updated successfully!", car.getRegistrationNumber()));
                 redirectAttributes.addFlashAttribute("messageType", "success");
                 return "redirect:/car";
             } catch (CarNotFoundException e) {
