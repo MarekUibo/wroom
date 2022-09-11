@@ -25,7 +25,7 @@ public class CarController {
     public String showCarListPage(Model model, @ModelAttribute("message") String message,
                                   @ModelAttribute("messageType") String messageType) {
         model.addAttribute("cars", carService.findAllCars());
-        return "car/list-car";
+        return "car/list-of-cars";
     }
     @GetMapping ("/create")
     public String showCreateCarPage(@ModelAttribute("car") Car car,

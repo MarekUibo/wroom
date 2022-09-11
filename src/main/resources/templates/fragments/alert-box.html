@@ -1,0 +1,6 @@
+<div class="alert alert-success" role="alert" th:if="${messageType} == 'success'">
+  <span th:text="${message}"></span>
+</div>
+<div class="alert alert-danger" role="alert" th:if="${messageType} == 'error'">
+  <span th:text="${message}"></span>
+</div>
