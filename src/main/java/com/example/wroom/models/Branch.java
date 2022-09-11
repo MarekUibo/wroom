@@ -2,13 +2,16 @@ package com.example.wroom.models;
 /**
  * @author:Marek Uibo
  */
+
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,13 +26,10 @@ public class Branch implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    private String address;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Employee> employee;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Car> cars;
-
-    private boolean isActive;
+    private String name;
+    private String fullAddress;
+    private String phoneNumber;
+    private String email;
+    private String city;
+    private Boolean isActive;
 }

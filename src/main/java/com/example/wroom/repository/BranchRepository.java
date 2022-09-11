@@ -15,5 +15,7 @@ import java.util.UUID;
 @Repository
 public interface BranchRepository extends JpaRepository<Branch, UUID> {
 
-    Optional<Branch> findByAddress(String address);
+    Optional<Branch> findByFullAddress(String address);
+
+    Optional<Branch> findFirstByIsActiveIsTrue();
 }

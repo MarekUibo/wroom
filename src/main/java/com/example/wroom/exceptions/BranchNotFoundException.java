@@ -9,6 +9,10 @@ import java.util.UUID;
  */
 public class BranchNotFoundException extends Exception {
     private static final long serialVersionUID = 1L;
+
+    public BranchNotFoundException() {
+        super("No active branch found");
+    }
     public BranchNotFoundException(UUID id) {
         super(String.format("Branch not found for id: %s", id));
     }

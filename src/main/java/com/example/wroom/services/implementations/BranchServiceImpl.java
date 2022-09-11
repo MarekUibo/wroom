@@ -27,7 +27,7 @@ public class BranchServiceImpl implements BranchService {
 
     @Override
     public void createBranch(Branch branch) {
-        branch.setActive(true);
+        branch.setIsActive(true);
         branchRepository.save(branch);
     }
 
@@ -42,8 +42,18 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
+    public Branch findRandomActiveBranch() throws BranchNotFoundException {
+        Optional<Branch> optionalBranch = branchRepository.findFirstByIsActiveIsTrue();
+
+        if(optionalBranch.isEmpty()) {
+            throw new BranchNotFoundException();
+        }
+        return optionalBranch.get();
+    }
+
+    @Override
     public Branch findBranchByAddress(String address) throws BranchNotFoundException {
-        Optional<Branch> optionalBranch = branchRepository.findByAddress(address);
+        Optional<Branch> optionalBranch = branchRepository.findByFullAddress(address);
 
         if(optionalBranch.isEmpty()) {
             throw new BranchNotFoundException(address);
@@ -66,14 +76,14 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public void deleteBranchById(UUID id) throws BranchNotFoundException {
         Branch branch = findBranchById(id);
-        branch.setActive(false);
+        branch.setIsActive(false);
         branchRepository.saveAndFlush(branch);
     }
 
     @Override
     public void restoreBranchById(UUID id) throws BranchNotFoundException {
         Branch branch = findBranchById(id);
-        branch.setActive(true);
+        branch.setIsActive(true);
         branchRepository.saveAndFlush(branch);
     }
 }
