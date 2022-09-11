@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 /**
  * Configuration for auditing
  *
+ *
  * @author Jonathan Rigottier
  */
 @Configuration
