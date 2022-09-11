@@ -6,15 +6,15 @@ import org.springframework.data.domain.AuditorAware;
 
 import java.util.Optional;
 
-
 /**
- * @author:Marek Uibo
+ * Custon handler to implement AuditorAware
+ *
+ * @author Jonathan Rigottier
  */
 public class AuditAwareHandler implements AuditorAware<String> {
-
     @Override
     public Optional<String> getCurrentAuditor() {
         return Optional.of(Constants.Audit.DEFAULT_AUDITOR);
     }
-
 }
+
