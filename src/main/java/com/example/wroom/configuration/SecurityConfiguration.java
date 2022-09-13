@@ -1,8 +1,6 @@
 package com.example.wroom.configuration;
 
-import com.example.wroom.handlers.AuditAwareHandler;
-import com.example.wroom.services.implementations.CustomUserDetailsService;
-import com.example.wroom.utils.Constants;
+import com.example.wroom.services.implementations.UserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,10 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import com.example.wroom.utils.Constants.Security.*;
 
 /**
  * Configuration for security
@@ -24,8 +19,8 @@ import com.example.wroom.utils.Constants.Security.*;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService();
+    public org.springframework.security.core.userdetails.UserDetailsService userDetailsService() {
+        return new UserDetailsService();
     }
 
     @Bean
@@ -49,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         String role = "ROLE_";
-        String admin = Constants.Security.AUTHORITY_ADMIN.replace(role, "");
+        String admin = AUTHORITY_ADMIN.replace(role, "");
         String manager = AUTHORITY_MANAGER.replace(role, "");
         String employee = AUTHORITY_EMPLOYEE.replace(role, "");
         String customer = AUTHORITY_CUSTOMER.replace(role, "");

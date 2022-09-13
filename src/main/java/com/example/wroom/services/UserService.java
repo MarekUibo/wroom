@@ -1,8 +1,7 @@
 package com.example.wroom.services;
 
-import com.sda.studysystem.exceptions.UserNotFoundException;
-import com.sda.studysystem.models.User;
-
+import com.example.wroom.exceptions.UserNotFoundException;
+import com.example.wroom.models.User;
 import java.util.List;
 
 /**

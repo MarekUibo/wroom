@@ -1,12 +1,10 @@
 package com.example.wroom.services.implementations;
 
+import com.example.wroom.exceptions.UserNotFoundException;
+import com.example.wroom.models.User;
 import com.example.wroom.services.UserService;
-import com.sda.studysystem.exceptions.UserNotFoundException;
-import com.sda.studysystem.models.User;
-import com.sda.studysystem.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author Kristiina Lindre
  */
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
     @Autowired
     private UserService userService;
 
@@ -24,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
             User user = userService.findUserByUserName(username);
-            return new CustomUserDetails(user);
+            return new UserDetails(user);
         } catch (UserNotFoundException userNotFoundException) {
             throw new UsernameNotFoundException(userNotFoundException.getLocalizedMessage());
         }
