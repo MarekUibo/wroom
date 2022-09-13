@@ -1,22 +1,26 @@
 package com.example.wroom.models;
-/**
- * @author Marek Uibo
- */
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
-
-@Entity
+/**
+ * Authority for User
+ *
+ * @author Kristiina Lindre
+ */
 @Data
-public class RentalOffice implements Serializable {
+@Entity
+@EqualsAndHashCode(callSuper = true)
+public class Authority extends Auditable<String> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -27,17 +31,5 @@ public class RentalOffice implements Serializable {
     private UUID id;
 
     private String name;
-    private String internetDomain;
-    private String contactAddress;
-
-    @OneToOne(cascade = CascadeType.MERGE)
-    private Employee owner;
-
-    private String logoUrl;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Branch> branches;
-
-    private BigDecimal sumOfAmountsForCarRental;
     private boolean isActive;
 }

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * @author:Marek Uibo
+ * @author Marek Uibo
  */
 @Entity
 @Data

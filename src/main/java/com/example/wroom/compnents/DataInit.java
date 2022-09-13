@@ -1,20 +1,14 @@
 package com.example.wroom.compnents;
 
-import com.example.wroom.exceptions.BranchNotFoundException;
-import com.example.wroom.exceptions.CarNotFoundException;
-import com.example.wroom.exceptions.EmployeeNotFoundException;
-import com.example.wroom.exceptions.RentalOfficeNotFoundException;
+import com.example.wroom.exceptions.*;
 import com.example.wroom.models.*;
-import com.example.wroom.services.BranchService;
-import com.example.wroom.services.CarService;
-import com.example.wroom.services.EmployeeService;
-import com.example.wroom.services.RentalOfficeService;
+import com.example.wroom.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
 /**
- * @author Marek Uibo
+ * @author Marek Uibo and Kristiina Lindre
  */
 
 public class DataInit {
@@ -31,14 +25,42 @@ public class DataInit {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private AuthorityService authorityService;
+
+    @Autowired
+    private SiteUserService siteUserService;
+
     @PostConstruct
     public void init() {
         initBranch();
         initCar();
         initEmployee();
         initRentalOffice();
+        initSiteUser();
     }
 
+    private void initSiteUser() {
+        System.out.println("Starting initializing User..");
+
+        try {
+            Authority authority = authorityService.findAuthorityByName(AUTHORITY_ADMIN);
+
+            User user = new User();
+            user.setUserName("admin@wroom.com");
+            user.setPassword("123456");
+            user.setAuthority(authority);
+
+            try {
+                User resultUser = siteUserService.findUserByUserName(user.getUserName());
+                System.out.println("Cannot pre-initialize user:" + resultUser.getUserName());
+            } catch (UserNotFoundException e) {
+                siteUserService.createUser(user);
+            }
+        } catch (AuthorityNotFoundException e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
     private void initBranch() {
         System.out.println("Starting initializing Booking..");
         Branch branch = new Branch();
@@ -116,6 +138,33 @@ public class DataInit {
             System.out.println("Cannot pre-initialize RentalOffice: " + searchRentalOffice);
         } catch (RentalOfficeNotFoundException e) {
             rentalOfficeService.createRentalOffice(rentalOffice);
+        }
+
+    }
+    private void initAuthorityData() {
+        System.out.println("Starting initializing Authority..");
+        Authority authorityAdmin = new Authority();
+        authorityAdmin.setName(AUTHORITY_ADMIN);
+        createAuthority(authorityAdmin);
+
+        Authority authorityManager = new Authority();
+        authorityManager.setName(AUTHORITY_MANAGER);
+        createAuthority(authorityManager);
+
+        Authority authorityEmployee = new Authority();
+        authorityEmployee.setName(AUTHORITY_EMPLOYEE);
+        createAuthority(authorityEmployee);
+
+        Authority authorityCustomer = new Authority();
+        authorityCustomer.setName(AUTHORITY_CUSTOMER);
+        createAuthority(authorityCustomer);
+    }
+    private void createAuthority(Authority authority) {
+        try {
+            Authority resultAuthority = authorityService.findAuthorityByName(authority.getName());
+            System.out.println("Cannot pre-initialize authority:" + resultAuthority.getName());
+        } catch(AuthorityNotFoundException authorityNotFoundException) {
+            authorityService.createAuthority(authority);
         }
     }
 }
