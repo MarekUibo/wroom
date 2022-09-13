@@ -1,6 +1,6 @@
 package com.example.wroom.configuration;
 
-import com.example.wroom.services.implementations.UserDetailsService;
+import com.example.wroom.services.implementations.SiteUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
@@ -19,8 +20,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
-    public org.springframework.security.core.userdetails.UserDetailsService userDetailsService() {
-        return new UserDetailsService();
+    public UserDetailsService userDetailsService() {
+        return (UserDetailsService) new SiteUserDetailsService();
     }
 
     @Bean
@@ -57,7 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .hasRole(admin)
                 .antMatchers("/car/**")
                 .hasAnyRole(manager, employee, admin)
-                .antMatchers("/teacher/**")
+                .antMatchers("//**")
                 .hasAnyRole(manager, admin)
                 .and()
                 .httpBasic()

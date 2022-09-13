@@ -3,7 +3,7 @@ package com.example.wroom.utils;
 /**
  * Constant values used in this application
  *
- * @author Jonathan Rigottier
+ * @author Jonathan Rigottier and Kristiina Lindre
  */
 public class Constants {
     public static class Audit {

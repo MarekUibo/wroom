@@ -1,6 +1,6 @@
 package com.example.wroom.services.implementations;
 
-import com.sda.studysystem.models.User;
+import com.example.wroom.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,11 +12,11 @@ import java.util.Collections;
 /**
  * Implementation of UserDetails
  *
- * @author Vinod John
+ * @author Kristiina Lindre
  */
 @Data
 @AllArgsConstructor
-public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
+public class CarUserDetails implements org.springframework.security.core.userdetails.UserDetails {
     private User user;
 
     @Override

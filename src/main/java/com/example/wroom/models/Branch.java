@@ -1,6 +1,6 @@
 package com.example.wroom.models;
 /**
- * @author:Marek Uibo
+ * @author Marek Uibo
  */
 
 import lombok.Data;

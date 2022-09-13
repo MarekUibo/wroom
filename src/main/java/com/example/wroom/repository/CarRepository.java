@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * Repository to handle car related DB operations
  *
- * @author: Marek Uibo & Jonathan Rigottier
+ * @author  Marek Uibo & Jonathan Rigottier
  */
 @Repository
 public interface CarRepository extends JpaRepository<Car, UUID> {

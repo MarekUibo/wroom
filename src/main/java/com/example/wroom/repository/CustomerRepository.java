@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * Repository to handle customer related DB operations
  *
- * @author: Marek Uibo & Jonathan Rigottier
+ * @author Marek Uibo & Jonathan Rigottier
  */
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, UUID> {

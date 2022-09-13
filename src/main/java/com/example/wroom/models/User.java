@@ -12,7 +12,7 @@ import java.util.UUID;
 /**
  * User model
  *
- * @author Vinod John
+ * @author Kristiina Lindre
  */
 @Data
 @Entity

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Service to handle authority related operations
  *
- * @author Vinod John
+ * @author Kristiina Lindre
  */
 public interface AuthorityService {
 

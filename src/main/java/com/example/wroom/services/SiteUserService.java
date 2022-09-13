@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Kristiina Lindre
  */
-public interface UserService {
+public interface SiteUserService {
     /**
      * To create a new user
      *

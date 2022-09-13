@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  * Auditable model
  *
  * @param <V> Generic type
- * @author Vinod John
+ * @author Jonathan Rigottier
  * @implNote This model can be extended to any entity which needs auditing
  */
 @Getter

@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * Repository to handle rentalOffice related DB operations
  *
- * @author: Marek Uibo & Jonathan Rigottier
+ * @author Marek Uibo & Jonathan Rigottier
  */
 @Repository
 public interface RentalOfficeRepository extends JpaRepository<RentalOffice, UUID> {
