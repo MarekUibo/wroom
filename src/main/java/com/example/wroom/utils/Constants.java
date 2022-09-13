@@ -10,4 +10,11 @@ public class Constants {
         public static final String DEFAULT_AUDITOR = "SYSTEM";
 
     }
+
+    public static class Security {
+        public static final String AUTHORITY_ADMIN = "ROLE_ADMIN";
+        public static final String AUTHORITY_MANAGER = "ROLE_MANAGER";
+        public static final String AUTHORITY_EMPLOYEE = "ROLE_EMPLOYEE";
+        public static final String AUTHORITY_CUSTOMER = "ROLE_CUSTOMER";
+    }
 }

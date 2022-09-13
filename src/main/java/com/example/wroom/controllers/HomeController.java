@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @GetMapping
     public String showHomePage(Model model) {
-        model.addAttribute("message", "Hello to Wroom car rental!");
+        model.addAttribute("message", "Please make your selection above");
         return "home";
     }
 }
