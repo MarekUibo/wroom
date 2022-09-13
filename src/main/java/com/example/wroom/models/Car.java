@@ -40,6 +40,9 @@ public class Car implements Serializable {
     @Enumerated(EnumType.STRING)
     private CarStatus status;
 
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Branch homeBranch;
+
     private BigDecimal amount;
     private boolean isActive;
 }

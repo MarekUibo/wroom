@@ -33,7 +33,7 @@ public class Employee implements Serializable {
     private EmployeeJobPosition employeeJobPosition; //Employee/Manager
 
     @OneToOne(cascade = CascadeType.MERGE)
-    private Branch branch;
+    private Branch homeBranch;
 
     @Enumerated(EnumType.STRING)
     private Role role;
