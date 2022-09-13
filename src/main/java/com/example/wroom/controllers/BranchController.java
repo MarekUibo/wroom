@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.UUID;
 
 /**
- * @author:Marek Uibo
+ * @author Marek Uibo
  */
 @Controller
 @RequestMapping("/branch")
@@ -25,7 +25,7 @@ public class BranchController {
     public String showBranchListPage(Model model, @ModelAttribute("message") String message,
                                      @ModelAttribute("messageType") String messageType) {
         model.addAttribute("message", branchService.findAllBranches());
-        return "branch/list-branch";
+        return "branch/list-of-branches";
     }
 
     @GetMapping("/create")
