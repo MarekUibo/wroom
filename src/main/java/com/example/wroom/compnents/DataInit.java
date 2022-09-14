@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
+import static com.example.wroom.utils.Constants.Security.*;
+
 /**
  * @author Marek Uibo and Kristiina Lindre
  */

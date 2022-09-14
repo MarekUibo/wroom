@@ -1,6 +1,6 @@
 package com.example.wroom.configuration;
 
-import com.example.wroom.services.implementations.SiteUserDetailsService;
+import com.example.wroom.services.implementations.SiteUserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import static com.example.wroom.utils.Constants.Security.*;
+
 
 /**
  * Configuration for security
@@ -21,7 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
-        return (UserDetailsService) new SiteUserDetailsService();
+        return (UserDetailsService) new SiteUserServiceImpl();
     }
 
     @Bean
