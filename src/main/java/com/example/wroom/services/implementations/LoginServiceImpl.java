@@ -15,12 +15,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginServiceImpl implements LoginService {
     @Autowired
-    private SiteUserService customUserService;
+    private SiteUserService siteUserService;
 
     @Override
     public boolean isLoginValid(Login login) {
         try {
-            customUserService.findUserByUserNameAndPassword(login.getUserName(), login.getPassword());
+            siteUserService.findUserByUserNameAndPassword(login.getUserName(), login.getPassword());
             return true;
         } catch (UserNotFoundException userNotFoundException) {
             return false;

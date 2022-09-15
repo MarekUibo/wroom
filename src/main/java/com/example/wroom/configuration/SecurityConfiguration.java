@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import static com.example.wroom.utils.Constants.Security.*;
 
 
+import static com.example.wroom.utils.Constants.Security.*;
+
 /**
  * Configuration for security
  *
