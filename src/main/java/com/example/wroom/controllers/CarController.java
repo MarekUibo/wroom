@@ -36,7 +36,7 @@ public class CarController {
     @PostMapping
     public String createCar(Car car, RedirectAttributes redirectAttributes) {
         try {
-            Car searchSchool = carService.findCarByRegistrationNumber(car.getRegistrationNumber());
+            Car searchCar = carService.findCarByRegistrationNumber(car.getRegistrationNumber());
             redirectAttributes.addFlashAttribute("message",
                     String.format("Car(registration number=%s) already exists!", car.getRegistrationNumber()));
             redirectAttributes.addFlashAttribute("messageType", "error");
