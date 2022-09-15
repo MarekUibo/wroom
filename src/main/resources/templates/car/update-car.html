@@ -3,8 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <title>Update car</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <body>
-
+<div class="container-fluid">
+    <div th:replace="fragments/navbar"></div>
+    <div class="container py-4">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Update car</h1>
+                <form action="#" method="post" th:action="@{/car/update}" th:object="${school}">
+                    <div class="form-group mb-3">
+                        <label for="carRegistrationNumber">Car registration number</label>
+                        <input class="form-control" id="carRegistrationNumber" th:field="*{carRegistrationNumber}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="mark">Car mark</label>
+                        <input class="form-control" id="mark" th:field="*{mark}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="model">Car model</label>
+                        <input class="form-control" id="model" th:field="*{model}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="bodyType">Car bodytype</label>
+                        <input class="form-control" id="bodyType" th:field="*{bodyType}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="yearOfProduction">Year of production</label>
+                        <input class="form-control" id="yearOfProduction" th:field="*{yearOfProduction}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="color">Color of car</label>
+                        <input class="form-control" id="color" th:field="*{color}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="mileage">Car mileage</label>
+                        <input class="form-control" id="mileage" th:field="*{mileage}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="status">Status of car</label>
+                        <input class="form-control" id="status" th:field="*{status}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="amount">Price of rental</label>
+                        <input class="form-control" id="amount" th:field="*{amount}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="isActive">Car availability</label>
+                        <input class="form-control" id="isActive" th:field="*{isActive}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="location">Location</label>
+                        <input class="form-control" id="location" th:field="*{location}" type="text" required>
+                    </div>
+                    <input id="id" th:field="*{id}" type="hidden">
+                    <input id="active" th:field="*{active}" type="hidden">
+                    <a class="btn btn-light mb-3" type="button" href="/school">Cancel</a>
+                    <button class="btn btn-outline-primary mb-3" type="submit">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/script-fragment"></div>
 </body>
 </html>
