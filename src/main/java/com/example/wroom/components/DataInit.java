@@ -1,4 +1,4 @@
-package com.example.wroom.compnents;
+package com.example.wroom.components;
 
 import com.example.wroom.exceptions.*;
 import com.example.wroom.models.*;
