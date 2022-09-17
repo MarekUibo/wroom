@@ -1,7 +1,7 @@
 package com.example.wroom.repository;
 
 import com.example.wroom.models.Booking;
-import com.example.wroom.models.Customer;
+import org.apache.catalina.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +15,7 @@ import java.util.UUID;
  */
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, UUID> {
-    Optional<Booking> findByCustomer(Customer customer);
+    Optional<Booking> findByUser(User user);
 }
 
 

@@ -31,7 +31,8 @@ public class UserController {
     }
 
     @GetMapping("/create")
-    public String showCreateUserPage(@ModelAttribute("customer") User user,
+
+    public String showCreateUserPage(@ModelAttribute("user") User user,
                                          @ModelAttribute("message") String message,
                                          @ModelAttribute("messageType") String messageType) {
         return "user/create-user";
@@ -43,8 +44,13 @@ public class UserController {
             redirectAttributes.addFlashAttribute("message",
                     String.format("User(id=%d) already exists!", searchUser.getId()));
             redirectAttributes.addFlashAttribute("messageType", "error");
+
+            return "redirect:/user/create";
+        } catch (UserNotFoundException e) {
+
             return "redirect:/customer/create";
         } catch (CustomerNotFoundException e) {
+
             userService.createUser(user);
             redirectAttributes.addFlashAttribute("message",
                     String.format("User(id=%d) created successfully!", user.getId()));

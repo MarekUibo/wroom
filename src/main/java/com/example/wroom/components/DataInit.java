@@ -26,9 +26,6 @@ public class DataInit {
     private CarService carService;
 
     @Autowired
-    private EmployeeService employeeService;
-
-    @Autowired
     private AuthorityService authorityService;
 
     @Autowired
