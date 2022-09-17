@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+import java.util.Collections;
+import java.util.List;
+
 import static com.example.wroom.utils.Constants.Security.*;
 
 /**
@@ -37,8 +40,9 @@ public class DataInit {
         initAuthority();
         initBranch();
         initCar();
-        initRentalOffice();
         initUser();
+        initRentalOffice();
+
     }
 
     private void initUser() {
@@ -48,12 +52,13 @@ public class DataInit {
             Authority authority = authorityService.findAuthorityByName(AUTHORITY_ADMIN);
 
             User user = new User();
+            user.setUserName("admin22");
             user.setEmail("admin@wroom.com");
             user.setPassword("123456");
             user.setAuthority(authority);
 
             try {
-                User resultUser = userService.findUserByUserName(user.getEmail());
+                User resultUser = userService.findUserByEmail(user.getEmail());
                 System.out.println("Cannot pre-initialize user:" + resultUser.getEmail());
             } catch (UserNotFoundException e) {
                 userService.createUser(user);
@@ -107,20 +112,27 @@ public class DataInit {
     }
     private void initRentalOffice() {
         System.out.println("Starting initializing RentalOffice..");
-        RentalOffice rentalOffice = new RentalOffice();
-        rentalOffice.setName("Tallinn");
-        rentalOffice.setInternetDomain("http://www.wroom-rental-car.ee");
-        rentalOffice.setContactAddress("Weizenbergi 12 10150 Tallinn");
-        rentalOffice.setLogoUrl("https://upww.screenrec.com/images/f_GubritL5psP3ITwR0klX2EZxa6j9V4ho.png");
 
         try {
-            RentalOffice searchRentalOffice = rentalOfficeService.findRentalOfficeByName(rentalOffice.getName());
-            System.out.println("Cannot pre-initialize RentalOffice: " + searchRentalOffice);
-        } catch (RentalOfficeNotFoundException e) {
-            rentalOfficeService.createRentalOffice(rentalOffice);
+            RentalOffice rentalOffice = new RentalOffice();
+            rentalOffice.setName("Tallinn");
+            rentalOffice.setInternetDomain("http://www.wroom-rental-car.ee");
+            rentalOffice.setContactAddress("Weizenbergi 12 10150 Tallinn");
+            rentalOffice.setLogoUrl("https://upww.screenrec.com/images/f_GubritL5psP3ITwR0klX2EZxa6j9V4ho.png");
+            rentalOffice.setBranches(branchService.findRandomActiveBranch());
+
+            try {
+                RentalOffice searchRentalOffice = rentalOfficeService.findRentalOfficeByName(rentalOffice.getName());
+                System.out.println("Cannot pre-initialize RentalOffice: " + searchRentalOffice);
+            } catch (RentalOfficeNotFoundException e) {
+                rentalOfficeService.createRentalOffice(rentalOffice);
+            }
+        } catch (BranchNotFoundException e) {
+            System.out.println("No branch found. Cannot pre-initialize Car: " + e.getMessage());
+        }
         }
 
-    }
+
     private void initAuthority() {
         System.out.println("Starting initializing Authority..");
         Authority authorityAdmin = new Authority();

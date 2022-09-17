@@ -27,8 +27,9 @@ public class User extends Auditable<String> implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    private String email;
+    private String userName;
     private String password;
+    private String email;
     private String firstName;
     private String lastName;
     private String phoneNumber;

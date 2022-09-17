@@ -40,16 +40,13 @@ public class UserController {
     @PostMapping
     public String createUser(User user, RedirectAttributes redirectAttributes) {
         try {
-            User searchUser = userService.findUserById(user.getId(UUID id));
+            User searchUser = userService.findUserById(user.getId());
             redirectAttributes.addFlashAttribute("message",
                     String.format("User(id=%d) already exists!", searchUser.getId()));
             redirectAttributes.addFlashAttribute("messageType", "error");
 
             return "redirect:/user/create";
         } catch (UserNotFoundException e) {
-
-            return "redirect:/customer/create";
-        } catch (CustomerNotFoundException e) {
 
             userService.createUser(user);
             redirectAttributes.addFlashAttribute("message",

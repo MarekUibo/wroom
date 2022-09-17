@@ -50,13 +50,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking findBookingByUserEmail(String email) throws BookingNotFoundException, CustomerNotFoundException {
-        User user = userService.findUserByEmail(email);
-
-        Optional<Booking> optionalBooking = bookingRepository.findByUser(user);
+    public Booking findBookingByUserEmail(String email) throws BookingNotFoundException {
+        Optional<Booking> optionalBooking = bookingRepository.findByUser(email);
 
         if(optionalBooking.isEmpty()) {
-            throw new BookingNotFoundException(user);
+            throw new BookingNotFoundException(email);
         }
 
         return optionalBooking.get();

@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 /**
  * Implementation of Employee Service
  *
@@ -34,11 +32,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByUserName(String userName) throws UserNotFoundException {
-        return null;
-    }
-
-    @Override
     public User findUserByUserNameAndPassword(String userName, String password) throws UserNotFoundException {
             Optional<User> optionalUser = userRepository.findByEmail(userName);
 
@@ -48,6 +41,7 @@ public class UserServiceImpl implements UserService {
             return optionalUser.get();
     }
 
+
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
@@ -55,10 +49,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserById(UUID id) throws UserNotFoundException {
-        Optional<User> optionalUser = UserRepository.findById(id);
+        Optional<User> optionalUser = userRepository.findById(id);
 
         if (optionalUser.isEmpty()) {
-            throw new UserNotFoundException(UUID id);
+            throw new UserNotFoundException(id);
         }
         return optionalUser.get();
     }

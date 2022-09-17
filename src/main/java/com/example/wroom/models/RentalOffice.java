@@ -31,12 +31,12 @@ public class RentalOffice implements Serializable {
     private String contactAddress;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    private Employee owner;
+    private User owner;
 
     private String logoUrl;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Branch> branches;
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Branch branches;
 
     private BigDecimal sumOfAmountsForCarRental;
     private boolean isActive;

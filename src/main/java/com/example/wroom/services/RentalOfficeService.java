@@ -1,6 +1,8 @@
 package com.example.wroom.services;
 
+import com.example.wroom.exceptions.BranchNotFoundException;
 import com.example.wroom.exceptions.RentalOfficeNotFoundException;
+import com.example.wroom.models.Branch;
 import com.example.wroom.models.RentalOffice;
 
 import java.util.List;

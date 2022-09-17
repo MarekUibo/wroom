@@ -1,6 +1,8 @@
 package com.example.wroom.services;
 
+import com.example.wroom.exceptions.BranchNotFoundException;
 import com.example.wroom.exceptions.UserNotFoundException;
+import com.example.wroom.models.Branch;
 import com.example.wroom.models.User;
 import java.util.List;
 import java.util.UUID;
@@ -19,12 +21,12 @@ public interface UserService {
     void createUser(User user);
 
     /**
-     * To find user by userName
+     * To find user by email
      *
-     * @param userName userName
+     * @param email email
      * @return User
      */
-    User findUserByUserName(String userName) throws UserNotFoundException;
+    User findUserByEmail(String email) throws UserNotFoundException;
 
 
     /**
@@ -50,12 +52,6 @@ public interface UserService {
      */
     User findUserById(UUID id) throws UserNotFoundException;
 
-    /**
-     * To find an user by its email
-     * @param email Email of the user
-     * @return User
-     */
-    User findUserByEmail(String email) throws UserNotFoundException;
 
     /**
      * To find all users
