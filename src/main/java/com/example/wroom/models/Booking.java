@@ -44,14 +44,14 @@ public class Booking implements Serializable {
     private boolean isActive;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    private Customer customer;
+    private User user;
 
     private BigDecimal additionalPayment;
     private String comments;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    private Employee  rentalEmployee;
+    private User  rentalEmployee;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    private Employee returnEmployee;
+    private User returnEmployee;
 }
