@@ -1,6 +1,5 @@
 package com.example.wroom.configuration;
 
-import com.example.wroom.services.implementations.CustomUserDetails;
 import com.example.wroom.services.implementations.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,8 +48,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         String role = "ROLE_";
         String admin = AUTHORITY_ADMIN.replace(role, "");
-        String manager = AUTHORITY_MANAGER.replace(role, "");
-        String employee = AUTHORITY_EMPLOYEE.replace(role, "");
+        String owner = AUTHORITY_EMPLOYEE_OWNER.replace(role, "");
+        String manager = AUTHORITY_EMPLOYEE_MANAGER.replace(role, "");
+        String employee = AUTHORITY_EMPLOYEE_SALES_PERSON.replace(role, "");
         String customer = AUTHORITY_CUSTOMER.replace(role, "");
 
 

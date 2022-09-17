@@ -13,8 +13,9 @@ public class Constants {
 
     public static class Security {
         public static final String AUTHORITY_ADMIN = "ROLE_ADMIN";
-        public static final String AUTHORITY_MANAGER = "ROLE_MANAGER";
-        public static final String AUTHORITY_EMPLOYEE = "ROLE_EMPLOYEE";
+        public static final String AUTHORITY_EMPLOYEE_OWNER = "ROLE_OWNER";
+        public static final String AUTHORITY_EMPLOYEE_MANAGER = "ROLE_MANAGER";
+        public static final String AUTHORITY_EMPLOYEE_SALES_PERSON = "ROLE_SALES_PERSON";
         public static final String AUTHORITY_CUSTOMER = "ROLE_CUSTOMER";
     }
 }

@@ -27,8 +27,15 @@ public class User extends Auditable<String> implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    private String userName;
+    private String email;
     private String password;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String address;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Branch homeBranch;
 
     @OneToOne(cascade = CascadeType.MERGE)
     private Authority authority;

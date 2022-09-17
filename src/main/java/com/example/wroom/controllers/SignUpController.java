@@ -37,14 +37,14 @@ public class SignUpController {
     }
 
     @PostMapping
-    public String postSignup(User user, RedirectAttributes redirectAttributes) {
+    public String postSignup(User userName, RedirectAttributes redirectAttributes) {
         try {
-            userService.findUserByUserName(user.getUserName());
+            userService.findUserByUserName(userName.getUserName());
             redirectAttributes.addFlashAttribute("message", "User already exists!");
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/signup";
         } catch(UserNotFoundException userNotFoundException) {
-            userService.createUser(user);
+            userService.createUser(userName);
             redirectAttributes.addFlashAttribute("message", "Signup successful!");
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/";

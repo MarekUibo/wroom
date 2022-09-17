@@ -37,13 +37,11 @@ public class DataInit {
 
     @PostConstruct
     public void init() {
-        initUser();
         initAuthority();
         initBranch();
         initCar();
-        initEmployee();
         initRentalOffice();
-
+        initUser();
     }
 
     private void initUser() {
@@ -53,13 +51,13 @@ public class DataInit {
             Authority authority = authorityService.findAuthorityByName(AUTHORITY_ADMIN);
 
             User user = new User();
-            user.setUserName("admin@wroom.com");
+            user.setEmail("admin@wroom.com");
             user.setPassword("123456");
             user.setAuthority(authority);
 
             try {
-                User resultUser = userService.findUserByUserName(user.getUserName());
-                System.out.println("Cannot pre-initialize user:" + resultUser.getUserName());
+                User resultUser = userService.findUserByUserName(user.getEmail());
+                System.out.println("Cannot pre-initialize user:" + resultUser.getEmail());
             } catch (UserNotFoundException e) {
                 userService.createUser(user);
             }
@@ -110,31 +108,6 @@ public class DataInit {
             System.out.println("No branch found. Cannot pre-initialize Car: " + e.getMessage());
         }
     }
-
-    private void initEmployee() {
-        System.out.println("Starting initializing Employee..");
-
-        try {
-            Employee employee = new Employee();
-            employee.setFirstName("John");
-            employee.setLastName("Doe");
-            employee.setEmail("admin@wroom.com");
-            employee.setAddress("address");
-            employee.setPhoneNumber("123456789");
-            employee.setRole(Role.ADMIN);
-            employee.setHomeBranch(branchService.findRandomActiveBranch());
-
-            try {
-                Employee searchEmployee = employeeService.findEmployeeByEmail(employee.getEmail());
-                System.out.println("Cannot pre-initialize Employee: " + searchEmployee);
-            } catch (EmployeeNotFoundException e) {
-                employeeService.createEmployee(employee);
-            }
-        } catch (BranchNotFoundException e) {
-            System.out.println("No branch found. Cannot pre-initialize Employee: " + e.getMessage());
-        }
-    }
-
     private void initRentalOffice() {
         System.out.println("Starting initializing RentalOffice..");
         RentalOffice rentalOffice = new RentalOffice();
@@ -157,12 +130,16 @@ public class DataInit {
         authorityAdmin.setName(AUTHORITY_ADMIN);
         createAuthority(authorityAdmin);
 
+        Authority authorityOwner = new Authority();
+        authorityOwner.setName(AUTHORITY_EMPLOYEE_OWNER);
+        createAuthority(authorityOwner);
+
         Authority authorityManager = new Authority();
-        authorityManager.setName(AUTHORITY_MANAGER);
+        authorityManager.setName(AUTHORITY_EMPLOYEE_MANAGER);
         createAuthority(authorityManager);
 
         Authority authorityEmployee = new Authority();
-        authorityEmployee.setName(AUTHORITY_EMPLOYEE);
+        authorityEmployee.setName(AUTHORITY_EMPLOYEE_SALES_PERSON);
         createAuthority(authorityEmployee);
 
         Authority authorityCustomer = new Authority();
