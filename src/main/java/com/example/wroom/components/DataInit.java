@@ -4,6 +4,7 @@ import com.example.wroom.exceptions.*;
 import com.example.wroom.models.*;
 import com.example.wroom.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
@@ -12,7 +13,7 @@ import static com.example.wroom.utils.Constants.Security.*;
 /**
  * @author Marek Uibo and Kristiina Lindre
  */
-
+@Component
 public class DataInit {
 
     @Autowired
@@ -31,7 +32,7 @@ public class DataInit {
     private AuthorityService authorityService;
 
     @Autowired
-    private SiteUserService siteUserService;
+    private UserService userService;
 
     @PostConstruct
     public void init() {
@@ -54,10 +55,10 @@ public class DataInit {
             user.setAuthority(authority);
 
             try {
-                User resultUser = siteUserService.findUserByUserName(user.getUserName());
+                User resultUser = userService.findUserByUserName(user.getUserName());
                 System.out.println("Cannot pre-initialize user:" + resultUser.getUserName());
             } catch (UserNotFoundException e) {
-                siteUserService.createUser(user);
+                userService.createUser(user);
             }
         } catch (AuthorityNotFoundException e) {
             System.out.println(e.getLocalizedMessage());

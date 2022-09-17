@@ -16,7 +16,7 @@ import java.util.Collections;
  */
 @Data
 @AllArgsConstructor
-public class CarUserDetails implements org.springframework.security.core.userdetails.UserDetails {
+public class CustomUserDetails implements org.springframework.security.core.userdetails.UserDetails {
     private User user;
 
     @Override
