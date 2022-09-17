@@ -29,9 +29,6 @@ public class Employee implements Serializable {
     private String phoneNumber;
     private String address;
 
-    @Enumerated(EnumType.STRING)
-    private EmployeeJobPosition employeeJobPosition; //Employee/Manager
-
     @OneToOne(cascade = CascadeType.MERGE)
     private Branch homeBranch;
 

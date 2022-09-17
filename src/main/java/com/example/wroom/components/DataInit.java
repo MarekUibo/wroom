@@ -118,9 +118,10 @@ public class DataInit {
             Employee employee = new Employee();
             employee.setFirstName("John");
             employee.setLastName("Doe");
+            employee.setEmail("admin@wroom.com");
             employee.setAddress("address");
             employee.setPhoneNumber("123456789");
-            employee.setRole(Role.MANAGER);
+            employee.setRole(Role.ADMIN);
             employee.setHomeBranch(branchService.findRandomActiveBranch());
 
             try {
