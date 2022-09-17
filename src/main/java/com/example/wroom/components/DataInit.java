@@ -151,6 +151,5 @@ public class DataInit {
             authorityService.createAuthority(authority);
         }
     }
-
 }
 
