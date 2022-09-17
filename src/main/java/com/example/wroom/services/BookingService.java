@@ -1,7 +1,6 @@
 package com.example.wroom.services;
 
 import com.example.wroom.exceptions.BookingNotFoundException;
-import com.example.wroom.exceptions.CustomerNotFoundException;
 import com.example.wroom.models.Booking;
 
 import java.util.List;
