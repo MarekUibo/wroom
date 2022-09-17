@@ -52,11 +52,11 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public Branch findBranchByAddress(String address) throws BranchNotFoundException {
-        Optional<Branch> optionalBranch = branchRepository.findByFullAddress(address);
+    public Branch findBranchByFullAddress(String fullAddress) throws BranchNotFoundException {
+        Optional<Branch> optionalBranch = branchRepository.findByFullAddress(fullAddress);
 
         if(optionalBranch.isEmpty()) {
-            throw new BranchNotFoundException(address);
+            throw new BranchNotFoundException(fullAddress);
         }
         return optionalBranch.get();
     }

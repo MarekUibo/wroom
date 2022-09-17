@@ -33,10 +33,10 @@ public interface BranchService {
 
     /**
      * To find a branch by its address
-     * @param address Address of the branch
+     * @param fullAddress fullAddress of the branch
      * @return Branch
      */
-    Branch findBranchByAddress(String address) throws BranchNotFoundException;
+    Branch findBranchByFullAddress(String fullAddress) throws BranchNotFoundException;
 
     /**
      * To find all branches

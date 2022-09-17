@@ -37,12 +37,13 @@ public class DataInit {
 
     @PostConstruct
     public void init() {
+        initUser();
+        initAuthority();
         initBranch();
         initCar();
         initEmployee();
         initRentalOffice();
-        initUser();
-        initAuthority();
+
     }
 
     private void initUser() {
@@ -68,7 +69,7 @@ public class DataInit {
 
     }
     private void initBranch() {
-        System.out.println("Starting initializing Booking..");
+        System.out.println("Starting initializing Branch..");
         Branch branch = new Branch();
         branch.setName("Tallinn autorent");
         branch.setFullAddress("27 Parnu mnt, Tallinn");
@@ -78,8 +79,8 @@ public class DataInit {
 
 
         try {
-            Branch searchBranch = branchService.findBranchById(branch.getId());
-            System.out.println("Cannot pre-initialize Booking: " + searchBranch.getId());
+            Branch searchBranch = branchService.findBranchByFullAddress(branch.getFullAddress());
+            System.out.println("Cannot pre-initialize Booking: " + searchBranch.getFullAddress());
         } catch (BranchNotFoundException e) {
             branchService.createBranch(branch);
         }
@@ -123,7 +124,7 @@ public class DataInit {
             employee.setHomeBranch(branchService.findRandomActiveBranch());
 
             try {
-                Employee searchEmployee = employeeService.findEmployeeById(employee.getId());
+                Employee searchEmployee = employeeService.findEmployeeByEmail(employee.getEmail());
                 System.out.println("Cannot pre-initialize Employee: " + searchEmployee);
             } catch (EmployeeNotFoundException e) {
                 employeeService.createEmployee(employee);
@@ -137,10 +138,12 @@ public class DataInit {
         System.out.println("Starting initializing RentalOffice..");
         RentalOffice rentalOffice = new RentalOffice();
         rentalOffice.setName("Tallinn");
-        rentalOffice.setContactAddress("address");
+        rentalOffice.setInternetDomain("http://www.wroom-rental-car.ee");
+        rentalOffice.setContactAddress("Weizenbergi 12 10150 Tallinn");
+        rentalOffice.setLogoUrl("https://upww.screenrec.com/images/f_GubritL5psP3ITwR0klX2EZxa6j9V4ho.png");
 
         try {
-            RentalOffice searchRentalOffice = rentalOfficeService.findRentalOfficeById(rentalOffice.getId());
+            RentalOffice searchRentalOffice = rentalOfficeService.findRentalOfficeByName(rentalOffice.getName());
             System.out.println("Cannot pre-initialize RentalOffice: " + searchRentalOffice);
         } catch (RentalOfficeNotFoundException e) {
             rentalOfficeService.createRentalOffice(rentalOffice);
