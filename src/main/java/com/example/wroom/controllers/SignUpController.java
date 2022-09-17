@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 /**
  * Controller to handle signup related requests
  *
- * @author Vinod John
+ * @author Jonathan Rigottier & Marek Uibo
  */
 @Controller
 @RequestMapping("/signup")
@@ -39,7 +39,7 @@ public class SignUpController {
     @PostMapping
     public String postSignup(User userName, RedirectAttributes redirectAttributes) {
         try {
-            userService.findUserByUserName(userName.getUserName());
+            userService.findUserByEmail(userName.getEmail());
             redirectAttributes.addFlashAttribute("message", "User already exists!");
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/signup";
