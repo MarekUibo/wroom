@@ -65,6 +65,7 @@ public class DataInit {
         } catch (AuthorityNotFoundException e) {
             System.out.println(e.getLocalizedMessage());
         }
+
     }
     private void initBranch() {
         System.out.println("Starting initializing Booking..");
