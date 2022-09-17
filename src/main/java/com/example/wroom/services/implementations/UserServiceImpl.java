@@ -1,12 +1,10 @@
 package com.example.wroom.services.implementations;
 
-import com.example.wroom.exceptions.RentalOfficeNotFoundException;
 import com.example.wroom.exceptions.UserNotFoundException;
 import com.example.wroom.models.User;
-import com.example.wroom.repository.SiteUserRepository;
-import com.example.wroom.services.SiteUserService;
+import com.example.wroom.repository.UserRepository;
+import com.example.wroom.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +19,10 @@ import java.util.Optional;
  */
 @Service
 @Transactional
-public class SiteUserServiceImpl implements SiteUserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
-    private SiteUserRepository siteUserRepository;
+    private UserRepository userRepository;
 
     @Override
     public void createUser(User user) {
@@ -33,7 +31,7 @@ public class SiteUserServiceImpl implements SiteUserService {
 
     @Override
     public User findUserByUserName(String userName) throws UsernameNotFoundException {
-        Optional<User> optionalUser = siteUserRepository.findUserWithUserName(userName);
+        Optional<User> optionalUser = userRepository.findByUserName(userName);
 
         if(optionalUser.isEmpty()) {
             throw new UsernameNotFoundException(userName);

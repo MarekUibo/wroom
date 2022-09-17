@@ -13,7 +13,6 @@ import java.util.UUID;
  * @author Marek Uibo & Jonathan Rigottier
  */
 @Repository
-public interface SiteUserRepository extends JpaRepository<User, UUID> {
-
-    Optional<User> findUserWithUserName(String userName);
+public interface UserRepository extends JpaRepository<User, UUID> {
+    Optional<User> findByUserName(String userName);
 }
