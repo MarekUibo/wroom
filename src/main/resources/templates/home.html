@@ -13,10 +13,11 @@
         <div class="p-5 mb-4 bg-light rounded-3">
             <div class="container-fluid py-5">
                 <h1 class="display-5 fw-bold">Welcome to Wroom car rental!</h1>
-                <p class="col-md-8 fs-4"><span th:text="${message}"></span></p>
-                <img src="https://upww.screenrec.com/images/f_GubritL5psP3ITwR0klX2EZxa6j9V4ho.png" alt="logo" style="float: right;width:240px;height:120px">
+
                 <div sec:authorize="isAuthenticated()">
-                    <p class="col-md-8 fs-4">Hello, <span th:text="${#authentication.name}"></span>!</p>
+                    <p class="col-md-8 fs-4">Hello!</p>
+                </div>
+                <img src="https://upww.screenrec.com/images/f_GubritL5psP3ITwR0klX2EZxa6j9V4ho.png" alt="logo" style="float:none;width:240px;height:120px">
                 </div>
 
                 <div th:replace="fragments/alert-box"></div>

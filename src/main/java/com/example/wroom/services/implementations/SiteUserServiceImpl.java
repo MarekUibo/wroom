@@ -32,11 +32,11 @@ public class SiteUserServiceImpl implements SiteUserService {
     }
 
     @Override
-    public User findUserByUserName(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUser = siteUserRepository.findUserWithUserName(username);
+    public User findUserByUserName(String userName) throws UsernameNotFoundException {
+        Optional<User> optionalUser = siteUserRepository.findUserWithUserName(userName);
 
         if(optionalUser.isEmpty()) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(userName);
         }
         return optionalUser.get();
 
