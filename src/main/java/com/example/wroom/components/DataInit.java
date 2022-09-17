@@ -34,16 +34,18 @@ public class DataInit {
     @Autowired
     private UserService userService;
 
+
     @PostConstruct
     public void init() {
         initBranch();
         initCar();
         initEmployee();
         initRentalOffice();
-        initSiteUser();
+        initUser();
+        initAuthorityData();
     }
 
-    private void initSiteUser() {
+    private void initUser() {
         System.out.println("Starting initializing User..");
 
         try {

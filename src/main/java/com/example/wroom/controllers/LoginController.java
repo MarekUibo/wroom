@@ -23,7 +23,8 @@ public class LoginController {
 
 
     @GetMapping
-    public String showLoginPage(@ModelAttribute("login") Login login, @ModelAttribute("message") String message,
+    public String showLoginPage(@ModelAttribute("login") Login login,
+                                @ModelAttribute("message") String message,
                                 @ModelAttribute("messageType") String messageType) {
         return "auth/login";
     }
