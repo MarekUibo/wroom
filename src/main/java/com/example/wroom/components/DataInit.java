@@ -42,7 +42,7 @@ public class DataInit {
         initEmployee();
         initRentalOffice();
         initUser();
-        initAuthorityData();
+        initAuthority();
     }
 
     private void initUser() {
@@ -146,7 +146,7 @@ public class DataInit {
         }
 
     }
-    private void initAuthorityData() {
+    private void initAuthority() {
         System.out.println("Starting initializing Authority..");
         Authority authorityAdmin = new Authority();
         authorityAdmin.setName(AUTHORITY_ADMIN);
