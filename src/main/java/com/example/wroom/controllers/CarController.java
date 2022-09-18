@@ -54,6 +54,7 @@ public class CarController {
                                     Model model) {
         model.addAttribute("carStatus", CarStatus.values());
         model.addAttribute("carBodyType", CarBodyType.values());
+        model.addAttribute("homeBranch", branchService.findAllBranches());
         return "car/create-car";
     }
     @PostMapping

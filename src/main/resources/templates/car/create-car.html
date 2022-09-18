@@ -53,6 +53,13 @@
                         </select>
                     </div>
                     <div class="form-group mb-3">
+                        <label >Branch car's belong to :</label>
+                        <select class="form-select" aria-label="homeBranch" th:field="*{homeBranch}">
+                            <option th:each="branch: ${homeBranch}" th:text="${branch.name}"
+                                    th:value="${branch.id}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
                         <label for="amount">Price of rental per day</label>
                         <input class="form-control" id="amount" th:field="*{amount}" type="text" required>
                     </div>
