@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -9,46 +8,13 @@
 </head>
 <body>
 <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Wroom car rental</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="branch/list-of-branches.html">Branch</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="car/list-of-cars.html">List of cars</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Booking</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="car/add-person.html">Sign up</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Log in </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+    <div th:replace="fragments/navbar"></div>
     <div class="container py-4">
         <div class="p-5 mb-4 bg-light rounded-3">
             <div class="container-fluid py-5">
-                <h1 class="display-5 fw-bold">Sign up</h1>
-                <div class="alert alert-danger" role="alert" th:if="${messageType} == 'error'">
-                    <span th:text="${message}"></span>
-                </div>
+                <h1 class="display-5 fw-bold">Signup</h1>
 
-                <form action="#" method="post" th:action="@{/carrental}" th:object="${car}">
+                <form action="#" method="post" th:action="@{/user/add-person}" th:object="${/user/add-person}">
                     <div class="form-group mb-3">
                         <label for="firstName">First name</label>
                         <input class="form-control" id="firstName" th:field="*{firstName}" type="text" required>

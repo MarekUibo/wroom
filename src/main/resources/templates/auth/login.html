@@ -47,7 +47,7 @@
           <span th:text="${message}"></span>
         </div>
 
-        <form action="#" method="post" th:action="@{/signup}" th:object="${signup}">
+        <form action="#" method="post" th:action="@{/add-person}" th:object="${add-person}">
           <div class="form-group mb-3">
             <label for="userName">Username</label>
             <input class="form-control" id="userName" th:field="*{userName}" type="text" required>
@@ -76,7 +76,7 @@
             <label for="address">Address</label>
             <input class="form-control" id="address" th:field="*{address}" type="text" required>
           </div>
-          <a class="btn btn-light mb-3" type="button" href="/car">Cancel</a>
+          <a class="btn btn-light mb-3" type="button" href="/user">Cancel</a>
           <button class="btn btn-outline-primary mb-3" type="submit">Create</button>
         </form>
       </div>
