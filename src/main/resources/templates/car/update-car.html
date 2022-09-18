@@ -16,6 +16,7 @@
                 <form action="#" method="post" th:action="@{/car/update}" th:object="${car}">
                     <div class="form-group mb-3">
                         <label for="registrationNumber">Car registration number</label>
+
                         <input class="form-control" id="carRegistrationNumber" th:field="*{registrationNumber}"
                                type="text" required>
                     </div>
