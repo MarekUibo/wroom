@@ -56,6 +56,18 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
+                    <label for="status" class="col-sm-2 col-form-label fw-bold">Status</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="status" th:value="${car.status}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="amount" class="col-sm-2 col-form-label fw-bold">Rent price per day in €</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="amount" th:value="${car.amount}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
                     <label for="Active" class="col-sm-2 col-form-label fw-bold">Active</label>
                     <div class="col-sm-10">
                         <input type="text" readonly class="form-control-plaintext" id="active" th:value="${car.active} ? 'Yes' : 'No'">

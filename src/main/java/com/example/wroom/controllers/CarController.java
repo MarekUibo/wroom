@@ -2,6 +2,7 @@ package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.CarNotFoundException;
 import com.example.wroom.models.Car;
+import com.example.wroom.models.CarBodyType;
 import com.example.wroom.models.CarStatus;
 import com.example.wroom.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,10 @@ public class CarController {
     @GetMapping ("/create")
     public String showCreateCarPage(@ModelAttribute("car") Car car,
                                     @ModelAttribute("message") String message,
-                                    @ModelAttribute("messageType") String messageType) {
+                                    @ModelAttribute("messageType") String messageType,
+                                    Model model) {
+        model.addAttribute("carStatus", CarStatus.values());
+        model.addAttribute("carBodyType", CarBodyType.values());
         return "car/create-car";
     }
     @PostMapping
@@ -51,15 +55,15 @@ public class CarController {
         try {
             Car searchCar = carService.findCarByRegistrationNumber(car.getRegistrationNumber());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Car(registration number=%s) already exists!", car.getRegistrationNumber()));
+                    String.format("Car with registration number (%s) already exists!", searchCar.getRegistrationNumber()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/car/create";
         } catch (CarNotFoundException e) {
             carService.createCar(car);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Car(id=%d) created successfully!", car.getRegistrationNumber()));
+                    String.format("Car with registration number (%s) created successfully!", car.getRegistrationNumber()));
             redirectAttributes.addFlashAttribute("messageType", "success");
-            return "redirect:/car/create";
+            return "redirect:/car";
         }
     }
 
@@ -70,6 +74,7 @@ public class CarController {
             try {
                 model.addAttribute("car", carService.findCarById(id));
                 model.addAttribute("carStatus", CarStatus.values());
+                model.addAttribute("carBodyType", CarBodyType.values());
             } catch (CarNotFoundException e) {
                 return handleCarNotFoundExceptionById(id, redirectAttributes);
             }
@@ -83,7 +88,7 @@ public class CarController {
             try {
                 carService.updateCar(car);
                 redirectAttributes.addFlashAttribute("message",
-                        String.format("Car(id=%d) updated successfully!", car.getId()));
+                        String.format("Car(id=%s) updated successfully!", car.getId()));
                 redirectAttributes.addFlashAttribute("messageType", "success");
                 return "redirect:/car";
             } catch (CarNotFoundException e) {

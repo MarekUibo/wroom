@@ -28,7 +28,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public void createCar(Car car) {
         car.setActive(true);
-        carRepository.save(car);
+        carRepository.saveAndFlush(car);
     }
 
     @Override
