@@ -2,6 +2,7 @@ package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.CarNotFoundException;
 import com.example.wroom.models.Car;
+import com.example.wroom.models.CarStatus;
 import com.example.wroom.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,18 @@ public class CarController {
         model.addAttribute("cars", carService.findAllCars());
         return "car/list-of-cars";
     }
+
+    @GetMapping("/{id}")
+    public String showCarViewPage(@PathVariable UUID id, Model model,
+                                     RedirectAttributes redirectAttributes) {
+        try {
+            model.addAttribute("car", carService.findCarById(id));
+            return "car/view-car";
+        } catch (CarNotFoundException e) {
+            return handleCarNotFoundExceptionById(id, redirectAttributes);
+        }
+    }
+
     @GetMapping ("/create")
     public String showCreateCarPage(@ModelAttribute("car") Car car,
                                     @ModelAttribute("message") String message,
@@ -49,18 +62,32 @@ public class CarController {
             return "redirect:/car/create";
         }
     }
+
+    @GetMapping("/update/{id}")
+    public String showUpdateCarPage(@PathVariable UUID id, Model model, RedirectAttributes redirectAttributes,
+                                       @RequestParam(value = "car", required = false) Car car) {
+        if (car == null) {
+            try {
+                model.addAttribute("car", carService.findCarById(id));
+                model.addAttribute("carStatus", CarStatus.values());
+            } catch (CarNotFoundException e) {
+                return handleCarNotFoundExceptionById(id, redirectAttributes);
+            }
+        }
+
+        return "car/update-car";
+    }
+
     @PostMapping("/update")
     public String updateCar(Car car, RedirectAttributes redirectAttributes) {
             try {
                 carService.updateCar(car);
                 redirectAttributes.addFlashAttribute("message",
-                        String.format("Car(id=%d) updated successfully!", car.getRegistrationNumber()));
+                        String.format("Car(id=%d) updated successfully!", car.getId()));
                 redirectAttributes.addFlashAttribute("messageType", "success");
                 return "redirect:/car";
             } catch (CarNotFoundException e) {
-                redirectAttributes.addFlashAttribute("message", e.getMessage());
-                redirectAttributes.addFlashAttribute("messageType", "error");
-                return "redirect:/car";
+                return handleCarNotFoundExceptionById(car.getId(), redirectAttributes);
             }
     }
 
