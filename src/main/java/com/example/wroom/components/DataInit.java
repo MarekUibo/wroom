@@ -58,8 +58,8 @@ public class DataInit {
             user.setAuthority(authority);
 
             try {
-                User resultUser = userService.findUserByEmail(user.getEmail());
-                System.out.println("Cannot pre-initialize user:" + resultUser.getEmail());
+                User resultUser = userService.findUserByUserName(user.getUserName());
+                System.out.println("Cannot pre-initialize user:" + resultUser.getUserName());
             } catch (UserNotFoundException e) {
                 userService.createUser(user);
             }

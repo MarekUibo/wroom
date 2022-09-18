@@ -21,22 +21,13 @@ public interface UserService {
     void createUser(User user);
 
     /**
-     * To find user by email
+     * To find user by username
      *
-     * @param email email
+     * @param userName username
      * @return User
      */
-    User findUserByEmail(String email) throws UserNotFoundException;
+    User findUserByUserName(String userName) throws UserNotFoundException;
 
-
-    /**
-     * To find user by username and password
-     *
-     * @param userName userName
-     * @param password password
-     * @return User
-     */
-   User findUserByUserNameAndPassword(String userName, String password) throws UserNotFoundException;
 
     /**
      * To fina all users
@@ -47,6 +38,7 @@ public interface UserService {
 
     /**
      * To find an user by its ID
+     *
      * @param id id of the user
      * @return User
      */
@@ -55,7 +47,7 @@ public interface UserService {
 
     /**
      * To find all users
-     * @return List of users
+     *
      */
 
     void updateUser(User employee) throws UserNotFoundException;
@@ -68,7 +60,8 @@ public interface UserService {
 
     /**
      * To restore an user by its ID
-     * @param id
+     *
+     * @param id id
      */
     void restoreUserById(UUID id) throws UserNotFoundException;
 

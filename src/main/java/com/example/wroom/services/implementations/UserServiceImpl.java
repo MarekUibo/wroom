@@ -5,7 +5,7 @@ import com.example.wroom.models.User;
 import com.example.wroom.repository.UserRepository;
 import com.example.wroom.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,22 +25,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public void createUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);
         userRepository.save(user);
     }
-
-    @Override
-    public User findUserByUserNameAndPassword(String userName, String password) throws UserNotFoundException {
-            Optional<User> optionalUser = userRepository.findByEmail(userName);
-
-            if (optionalUser.isEmpty()) {
-                throw new UsernameNotFoundException(userName);
-            }
-            return optionalUser.get();
-    }
-
 
     @Override
     public List<User> findAllUsers() {
@@ -58,11 +51,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByEmail(String email) throws UserNotFoundException {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+    public User findUserByUserName(String userName) throws UserNotFoundException {
+        Optional<User> optionalUser = userRepository.findByUserName(userName);
 
         if (optionalUser.isEmpty()) {
-            throw new UserNotFoundException(email);
+            throw new UserNotFoundException(userName);
         }
         return optionalUser.get();
     }
@@ -83,8 +76,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void restoreUserById(UUID id) throws UserNotFoundException {
-            User employee = findUserById(id);
-            employee.setActive(true);
-            userRepository.saveAndFlush(employee);
+        User employee = findUserById(id);
+        employee.setActive(true);
+        userRepository.saveAndFlush(employee);
     }
 }

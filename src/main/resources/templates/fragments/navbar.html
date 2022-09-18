@@ -20,10 +20,7 @@
                     <a class="nav-link"  href="/booking">Manage booking</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  href="">Sign up</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"  href="#" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE)">Employee</a>
+                    <a class="nav-link"  href="#" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'OWNER','SALES_PERSON','CUSTOMER')">User</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"  href="#">Log in </a>

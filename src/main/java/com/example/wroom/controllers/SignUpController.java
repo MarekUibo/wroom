@@ -39,7 +39,7 @@ public class SignUpController {
     @PostMapping
     public String postSignup(User userName, RedirectAttributes redirectAttributes) {
         try {
-            userService.findUserByEmail(userName.getEmail());
+            userService.findUserByUserName(userName.getUserName());
             redirectAttributes.addFlashAttribute("message", "User already exists!");
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/signup";

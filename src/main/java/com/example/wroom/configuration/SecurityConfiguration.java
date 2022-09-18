@@ -61,8 +61,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .hasRole(admin)
                 .antMatchers("/car/**")
                 .hasAnyRole(manager, employee, admin)
-                .antMatchers("//**")
-                .hasAnyRole(manager, admin)
                 .and()
                 .httpBasic()
                 .and()
