@@ -62,6 +62,12 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
+                    <label for="homeBranch" class="col-sm-2 col-form-label fw-bold">Branch of the car</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="homeBranch" th:value="${car.homeBranch.name}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
                     <label for="amount" class="col-sm-2 col-form-label fw-bold">Rent price per day in €</label>
                     <div class="col-sm-10">
                         <input type="text" readonly class="form-control-plaintext" id="amount" th:value="${car.amount}">

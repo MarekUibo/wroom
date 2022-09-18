@@ -1,9 +1,12 @@
 package com.example.wroom.controllers;
 
+import com.example.wroom.exceptions.BranchNotFoundException;
 import com.example.wroom.exceptions.CarNotFoundException;
+import com.example.wroom.models.Branch;
 import com.example.wroom.models.Car;
 import com.example.wroom.models.CarBodyType;
 import com.example.wroom.models.CarStatus;
+import com.example.wroom.services.BranchService;
 import com.example.wroom.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,9 @@ public class CarController {
 
     @Autowired
     private CarService carService;
+
+    @Autowired
+    private BranchService branchService;
 
     @GetMapping
     public String showCarListPage(Model model, @ModelAttribute("message") String message,
@@ -75,6 +81,7 @@ public class CarController {
                 model.addAttribute("car", carService.findCarById(id));
                 model.addAttribute("carStatus", CarStatus.values());
                 model.addAttribute("carBodyType", CarBodyType.values());
+                model.addAttribute("homeBranch", branchService.findAllBranches());
             } catch (CarNotFoundException e) {
                 return handleCarNotFoundExceptionById(id, redirectAttributes);
             }
