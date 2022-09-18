@@ -31,5 +31,5 @@ public class Branch implements Serializable {
     private String phoneNumber;
     private String email;
     private String city;
-    private Boolean isActive;
+    private boolean isActive;
 }
