@@ -17,7 +17,7 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
  * @author:Marek Uibo
  */
 @Controller
-@RequestMapping("/booking")
+@RequestMapping("/booking/list-booking")
 public class BookingController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class BookingController {
         model.addAttribute("bookings", bookingService.findAllBookings());
         return "booking/list-booking";
     }
-    @GetMapping ("/create")
+    @GetMapping ("booking/create-booking")
     public String showCreateBookingPage(@ModelAttribute("booking")Booking booking,
                                         @ModelAttribute("message") String message,
                                         @ModelAttribute("messageType") String messageType){
@@ -42,17 +42,17 @@ public class BookingController {
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) already exists!", booking.getId()));
             redirectAttributes.addFlashAttribute("messageType", "error");
-            return "redirect:/booking/create";
+            return "redirect:/booking/create-booking";
         } catch (BookingNotFoundException e) {
             bookingService.createBooking(booking);
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) created successfully!", booking.getId()));
             redirectAttributes.addFlashAttribute("messageType", "success");
-            return "redirect:/booking";
+            return "redirect:/booking/list-booking";
         }
     }
 
-    @GetMapping("/update")
+    @GetMapping("/update-booking")
     public String updateBooking(Booking booking, RedirectAttributes redirectAttributes) {
             try {
                bookingService.updateBooking(booking);
@@ -61,30 +61,30 @@ public class BookingController {
             } catch (BookingNotFoundException e) {
                 redirectAttributes.addFlashAttribute("message", e.getMessage());
                 redirectAttributes.addFlashAttribute("messageType", "error");
-                return "redirect:/booking";
+                return "redirect:/booking/list-booking";
     }
         return null;
     }
-    @GetMapping("/delete")
+    @GetMapping("/delete-booking")
     public String deleteBooking(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
             bookingService.deleteBookingById(id);
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) deleted successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
-            return "redirect:/booking";
+            return "redirect:/booking/list-booking";
         } catch (BookingNotFoundException e) {
            return handleBookingNotFoundExceptionById(id, redirectAttributes);
         }
     }
-    @GetMapping("/restore")
+    @GetMapping("/restore-booking")
     public String restoreBooking(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
             bookingService.restoreBookingById(id);
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) restored successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
-            return "redirect:/booking";
+            return "redirect:/booking/list-booking";
         } catch (BookingNotFoundException e) {
             return handleBookingNotFoundExceptionById(id, redirectAttributes);
         }
@@ -94,7 +94,7 @@ public class BookingController {
        redirectAttributes.addFlashAttribute("message",
                String.format("Booking(%s) not found!", id));
        redirectAttributes.addFlashAttribute("messageType", "error");
-       return "redirect:/booking";
+       return "redirect:/booking/list-booking";
     }
 
 
