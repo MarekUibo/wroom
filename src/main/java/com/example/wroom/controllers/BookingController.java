@@ -17,7 +17,7 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
  * @author:Marek Uibo
  */
 @Controller
-@RequestMapping("/booking/list-booking")
+@RequestMapping("/booking")
 public class BookingController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class BookingController {
         model.addAttribute("bookings", bookingService.findAllBookings());
         return "booking/list-booking";
     }
-    @GetMapping ("booking/create-booking")
+    @GetMapping ("/create")
     public String showCreateBookingPage(@ModelAttribute("booking")Booking booking,
                                         @ModelAttribute("message") String message,
                                         @ModelAttribute("messageType") String messageType){
@@ -52,7 +52,7 @@ public class BookingController {
         }
     }
 
-    @GetMapping("/update-booking")
+    @GetMapping("/update")
     public String updateBooking(Booking booking, RedirectAttributes redirectAttributes) {
             try {
                bookingService.updateBooking(booking);
@@ -65,7 +65,7 @@ public class BookingController {
     }
         return null;
     }
-    @GetMapping("/delete-booking")
+    @GetMapping("/delete/{id}")
     public String deleteBooking(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
             bookingService.deleteBookingById(id);
@@ -77,7 +77,7 @@ public class BookingController {
            return handleBookingNotFoundExceptionById(id, redirectAttributes);
         }
     }
-    @GetMapping("/restore-booking")
+    @GetMapping("/restore/{id}")
     public String restoreBooking(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
             bookingService.restoreBookingById(id);
