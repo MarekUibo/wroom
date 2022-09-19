@@ -4,12 +4,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
+import java.util.Calendar;
 
 /**
  * @author Marek Uibo
@@ -26,7 +29,16 @@ public class Booking implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
+    private Calendar rightNow = Calendar.getInstance();
     private LocalDateTime dateOfBooking;
+
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date dateOut;
+    private String timeOut;
+
+    @DateTimeFormat (pattern = "dd-MM-yyyy")
+    private Date dateIn;
+    private String timeIn;
 
     @OneToOne(cascade = CascadeType.MERGE)
     private Car car;
@@ -42,6 +54,9 @@ public class Booking implements Serializable {
 
     @OneToOne(cascade = CascadeType.MERGE)
     private Branch returnBranch;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Branch homeBranch;
 
     private BigDecimal amount;
     private boolean isActive;
