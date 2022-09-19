@@ -31,6 +31,9 @@ public class Booking implements Serializable {
     @OneToOne(cascade = CascadeType.MERGE)
     private Car car;
 
+    private String userName;
+    private String registrationNumber;
+
     private LocalDateTime dateFrom;
     private LocalDateTime dateTo;
 
@@ -54,4 +57,7 @@ public class Booking implements Serializable {
 
     @OneToOne(cascade = CascadeType.MERGE)
     private User returnEmployee;
+
+    @Enumerated(EnumType.STRING)
+    private CarStatus status;
 }
