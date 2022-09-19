@@ -16,51 +16,61 @@
 
                 <form action="#" method="post" th:action="@{/booking/update}" th:object="${booking}">
                     <div class="form-group mb-3">
-                        <label for="customer">Customer</label>
-                        <input class="form-control" id="customer" th:field="*{customer}" type="text" required>
+                        <label for="username">Username</label>
+                        <input class="form-control" id="username" th:field="*{userName}" type="text" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="registrationNumber">Car registration number</label>
-                        <input class="form-control" id="registrationNumber" th:field="*{registrationNumber}" type="text" required>
+                        <input class="form-control" id="registrationNumber" th:field="*{registrationNumber}"
+                               type="text" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="dateOfBooking">Date of booking</label>
-                        <input class="form-control" id="dateOfBooking" th:field="*{dateOfBooking}" type="text" required>
+                        <input class="form-control" id="dateOfBooking" th:field="*{dateOfBooking}"
+                               type="text" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="dateFrom">Date from</label>
-                        <input class="form-control" id="dateFrom" th:field="*{dateFrom}" type="text" required>
+                        <input class="form-control" id="dateFrom" th:field="*{dateFrom}"
+                               type="text" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="dateTo">Date to</label>
-                        <input class="form-control" id="dateTo" th:field="*{dateTo}" type="text" required>
+                        <input class="form-control" id="dateTo" th:field="*{dateTo}"
+                               type="text" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="rentalBranch">Rental branch</label>
-                        <input class="form-control" id="rentalBranch" th:field="*{rentalBranch}" type="text" required>
+                        <input class="form-control" id="rentalBranch" th:field="*{rentalBranch}"
+                               type="text" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="returnBranch">Return branch</label>
-                        <input class="form-control" id="returnBranch" th:field="*{returnBranch}" type="text" required>
+                        <input class="form-control" id="returnBranch" th:field="*{returnBranch}"
+                               type="text" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="amount">Price for rental</label>
-                        <input class="form-control" id="amount" th:field="*{amount}" type="text" required>
+                        <input class="form-control" id="amount" th:field="*{amount}"
+                               type="text" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="status">Status of car</label>
-                        <select class="form-control" id="status" th:field="*{status}" type="text" required>
+                        <select class="form-control" id="status" th:field="*{status}"
+                                type="text" required>
                             <option th:value="'Available'" th:text="Available"></option>
                             <option th:value="'Unavailable'" th:text="Unavailable"></option>
                         </select>
                     </div>
                     <div class="form-group mb-3">
                         <label for="additionalPayment">Additional payment</label>
-                        <input class="form-control" id="additionalPayment" th:field="*{additionalPayment}" type="text" required>
+                        <input class="form-control" id="additionalPayment" th:field="*{additionalPayment}"
+                               type="text" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="comments">Comments</label>
-                        <input class="form-control" id="comments" th:field="*{comments}" type="text" required>
+                        <input class="form-control" id="comments" th:field="*{comments}"
+                               type="text" required>
                     </div>
                     <a class="btn btn-light mb-3" type="button" href="/booking">Cancel</a>
                     <button class="btn btn-outline-primary mb-3" type="submit">Update</button>
