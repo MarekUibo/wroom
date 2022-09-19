@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View branch</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid">
+    <div th:replace="fragments/navbar"></div>
+    <div class="container py-4">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Branch info</h1>
+                <div class="mb-3 row">
+                    <label for="name" class="col-sm-2 col-form-label fw-bold">Branch name</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="name" th:value="${branch.name}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="fullAddress" class="col-sm-2 col-form-label fw-bold">Full Address</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="fullAddress" th:value="${branch.fullAddress}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="phoneNumber" class="col-sm-2 col-form-label fw-bold">Phone number</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="phoneNumber" th:value="${branch.phoneNumber}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="email" class="col-sm-2 col-form-label fw-bold">Email</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="email" th:value="${branch.email}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="city" class="col-sm-2 col-form-label fw-bold">City</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="city" th:value="${branch.city}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="active" class="col-sm-2 col-form-label fw-bold">Active</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="active" th:value="${branch.active} ? 'Yes' : 'No'">
+                    </div>
+                </div>
+                <a class="btn btn-outline-info mb-3" type="button" href="/branch">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/script-fragment"></div>
+</body>
+</html>

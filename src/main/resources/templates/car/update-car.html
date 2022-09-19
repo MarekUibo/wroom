@@ -52,7 +52,7 @@
                         </select>
                     </div>
                     <div class="form-group mb-3">
-                        <label >Branch car's belong to :</label>
+                        <label >Branch of the car :</label>
                         <select class="form-select" aria-label="homeBranch" th:field="*{homeBranch}">
                             <option th:each="branch: ${homeBranch}" th:text="${branch.name}"
                                     th:value="${branch.id}"></option>

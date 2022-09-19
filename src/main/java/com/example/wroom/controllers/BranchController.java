@@ -78,10 +78,10 @@ public class BranchController {
             }
         }
 
-        return "car/update-car";
+        return "branch/update-branch";
     }
 
-    @GetMapping("/update")
+    @PostMapping("/update")
     public String updateBranch(Branch branch, RedirectAttributes redirectAttributes) {
         try {
             branchService.updateBranch(branch);
