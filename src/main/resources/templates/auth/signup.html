@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Signup</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid">
+  <div th:replace="fragments/navbar"></div>
+  <div class="container py-4">
+    <div class="p-5 mb-4 bg-light rounded-3">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Signup</h1>
+        <div class="alert alert-danger" role="alert" th:if="${messageType} == 'error'">
+          <span th:text="${message}"></span>
+        </div>
+        <div class="alert alert-danger" role="alert" th:if="${authorities.size()} == 0">
+          <span>Signup unavailable!</span>
+        </div>
+
+        <form action="#" method="post" th:action="@{/signup}" th:object="${user}">
+          <div class="form-group mb-3">
+            <label for="username">Username</label>
+            <input class="form-control" id="username" th:field="*{userName}" type="text" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="password">Password</label>
+            <input class="form-control" id="password" th:field="*{password}" type="password" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="email">Email</label>
+            <input class="form-control" id="email" th:field="*{email}" type="text" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="firstName">Firstname</label>
+            <input class="form-control" id="firstName" th:field="*{firstName}" type="text" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="lastName">Lastname</label>
+            <input class="form-control" id="lastName" th:field="*{lastName}" type="text" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="phoneNumber">PhoneNumber</label>
+            <input class="form-control" id="phoneNumber" th:field="*{phoneNumber}" type="text" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="address">Address</label>
+            <input class="form-control" id="address" th:field="*{address}" type="text" required>
+          </div>
+          <div class="form-group mb-3">
+            <select class="form-select" aria-label="authorities" th:field="*{authority.id}">
+              <option th:each="authority: ${authorities}" th:text="${authority.name.replace('_', ' ')}"
+                      th:value="${authority.id}"></option>
+            </select>
+          </div>
+          <a class="btn btn-light mb-3" type="button" href="/">Cancel</a>
+          <button class="btn btn-outline-primary mb-3" type="submit">Signup</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="fragments/script-fragment"></div>
+</body>
+</html>

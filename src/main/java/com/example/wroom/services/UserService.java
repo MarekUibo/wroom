@@ -28,6 +28,14 @@ public interface UserService {
      */
     User findUserByUserName(String userName) throws UserNotFoundException;
 
+    /**
+     * To find user by username and password
+     *
+     * @param userName userName
+     * @param password password
+     * @return Optional of User
+     */
+    User findUserByUserNameAndPassword(String userName, String password) throws UserNotFoundException;
 
     /**
      * To fina all users

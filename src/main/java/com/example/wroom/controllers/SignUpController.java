@@ -1,6 +1,7 @@
 package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.UserNotFoundException;
+import com.example.wroom.models.Authority;
 import com.example.wroom.models.User;
 import com.example.wroom.services.AuthorityService;
 import com.example.wroom.services.UserService;
@@ -33,18 +34,21 @@ public class SignUpController {
     public String showSignupPage(@ModelAttribute("user") User user, @ModelAttribute("message") String message,
                                  @ModelAttribute("messageType") String messageType, Model model) {
         model.addAttribute("authorities", authorityService.findAllAuthorities());
+        Authority client = new Authority();
+        client.setName("ROLE_CUSTOMER");
+        user.setAuthority(client);
         return "auth/signup";
     }
 
     @PostMapping
-    public String postSignup(User userName, RedirectAttributes redirectAttributes) {
+    public String postSignup(User user, RedirectAttributes redirectAttributes) {
         try {
-            userService.findUserByUserName(userName.getUserName());
+            userService.findUserByUserName(user.getUserName());
             redirectAttributes.addFlashAttribute("message", "User already exists!");
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/signup";
         } catch(UserNotFoundException userNotFoundException) {
-            userService.createUser(userName);
+            userService.createUser(user);
             redirectAttributes.addFlashAttribute("message", "Signup successful!");
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/";

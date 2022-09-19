@@ -61,6 +61,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserByUserNameAndPassword(String userName, String password) throws UserNotFoundException {
+        Optional<User> optionalUser = userRepository.findByUserNameAndPassword (userName, password);
+
+        if(optionalUser.isEmpty()) {
+            throw new UserNotFoundException(userName, password);
+        }
+        return optionalUser.get();
+    }
+
+    @Override
     public void updateUser(User user) throws UserNotFoundException {
         if (findUserById(user.getId()) != null) {
             userRepository.saveAndFlush(user);

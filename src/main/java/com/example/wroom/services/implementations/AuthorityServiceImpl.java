@@ -42,6 +42,11 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     @Override
+    public void setCustomerAuthority(Authority authority) {
+        authority.setName("AUTHORITY_CUSTOMER");
+    }
+
+    @Override
     public List<Authority> findAllAuthorities() {
         return authorityRepository.findAll();
     }
