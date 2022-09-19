@@ -2,7 +2,9 @@ package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.BookingNotFoundException;
 import com.example.wroom.models.Booking;
+import com.example.wroom.models.CarStatus;
 import com.example.wroom.services.BookingService;
+import com.example.wroom.services.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,9 @@ public class BookingController {
     @Autowired
     public BookingService bookingService;
 
+    @Autowired
+    private BranchService branchService;
+
     @GetMapping
     public String showBookingListPage(Model model, @ModelAttribute("message") String message,
                                       @ModelAttribute("messageType") String messageType) {
@@ -32,7 +37,11 @@ public class BookingController {
     @GetMapping ("/create")
     public String showCreateBookingPage(@ModelAttribute("booking")Booking booking,
                                         @ModelAttribute("message") String message,
-                                        @ModelAttribute("messageType") String messageType){
+                                        @ModelAttribute("messageType") String messageType,
+                                        Model model) {
+        model.addAttribute("carStatus", CarStatus.values());
+        model.addAttribute("homeBranch", branchService.findAllBranches());
+
         return "booking/create-booking";
     }
     @PostMapping
@@ -40,7 +49,7 @@ public class BookingController {
         try {
             Booking searchBooking = bookingService.findBookingById(booking.getId());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Booking(%s) already exists!", booking.getId()));
+                    String.format("Booking(%s) already exists!", searchBooking.getId()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/booking/create-booking";
         } catch (BookingNotFoundException e) {

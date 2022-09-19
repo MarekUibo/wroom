@@ -15,7 +15,7 @@
                 <h1 class="display-5 fw-bold">Create booking</h1>
                 <div th:replace="fragments/alert-box"></div>
 
-                <form action="#" method="post" th:action="@{/booking/create}" th:object="${booking}">
+                <form action="#" method="post" th:action="@{/booking}" th:object="${booking}">
                     <div class="form-group mb-3">
                         <label for="username">Username</label>
                         <input class="form-control" id="username" th:field="*{userName}" type="text" required>
@@ -26,23 +26,33 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="dateOfBooking">Date of booking</label>
-                        <input class="form-control" id="dateOfBooking" th:field="*{dateOfBooking}" type="text" required>
-                    </div>
+                        <div class="col-sm-6">
+                            <input type="date" class="form-control" id="dateOfBooking" name="dateFrom" placeholder="Date From" required>
+                        </div>
+
                     <div class="form-group mb-3">
                         <label for="dateFrom">Date from</label>
-                        <input class="form-control" id="dateFrom" th:field="*{dateFrom}" type="text" required>
-                    </div>
+                        <div class="col-sm-6">
+                            <input type="date" class="form-control" id="dateFrom" name="dateFrom" placeholder="Date From" required>
+                        </div>
                     <div class="form-group mb-3">
                         <label for="dateTo">Date to</label>
-                        <input class="form-control" id="dateTo" th:field="*{dateTo}" type="text" required>
+                        <div class="col-sm-6">
+                            <input type="date" class="form-control" id="dateTo" name="dateFrom" placeholder="Date From" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="rentalBranch">Rental branch</label>
-                        <input class="form-control" id="rentalBranch" th:field="*{rentalBranch}" type="text" required>
+                        <label >The branch where you rent the car :</label>
+                        <select class="form-select" aria-label="homeBranch" th:field="*{homeBranch}">
+                            <option th:each="branch: ${homeBranch}" th:text="${branch.name}"
+                                    th:value="${branch.id}"></option>
+                        </select>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="returnBranch">Return branch</label>
-                        <input class="form-control" id="returnBranch" th:field="*{returnBranch}" type="text" required>
+                        <label >The branch where you return the rented car:</label>
+                        <select class="form-select" aria-label="homeBranch" th:field="*{homeBranch}">
+                            <option th:each="branch: ${homeBranch}" th:text="${branch.name}"
+                                    th:value="${branch.id}"></option>
+                        </select>
                     </div>
                     <div class="form-group mb-3">
                         <label for="amount">Price for rental</label>
@@ -50,8 +60,9 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="status">Status of car</label>
-                        <input class="form-control" id="status" th:field="*{status}" type="text" required>
-                        <option th:each="status: ${carStatus}" th:value="${status}" th:text="${status}"></option>
+                        <select class="form-control" id="status" th:field="*{status}" required>
+                            <option th:each="status: ${carStatus}" th:value="${status}" th:text="${status}"></option>
+                        </select>
                     </div>
                     <div class="form-group mb-3">
                         <label for="additionalPayment">Additional payment</label>
