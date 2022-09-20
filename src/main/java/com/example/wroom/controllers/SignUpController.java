@@ -34,9 +34,6 @@ public class SignUpController {
     public String showSignupPage(@ModelAttribute("user") User user, @ModelAttribute("message") String message,
                                  @ModelAttribute("messageType") String messageType, Model model) {
         model.addAttribute("authorities", authorityService.findAllAuthorities());
-        Authority client = new Authority();
-        client.setName("ROLE_CUSTOMER");
-        user.setAuthority(client);
         return "auth/signup";
     }
 
