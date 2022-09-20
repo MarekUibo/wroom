@@ -67,13 +67,13 @@ public class BookingController {
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) already exists!", searchBooking.getId()));
             redirectAttributes.addFlashAttribute("messageType", "error");
-            return "redirect:/booking/create-booking";
+            return "redirect:/booking/create";
         } catch (BookingNotFoundException e) {
             bookingService.createBooking(booking);
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) created successfully!", booking.getId()));
             redirectAttributes.addFlashAttribute("messageType", "success");
-            return "redirect:/booking/list-booking";
+            return "redirect:/booking";
         }
     }
 

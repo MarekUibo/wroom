@@ -27,18 +27,16 @@
                                     th:value="${car.id}" ></option>
                         </select>
                     </div>
-
-
-                    <div class="form-group mb-3">
-                        <label for="dateFrom">Date from</label>
-                        <div class="col-sm-6">
-                            <input type="date" class="form-control" id="dateFrom" name="dateFrom" placeholder="Date From" required>
+                        <div class="form-group mb-3">
+                            <label for="dateFrom">Date from</label>
+                            <input class="form-control" id="dateFrom" th:field="*{dateFrom}" type="text" required>
                         </div>
-                    <div class="form-group mb-3">
-                        <label for="dateTo">Date to</label>
-                        <div class="col-sm-6">
-                            <input type="date" class="form-control" id="dateTo" name="dateFrom" placeholder="Date From" required>
-                    </div>
+                        <div class="form-group mb-3">
+                            <label for="dateTo">Date to</label>
+                            <input class="form-control" id="dateTo" th:field="*{dateTo}" type="text" required>
+                        </div>
+
+
                     <div class="form-group mb-3">
                         <label >The branch where you rent the car :</label>
                         <select class="form-select" aria-label="homeBranch" th:field="*{homeBranch}">

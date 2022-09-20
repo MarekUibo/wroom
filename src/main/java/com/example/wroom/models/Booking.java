@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
@@ -31,17 +32,17 @@ public class Booking implements Serializable {
 
     private Calendar rightNow = Calendar.getInstance();
     private LocalDateTime dateOfBooking = LocalDateTime.now();
-    private LocalDateTime dateFrom;
-    private LocalDateTime dateTo;
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
     private BigDecimal additionalPayment;
     private String comments;
     private BigDecimal amount;
     private boolean isActive;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date dateOut;
 
-    @DateTimeFormat (pattern = "yyyy-MM-dd")
+    @DateTimeFormat (pattern = "dd-MM-yyyy")
     private Date dateIn;
 
     @OneToOne(cascade = CascadeType.MERGE)
