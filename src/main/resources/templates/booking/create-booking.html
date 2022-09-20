@@ -20,17 +20,14 @@
                         <div class="container-fluid py-5">
                             <p class="col-md-8 fs-4">Booking for: <span th:text="${#authentication.name}"></span></p>
                     </div>
-                    <!--<div class="form-group mb-3">
-                        <label >Car registration number :</label>
-                        <select class="form-control" id="registrationNumber" th:field="*{registrationNumber}" required>
-                            <option th:each="registrationNumber: ${booking.registrationNumber}" th:value="${booking.registrationNumber}" th:text="${booking.registrationNumber}"></option>
-                        </select>
-                    </div>-->
                     <div class="form-group mb-3">
-                        <label for="dateOfBooking">Date of booking</label>
-                        <div class="col-sm-6">
-                            <input type="date" class="form-control" id="dateOfBooking" name="dateFrom" placeholder="Date From" required>
-                        </div>
+                        <label >Car registration number :</label>
+                        <select class="form-control" id="carNumber" th:field="*{car.id}" required>
+                            <option th:each="car: ${carNumber}" th:text="${car.registrationNumber}"
+                                    th:value="${car.id}" ></option>
+                        </select>
+                    </div>
+
 
                     <div class="form-group mb-3">
                         <label for="dateFrom">Date from</label>
@@ -55,17 +52,12 @@
                             <option th:each="branch: ${homeBranch}" th:text="${branch.name}"
                                     th:value="${branch.id}"></option>
                         </select>
-                    </div>
+                    </div>-->
                         <!--<div class="form-group mb-3">
                             <label for="amount">Price for rental</label>
                             <input class="form-control" id="amount" th:field="*{amount}" type="text" required>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="status">Status of car</label>
-                            <select class="form-control" id="status" th:field="*{status}" required>
-                                <option th:each="status: ${carStatus}" th:value="${status}" th:text="${status}"></option>
-                            </select>
-                        </div>-->
+                        -->
                         <!--<div class="form-group mb-3">
                             <label for="additionalPayment">Additional payment</label>
                             <input class="form-control" id="additionalPayment" th:field="*{additionalPayment}" type="text" required>
@@ -76,7 +68,6 @@
                         </div>-->
                         <a class="btn btn-light mb-3" type="button" href="/car">Cancel</a>
                         <button class="btn btn-outline-primary mb-3" type="submit">Create</button>
-
                     </form>
                 </div>
             </div>

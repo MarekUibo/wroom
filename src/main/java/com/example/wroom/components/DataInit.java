@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class DataInit {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BookingService bookingService;
 
     @PostConstruct
     public void init() {
@@ -42,7 +45,7 @@ public class DataInit {
         initCar();
         initUser();
         initRentalOffice();
-
+        //initBooking();
     }
 
     private void initUser() {
@@ -128,9 +131,25 @@ public class DataInit {
                 rentalOfficeService.createRentalOffice(rentalOffice);
             }
         } catch (BranchNotFoundException e) {
-            System.out.println("No branch found. Cannot pre-initialize Car: " + e.getMessage());
+            System.out.println("No branch found. Cannot pre-initialize branch: " + e.getMessage());
         }
         }
+
+    private void initBooking() {
+        System.out.println("Starting initializing Booking...");
+
+        Booking booking = new Booking();
+        booking.setAmount(BigDecimal.valueOf(199.99));
+        booking.setActive(true);
+        booking.setComments("test");
+
+        try {
+            Booking searchBooking = bookingService.findBookingById(booking.getId());
+            System.out.println("Cannot pre-initialize Booking: " + searchBooking);
+        } catch (BookingNotFoundException e) {
+            bookingService.createBooking(booking);
+        }
+    }
 
 
     private void initAuthority() {

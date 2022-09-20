@@ -30,24 +30,22 @@ public class Booking implements Serializable {
     private UUID id;
 
     private Calendar rightNow = Calendar.getInstance();
-    private LocalDateTime dateOfBooking;
+    private LocalDateTime dateOfBooking = LocalDateTime.now();
+    private LocalDateTime dateFrom;
+    private LocalDateTime dateTo;
+    private BigDecimal additionalPayment;
+    private String comments;
+    private BigDecimal amount;
+    private boolean isActive;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOut;
-    private String timeOut;
 
-    @DateTimeFormat (pattern = "dd-MM-yyyy")
+    @DateTimeFormat (pattern = "yyyy-MM-dd")
     private Date dateIn;
-    private String timeIn;
 
     @OneToOne(cascade = CascadeType.MERGE)
     private Car car;
-
-    private String userName;
-    private String registrationNumber;
-
-    private LocalDateTime dateFrom;
-    private LocalDateTime dateTo;
 
     @OneToOne(cascade = CascadeType.MERGE)
     private Branch rentalBranch;
@@ -58,21 +56,7 @@ public class Booking implements Serializable {
     @OneToOne(cascade = CascadeType.MERGE)
     private Branch homeBranch;
 
-    private BigDecimal amount;
-    private boolean isActive;
-
     @OneToOne(cascade = CascadeType.MERGE)
     private User user;
 
-    private BigDecimal additionalPayment;
-    private String comments;
-
-    @OneToOne(cascade = CascadeType.MERGE)
-    private User  rentalEmployee;
-
-    @OneToOne(cascade = CascadeType.MERGE)
-    private User returnEmployee;
-
-    @Enumerated(EnumType.STRING)
-    private CarStatus status;
 }

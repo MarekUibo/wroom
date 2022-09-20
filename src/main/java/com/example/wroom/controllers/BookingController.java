@@ -5,6 +5,7 @@ import com.example.wroom.models.Booking;
 import com.example.wroom.models.CarStatus;
 import com.example.wroom.services.BookingService;
 import com.example.wroom.services.BranchService;
+import com.example.wroom.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,18 +29,33 @@ public class BookingController {
     @Autowired
     private BranchService branchService;
 
+    @Autowired
+    private CarService carService;
+
     @GetMapping
     public String showBookingListPage(Model model, @ModelAttribute("message") String message,
                                       @ModelAttribute("messageType") String messageType) {
         model.addAttribute("bookings", bookingService.findAllBookings());
         return "booking/list-booking";
     }
+
+    @GetMapping("/{id}")
+    public String showBookingViewPage(@PathVariable UUID id, Model model,
+                                     RedirectAttributes redirectAttributes) {
+        try {
+            model.addAttribute("booking", bookingService.findBookingById(id));
+            return "booking/view-booking";
+        } catch (BookingNotFoundException e) {
+            return handleBookingNotFoundExceptionById(id, redirectAttributes);
+        }
+    }
+
     @GetMapping ("/create")
     public String showCreateBookingPage(@ModelAttribute("booking")Booking booking,
                                         @ModelAttribute("message") String message,
                                         @ModelAttribute("messageType") String messageType,
                                         Model model) {
-        model.addAttribute("carStatus", CarStatus.values());
+        model.addAttribute("carNumber", carService.findAllCars());
         model.addAttribute("homeBranch", branchService.findAllBranches());
 
         return "booking/create-booking";
@@ -105,6 +121,5 @@ public class BookingController {
        redirectAttributes.addFlashAttribute("messageType", "error");
        return "redirect:/booking/list-booking";
     }
-
 
 }
