@@ -12,11 +12,11 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/branch"
-                       sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'OWNER','SALES_PERSON','CUSTOMER')">Branch</a>
+                       sec:authorize="hasAnyRole('ADMIN', 'OWNER')">Branch</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/car"
-                       sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'OWNER','SALES_PERSON','CUSTOMER')">Cars</a>
+                       sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'OWNER','SALES_PERSON', 'CUSTOMER')">Cars</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"  href="/booking"

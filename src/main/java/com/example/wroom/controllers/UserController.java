@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.UUID;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 
 /**
  * @author:Marek Uibo
@@ -27,7 +27,7 @@ public class UserController {
     public String showUserListPage(Model model, @ModelAttribute("message") String message,
                                        @ModelAttribute("messageType") String messageType) {
         model.addAttribute("users", userService.findAllUsers());
-        return "user/list-user";
+        return "user/list-users";
     }
 
     @GetMapping("/create")

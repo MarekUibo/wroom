@@ -58,7 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/signup")
                 .permitAll()
                 .antMatchers("/branch/**")
-                .hasAnyRole(manager, employee, admin, owner, customer)
+                .hasAnyRole(admin, owner)
                 .antMatchers("/car/**")
                 .hasAnyRole(manager, employee, admin, owner, customer)
                 .antMatchers("/booking/**")
