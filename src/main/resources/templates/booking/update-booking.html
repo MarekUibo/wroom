@@ -2,7 +2,7 @@
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Update school</title>
+    <title>Update booking</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
@@ -13,22 +13,22 @@
         <div class="p-5 mb-4 bg-light rounded-3">
             <div class="container-fluid py-5">
                 <h1 class="display-5 fw-bold">Update Booking</h1>
-
                 <form action="#" method="post" th:action="@{/booking/update}" th:object="${booking}">
                     <div class="form-group mb-3">
                         <label for="username">Username</label>
-                        <input class="form-control" id="username" th:field="*{userName}" type="text" required>
+                        <input class="form-control" id="username" th:field="*{userName}"
+                               type="text" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="registrationNumber">Car registration number</label>
                         <input class="form-control" id="registrationNumber" th:field="*{registrationNumber}"
                                type="text" required>
                     </div>
-                    <div class="form-group mb-3">
+                    <!--<div class="form-group mb-3">
                         <label for="dateOfBooking">Date of booking</label>
                         <input class="form-control" id="dateOfBooking" th:field="*{dateOfBooking}"
                                type="text" required>
-                    </div>
+                    </div>-->
                     <div class="form-group mb-3">
                         <label for="dateFrom">Date from</label>
                         <input class="form-control" id="dateFrom" th:field="*{dateFrom}"

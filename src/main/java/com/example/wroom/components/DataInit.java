@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static com.example.wroom.utils.Constants.Security.*;
 
@@ -45,7 +47,7 @@ public class DataInit {
         initCar();
         initUser();
         initRentalOffice();
-        //initBooking();
+        initBooking();
     }
 
     private void initUser() {
@@ -139,10 +141,15 @@ public class DataInit {
         System.out.println("Starting initializing Booking...");
 
         Booking booking = new Booking();
-        booking.setAmount(BigDecimal.valueOf(199.99));
-        booking.setActive(true);
-        booking.setComments("test");
-
+        User user = new User();
+        booking.setId(UUID.randomUUID());
+        user.setUserName("admin22");
+        //booking.getCar().setRegistrationNumber("123ABC");
+        //booking.setDateFrom(LocalDate.parse("2022-09-25"));
+        //booking.setDateTo(LocalDate.parse("2022-09-30"));
+        //booking.setActive(true);
+        //booking.setComments("test");
+        //booking.setAmount(BigDecimal.valueOf(199.99));
         try {
             Booking searchBooking = bookingService.findBookingById(booking.getId());
             System.out.println("Cannot pre-initialize Booking: " + searchBooking);
@@ -182,5 +189,6 @@ public class DataInit {
             authorityService.createAuthority(authority);
         }
     }
+
 }
 

@@ -1,11 +1,15 @@
 package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.BookingNotFoundException;
+import com.example.wroom.exceptions.CarNotFoundException;
 import com.example.wroom.models.Booking;
+import com.example.wroom.models.Car;
+import com.example.wroom.models.CarBodyType;
 import com.example.wroom.models.CarStatus;
 import com.example.wroom.services.BookingService;
 import com.example.wroom.services.BranchService;
 import com.example.wroom.services.CarService;
+import com.example.wroom.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +31,9 @@ public class BookingController {
     public BookingService bookingService;
 
     @Autowired
+    public UserService userService;
+
+    @Autowired
     private BranchService branchService;
 
     @Autowired
@@ -41,7 +48,7 @@ public class BookingController {
 
     @GetMapping("/{id}")
     public String showBookingViewPage(@PathVariable UUID id, Model model,
-                                     RedirectAttributes redirectAttributes) {
+                                      RedirectAttributes redirectAttributes) {
         try {
             model.addAttribute("booking", bookingService.findBookingById(id));
             return "booking/view-booking";
@@ -50,16 +57,17 @@ public class BookingController {
         }
     }
 
-    @GetMapping ("/create")
-    public String showCreateBookingPage(@ModelAttribute("booking")Booking booking,
+    @GetMapping("/create")
+    public String showCreateBookingPage(@ModelAttribute("booking") Booking booking,
                                         @ModelAttribute("message") String message,
                                         @ModelAttribute("messageType") String messageType,
                                         Model model) {
-        model.addAttribute("carNumber", carService.findAllCars());
+        model.addAttribute("carRegistrationNumber", carService.findAllCars());
         model.addAttribute("homeBranch", branchService.findAllBranches());
 
         return "booking/create-booking";
     }
+
     @PostMapping
     public String createBooking(Booking booking, RedirectAttributes redirectAttributes) {
         try {
@@ -77,6 +85,25 @@ public class BookingController {
         }
     }
 
+    @GetMapping("/update/{id}")
+    public String showUpdateBookingPage(@PathVariable UUID id, String registrationNumber , Model model, RedirectAttributes redirectAttributes,
+                                        @RequestParam(value = "car", required = false) Booking booking) {
+        if (booking == null) {
+            try {
+                model.addAttribute("email", bookingService.findBookingById(id));
+                model.addAttribute("registrationNumber", carService.findCarByRegistrationNumber(registrationNumber));
+                model.addAttribute("dateFrom", booking.getDateFrom());
+                model.addAttribute("dateTo", booking.getDateTo());
+            } catch (CarNotFoundException e) {
+                return handleBookingNotFoundExceptionById(id, redirectAttributes);
+            } catch (BookingNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return "booking/update-booking";
+    }
+
+
     @GetMapping("/update")
     public String updateBooking(Booking booking, RedirectAttributes redirectAttributes) {
             try {
@@ -86,7 +113,7 @@ public class BookingController {
             } catch (BookingNotFoundException e) {
                 redirectAttributes.addFlashAttribute("message", e.getMessage());
                 redirectAttributes.addFlashAttribute("messageType", "error");
-                return "redirect:/booking/list-booking";
+                return "redirect:/booking";
     }
         return null;
     }
@@ -97,7 +124,7 @@ public class BookingController {
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) deleted successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
-            return "redirect:/booking/list-booking";
+            return "redirect:/booking";
         } catch (BookingNotFoundException e) {
            return handleBookingNotFoundExceptionById(id, redirectAttributes);
         }
@@ -109,17 +136,17 @@ public class BookingController {
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) restored successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
-            return "redirect:/booking/list-booking";
+            return "redirect:/booking";
         } catch (BookingNotFoundException e) {
             return handleBookingNotFoundExceptionById(id, redirectAttributes);
         }
     }
+
     //Private methods//
     private String handleBookingNotFoundExceptionById(UUID id, RedirectAttributes redirectAttributes) {
-       redirectAttributes.addFlashAttribute("message",
-               String.format("Booking(%s) not found!", id));
-       redirectAttributes.addFlashAttribute("messageType", "error");
-       return "redirect:/booking/list-booking";
+        redirectAttributes.addFlashAttribute("message",
+                String.format("Booking(%s) not found!", id));
+        redirectAttributes.addFlashAttribute("messageType", "error");
+        return "redirect:/booking";
     }
-
 }
