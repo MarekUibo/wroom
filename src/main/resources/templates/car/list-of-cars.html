@@ -44,7 +44,7 @@
                         <td th:text="${car.mark}"></td>
                         <td th:text="${car.model}"></td>
                         <td th:text="${car.status}"></td>
-                        <td th:text="${car.homeBranch}"></td>
+                        <td th:text="${car.homeBranch.getName()}"></td>
                         <td>
                             <a class="btn btn-primary" style="margin-right:15px;" role="button" th:href="@{/car/update/{id}(id=${car.id})}" th:if="${car.isActive()}">
                                 <i class="bi bi-pencil-fill"></i>

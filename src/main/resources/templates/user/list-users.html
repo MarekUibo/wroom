@@ -26,7 +26,9 @@
           <th scope="col">#</th>
           <th scope="col">Username</th>
           <th scope="col">Authority</th>
+          <th scope="col">Branch</th>
           <th scope="col">Actions</th>
+
           </thead>
           <tbody>
           <tr th:each="user: ${users}">
@@ -34,7 +36,8 @@
                 <span class="d-inline-block text-truncate" style="max-width: 70px;" th:text="${user.id}"></span>
             </th>
             <td th:text="${user.userName}"></td>
-            <td th:text="${user.authority}"></td>
+            <td th:text="${user.authority.getName()}"></td>
+            <!--<td th:text="${user.getHomeBranch().getName()}"></td>-->
             <td>
               <a class="btn btn-primary" style="margin-right:15px;" role="button" href="#" th:if="${user.isActive()}">
                 <i class="bi bi-pencil-fill"></i>
