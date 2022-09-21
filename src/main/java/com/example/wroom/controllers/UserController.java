@@ -1,5 +1,6 @@
 package com.example.wroom.controllers;
 
+import com.example.wroom.exceptions.AuthorityNotFoundException;
 import com.example.wroom.exceptions.UserNotFoundException;
 import com.example.wroom.models.User;
 import com.example.wroom.services.UserService;
@@ -31,14 +32,14 @@ public class UserController {
     }
 
     @GetMapping("/create")
-
     public String showCreateUserPage(@ModelAttribute("user") User user,
                                          @ModelAttribute("message") String message,
                                          @ModelAttribute("messageType") String messageType) {
         return "user/create-user";
     }
+
     @PostMapping
-    public String createUser(User user, RedirectAttributes redirectAttributes) {
+    public String createUser(User user, RedirectAttributes redirectAttributes) throws AuthorityNotFoundException {
         try {
             User searchUser = userService.findUserById(user.getId());
             redirectAttributes.addFlashAttribute("message",
@@ -55,6 +56,7 @@ public class UserController {
             return "redirect:/user/create";
         }
     }
+
     @PostMapping("/update")
     public String updateUser(User user, RedirectAttributes redirectAttributes) {
         try {
@@ -83,6 +85,7 @@ public class UserController {
             return handleUserNotFoundExceptionByID(id, redirectAttributes);
         }
     }
+
     @GetMapping("/restore/{id}")
     public String restoreUser(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {

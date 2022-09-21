@@ -1,5 +1,6 @@
 package com.example.wroom.controllers;
 
+import com.example.wroom.exceptions.AuthorityNotFoundException;
 import com.example.wroom.exceptions.UserNotFoundException;
 import com.example.wroom.models.Authority;
 import com.example.wroom.models.User;
@@ -38,7 +39,7 @@ public class SignUpController {
     }
 
     @PostMapping
-    public String postSignup(User user, RedirectAttributes redirectAttributes) {
+    public String postSignup(User user, RedirectAttributes redirectAttributes) throws AuthorityNotFoundException {
         try {
             userService.findUserByUserName(user.getUserName());
             redirectAttributes.addFlashAttribute("message", "User already exists!");

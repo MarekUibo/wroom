@@ -1,5 +1,6 @@
 package com.example.wroom.services;
 
+import com.example.wroom.exceptions.AuthorityNotFoundException;
 import com.example.wroom.exceptions.BranchNotFoundException;
 import com.example.wroom.exceptions.UserNotFoundException;
 import com.example.wroom.models.Branch;
@@ -18,7 +19,14 @@ public interface UserService {
      *
      * @param user User
      */
-    void createUser(User user);
+    void createUser(User user) throws AuthorityNotFoundException;
+
+    /**
+     * To create a new customer
+     *
+     * @param user User
+     */
+    void createCustomer(User user);
 
     /**
      * To find user by username

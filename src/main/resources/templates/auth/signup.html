@@ -49,12 +49,12 @@
             <label for="address">Address</label>
             <input class="form-control" id="address" th:field="*{address}" type="text" required>
           </div>
-          <div class="form-group mb-3">
+          <!--<div class="form-group mb-3">
             <select class="form-select" aria-label="authorities" th:field="*{authority.id}">
               <option th:each="authority: ${authorities}" th:text="${authority.name.replace('_', ' ')}"
                       th:value="${authority.id}"></option>
             </select>
-          </div>
+          </div>-->
           <a class="btn btn-light mb-3" type="button" href="/">Cancel</a>
           <button class="btn btn-outline-primary mb-3" type="submit">Signup</button>
         </form>

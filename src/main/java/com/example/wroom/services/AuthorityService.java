@@ -27,12 +27,6 @@ public interface AuthorityService {
      */
    Authority findAuthorityByName(String name) throws AuthorityNotFoundException;
 
-    /**
-     * To set customer authority
-     *
-     * @param authority Authority name
-     */
-    void setCustomerAuthority(Authority authority);
 
     /**
      * To find all authorities

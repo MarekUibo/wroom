@@ -1,8 +1,11 @@
 package com.example.wroom.services.implementations;
 
+import com.example.wroom.exceptions.AuthorityNotFoundException;
 import com.example.wroom.exceptions.UserNotFoundException;
+import com.example.wroom.models.Authority;
 import com.example.wroom.models.User;
 import com.example.wroom.repository.UserRepository;
+import com.example.wroom.services.AuthorityService;
 import com.example.wroom.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +15,9 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static com.example.wroom.utils.Constants.Security.AUTHORITY_ADMIN;
+import static com.example.wroom.utils.Constants.Security.AUTHORITY_CUSTOMER;
 
 /**
  * Implementation of Employee Service
@@ -28,8 +34,20 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private AuthorityService authorityService;
+
     @Override
-    public void createUser(User user) {
+    public void createUser(User user) throws AuthorityNotFoundException {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setActive(true);
+        Authority authority = authorityService.findAuthorityByName(AUTHORITY_CUSTOMER);
+        user.setAuthority(authority);
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public void createCustomer(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);
         userRepository.saveAndFlush(user);

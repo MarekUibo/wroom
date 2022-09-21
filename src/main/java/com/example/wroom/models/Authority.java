@@ -25,7 +25,7 @@ public class Authority extends Auditable<String> implements Serializable {
 
     @Id
     @GeneratedValue(generator = "UUID")
-    @Column(updatable = false, nullable = false)
+    @Column(updatable = true, nullable = false)
     @Type(type = "org.hibernate.type.UUIDCharType")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
