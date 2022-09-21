@@ -40,8 +40,8 @@
             <td th:text="${booking.id}"></td>
             <td th:text="${booking.userName}"></td>
             <td th:text="${booking.registrationNumber}"></td>
-            <!--<td th:text="${booking.dateFrom ('ddMMyy')}">Date From</td>
-            <td th:text="${booking.dateTo ('ddMMyy')}">Date To</td>-->
+            <!--<td th:text="${booking.dateFrom ('yyyy-MM-dd')}">Date From</td>
+            <td th:text="${booking.dateTo ('yyyy-MM-dd')}">Date To</td>-->
             <td>
               <a class="btn btn-primary" style="margin-right:15px;" role="button" th:href="@{/booking/update/{id}(id=${booking.id})}" th:if="${booking.isActive()}">
                 <i class="bi bi-pencil-fill"></i>

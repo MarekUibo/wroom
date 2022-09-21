@@ -4,9 +4,9 @@ import com.example.wroom.exceptions.BookingNotFoundException;
 import com.example.wroom.models.Booking;
 import com.example.wroom.repository.BookingRepository;
 import com.example.wroom.services.BookingService;
-
+import com.example.wroom.models.User;
 import com.example.wroom.services.UserService;
-import org.apache.catalina.User;
+//import org.apache.catalina.User;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +32,12 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private UserService userService;
 
+
+
     @Override
     public void createBooking(Booking booking) {
         booking.setActive(true);
-        bookingRepository.save(booking);
+        bookingRepository.saveAndFlush(booking);
     }
 
     @Override

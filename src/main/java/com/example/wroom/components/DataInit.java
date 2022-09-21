@@ -2,6 +2,7 @@ package com.example.wroom.components;
 
 import com.example.wroom.exceptions.*;
 import com.example.wroom.models.*;
+import com.example.wroom.models.Car;
 import com.example.wroom.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -142,12 +143,13 @@ public class DataInit {
 
         Booking booking = new Booking();
         User user = new User();
+        Car car = new Car();
         booking.setId(UUID.randomUUID());
         user.setUserName("admin22");
-        //booking.getCar().setRegistrationNumber("123ABC");
-        //booking.setDateFrom(LocalDate.parse("2022-09-25"));
-        //booking.setDateTo(LocalDate.parse("2022-09-30"));
-        //booking.setActive(true);
+        car.setRegistrationNumber("123ABC");
+        booking.setDateFrom(LocalDate.parse("2022-09-25"));
+        booking.setDateTo(LocalDate.parse("2022-09-30"));
+        booking.setActive(true);
         //booking.setComments("test");
         //booking.setAmount(BigDecimal.valueOf(199.99));
         try {

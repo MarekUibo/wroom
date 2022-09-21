@@ -16,10 +16,10 @@
                 <div th:replace="fragments/alert-box"></div>
 
                 <form action="#" method="post" th:action="@{/booking}" th:object="${booking}">
-                    <div class="p-5 mb-4 bg-light rounded-3">
-                        <div class="container-fluid py-5">
-                            <p class="col-md-8 fs-4">Booking for: <span th:text="${#authentication.name}"></span></p>
-                    </div>
+                        <div class="form-group mb-3">
+                            <label for="userName">User name</label>
+                            <input class="form-control" id="userName" th:field="*{userName}" type="text" required>
+                        </div>
                         <div class="form-group mb-3">
                             <label >Car registration number :</label>
                             <select class="form-control" id="carRegistrationNumber" th:field="*{car.id}" required>
