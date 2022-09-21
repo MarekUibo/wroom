@@ -9,8 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
+//import java.util.Date;
 import java.util.UUID;
 import java.util.Calendar;
 
@@ -30,19 +29,19 @@ public class Booking implements Serializable {
     private UUID id;
 
     private Calendar rightNow = Calendar.getInstance();
-    private LocalDateTime dateOfBooking = LocalDateTime.now();
-   //private LocalDate dateFrom;
+    private LocalDate dateOfBooking = LocalDate.now();
+    //private LocalDate dateFrom;
     //private LocalDate dateTo;
     private BigDecimal additionalPayment;
     private String comments;
     private BigDecimal amount;
     private boolean isActive;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date dateFrom;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateFrom;
 
-    @DateTimeFormat (pattern = "dd-MM-yyyy")
-    private Date dateTo;
+    @DateTimeFormat (pattern = "yyyy-MM-dd")
+    private LocalDate dateTo;
 
     @OneToOne(cascade = CascadeType.MERGE)
     private Car car;

@@ -87,18 +87,20 @@ public class BookingController {
 
     @GetMapping("/update/{id}")
     public String showUpdateBookingPage(@PathVariable UUID id, String registrationNumber , Model model, RedirectAttributes redirectAttributes,
-                                        @RequestParam(value = "car", required = false) Booking booking) {
+                                        @RequestParam(value = "booking", required = false) Booking booking) throws BookingNotFoundException {
         if (booking == null) {
             try {
-                model.addAttribute("email", bookingService.findBookingById(id));
-                model.addAttribute("registrationNumber", carService.findCarByRegistrationNumber(registrationNumber));
-                model.addAttribute("dateFrom", booking.getDateFrom());
-                model.addAttribute("dateTo", booking.getDateTo());
-            } catch (CarNotFoundException e) {
-                return handleBookingNotFoundExceptionById(id, redirectAttributes);
+                model.addAttribute("booking", bookingService.findBookingById(id));
+                model.addAttribute("carStatus", CarStatus.values());
+                //model.addAttribute("registrationNumber", carService.findCarByRegistrationNumber(registrationNumber));
+                //model.addAttribute("dateFrom", booking.getDateFrom());
+                //model.addAttribute("dateTo", booking.getDateTo());
+                //model.addAttribute("homeBranch", branchService.findAllBranches());
             } catch (BookingNotFoundException e) {
                 throw new RuntimeException(e);
             }
+
+
         }
         return "booking/update-booking";
     }
