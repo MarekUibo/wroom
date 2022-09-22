@@ -5,6 +5,7 @@ import com.example.wroom.exceptions.BookingNotFoundException;
 import com.example.wroom.exceptions.UserNotFoundException;
 
 import com.example.wroom.models.Booking;
+import com.example.wroom.models.User;
 
 import java.util.List;
 import java.util.UUID;
@@ -30,10 +31,10 @@ public interface BookingService {
 
     /**
      * To find a booking by its user email
-     * @param email email of the user's booking
+     * @param userName userName the user's booking
      * @return Booking
      */
-    Booking findBookingByUserEmail(String email) throws BookingNotFoundException, UserNotFoundException;
+    Booking findBookingByUserName(User userName) throws BookingNotFoundException, UserNotFoundException;
 
     /**
      * To find all bookings

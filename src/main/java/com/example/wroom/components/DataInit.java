@@ -141,22 +141,26 @@ public class DataInit {
     private void initBooking() {
         System.out.println("Starting initializing Booking...");
 
-        Booking booking = new Booking();
-        User user = new User();
-        Car car = new Car();
-        booking.setId(UUID.randomUUID());
-        user.setUserName("admin22");
-        car.setRegistrationNumber("123ABC");
-        booking.setDateFrom(LocalDate.parse("2022-09-25"));
-        booking.setDateTo(LocalDate.parse("2022-09-30"));
-        booking.setActive(true);
-        //booking.setComments("test");
-        //booking.setAmount(BigDecimal.valueOf(199.99));
         try {
-            Booking searchBooking = bookingService.findBookingById(booking.getId());
-            System.out.println("Cannot pre-initialize Booking: " + searchBooking);
-        } catch (BookingNotFoundException e) {
-            bookingService.createBooking(booking);
+
+            Booking booking = new Booking();
+            //User user = new User();
+            booking.setUser(userService.findUserByUserName("admin22"));
+            booking.setCar(carService.findCarByRegistrationNumber("123ABC"));
+            booking.setDateFrom(LocalDate.parse("2022-09-25"));
+            booking.setDateTo(LocalDate.parse("2022-09-30"));
+            booking.setActive(true);
+            //booking.setComments("test");
+            //booking.setAmount(BigDecimal.valueOf(199.99));
+            try {
+                User user = new User();
+                Booking searchBooking = bookingService.findBookingByUserName(booking.getUserName());
+                System.out.println("Cannot pre-initialize Booking: " + searchBooking);
+            } catch (BookingNotFoundException e) {
+                bookingService.createBooking(booking);
+            }
+        } catch (CarNotFoundException | UserNotFoundException e) {
+            System.out.println("No booking found. Cannot pre-initialize booking: " + e.getMessage());
         }
     }
 

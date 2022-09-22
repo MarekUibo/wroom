@@ -10,6 +10,11 @@ import com.example.wroom.services.UserService;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,11 +37,14 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private UserService userService;
 
-
-
     @Override
     public void createBooking(Booking booking) {
         booking.setActive(true);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        User user = new User();
+        user.setUserName(currentUserName);
+        booking.setUser(user);
         bookingRepository.saveAndFlush(booking);
     }
 
@@ -52,11 +60,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking findBookingByUserEmail(String email) throws BookingNotFoundException {
-        Optional<Booking> optionalBooking = bookingRepository.findByUser(email);
+    public Booking findBookingByUserName(User userName) throws BookingNotFoundException {
+        Optional<Booking> optionalBooking = bookingRepository.findByUserName(userName);
 
         if(optionalBooking.isEmpty()) {
-            throw new BookingNotFoundException(email);
+            throw new BookingNotFoundException(String.valueOf(userName));
         }
 
         return optionalBooking.get();
