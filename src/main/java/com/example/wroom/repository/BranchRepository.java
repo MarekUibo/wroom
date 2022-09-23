@@ -18,4 +18,6 @@ public interface BranchRepository extends JpaRepository<Branch, UUID> {
     Optional<Branch> findByFullAddress(String address);
 
     Optional<Branch> findFirstByIsActiveIsTrue();
+
+    Optional<Branch> findBranchByName(String name);
 }

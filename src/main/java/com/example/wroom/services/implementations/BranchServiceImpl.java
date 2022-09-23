@@ -40,6 +40,16 @@ public class BranchServiceImpl implements BranchService {
         }
         return optionalBranch.get();
     }
+    @Override
+    public Branch findBranchByName(String name) throws BranchNotFoundException {
+        Optional<Branch> optionalBranch = branchRepository.findBranchByName(name);
+
+        if(optionalBranch.isEmpty()) {
+            throw new BranchNotFoundException(name);
+        }
+        return optionalBranch.get();
+    }
+
 
     @Override
     public Branch findRandomActiveBranch() throws BranchNotFoundException {

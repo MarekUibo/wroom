@@ -26,6 +26,13 @@ public interface BranchService {
     Branch findBranchById(UUID id) throws BranchNotFoundException;
 
     /**
+     * To find a branch by its Name
+     * @param name id of the branch
+     * @return Branch
+     */
+    Branch findBranchByName(String name) throws BranchNotFoundException;
+
+    /**
      * To find first active branch
      * @return Branch
      */
