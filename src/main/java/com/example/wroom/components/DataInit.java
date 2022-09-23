@@ -48,7 +48,7 @@ public class DataInit {
         initCar();
         initUser();
         initRentalOffice();
-        initBooking();
+        //initBooking();
     }
 
     private void initUser() {
@@ -58,10 +58,13 @@ public class DataInit {
             Authority authority = authorityService.findAuthorityByName(AUTHORITY_ADMIN);
 
             User user = new User();
+            Branch branch = new Branch();
             user.setUserName("admin22");
             user.setEmail("admin@wroom.com");
             user.setPassword("123456");
             user.setAuthority(authority);
+            branch.setName("Tallinn");
+            //user.setHomeBranch(branchService.findBranchByName(name));
 
             try {
                 User resultUser = userService.findUserByUserName(user.getUserName());
@@ -138,24 +141,23 @@ public class DataInit {
         }
         }
 
-    private void initBooking() {
+   private void initBooking() {
         System.out.println("Starting initializing Booking...");
 
         try {
 
             Booking booking = new Booking();
-            //User user = new User();
+            User user = new User();
             booking.setUser(userService.findUserByUserName("admin22"));
             booking.setCar(carService.findCarByRegistrationNumber("123ABC"));
             booking.setDateFrom(LocalDate.parse("2022-09-25"));
             booking.setDateTo(LocalDate.parse("2022-09-30"));
             booking.setActive(true);
-            //booking.setComments("test");
-            //booking.setAmount(BigDecimal.valueOf(199.99));
+            booking.setComments("test");
+            booking.setAmount(BigDecimal.valueOf(199.99));
             try {
-                User user = new User();
-                Booking searchBooking = bookingService.findBookingByUserName(booking.getUserName());
-                System.out.println("Cannot pre-initialize Booking: " + searchBooking);
+              Booking searchBooking = bookingService.findBookingByUserName(booking.getUserName());
+                  System.out.println("Cannot pre-initialize Booking: " + searchBooking);
             } catch (BookingNotFoundException e) {
                 bookingService.createBooking(booking);
             }

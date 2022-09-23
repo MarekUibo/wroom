@@ -36,10 +36,9 @@
                 <span class="d-inline-block text-truncate" style="max-width: 70px;" th:text="${user.id}"></span>
             </th>
             <td th:text="${user.userName}"></td>
-            <td th:text="${user.authority}"></td>
-            <td th:text="${user.homeBranch}"></td>
-            <!--<td th:text="${user.getHomeBranch().getName()}"></td>
-             <td th:text="${user.homeBranch}"></td>-->
+            <td th:text="${user.authority.getName()}"></td>
+            <td th:text="${user.getHomeBranch().getName()}"></td>
+
             <td>
               <a class="btn btn-primary" style="margin-right:15px;" role="button" href="#" th:if="${user.isActive()}">
                 <i class="bi bi-pencil-fill"></i>

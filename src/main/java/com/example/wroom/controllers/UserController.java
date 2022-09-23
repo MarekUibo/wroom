@@ -3,6 +3,8 @@ package com.example.wroom.controllers;
 import com.example.wroom.exceptions.AuthorityNotFoundException;
 import com.example.wroom.exceptions.UserNotFoundException;
 import com.example.wroom.models.User;
+import com.example.wroom.services.AuthorityService;
+import com.example.wroom.services.BranchService;
 import com.example.wroom.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BranchService branchService;
+
+    @Autowired
+    private AuthorityService authorityService;
+
     @GetMapping
     public String showUserListPage(Model model, @ModelAttribute("message") String message,
                                        @ModelAttribute("messageType") String messageType) {
@@ -33,8 +41,11 @@ public class UserController {
 
     @GetMapping("/create")
     public String showCreateUserPage(@ModelAttribute("user") User user,
-                                         @ModelAttribute("message") String message,
-                                         @ModelAttribute("messageType") String messageType) {
+                                     @ModelAttribute("message") String message,
+                                     @ModelAttribute("messageType") String messageType,
+                                     Model model) {
+        model.addAttribute("authorities", authorityService.findAllAuthorities());
+        model.addAttribute("homeBranches", branchService.findAllBranches());
         return "user/create-user";
     }
 
@@ -56,6 +67,21 @@ public class UserController {
             return "redirect:/user/create";
         }
     }
+    @GetMapping("/update/{id}")
+    public String showUpdateUserPage(@PathVariable UUID id, Model model, RedirectAttributes redirectAttributes,
+                                     @RequestParam(value = "user", required = false) User user) {
+        if (user == null) {
+            try {
+                model.addAttribute("user", userService.findUserById(id));
+                model.addAttribute("homeBranch", branchService.findAllBranches());
+            } catch (UserNotFoundException e) {
+                return handleUserNotFoundExceptionByID(id, redirectAttributes);
+            }
+        }
+
+        return "user/update-user";
+    }
+
 
     @PostMapping("/update")
     public String updateUser(User user, RedirectAttributes redirectAttributes) {
