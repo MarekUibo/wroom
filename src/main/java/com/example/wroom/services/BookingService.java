@@ -31,10 +31,10 @@ public interface BookingService {
 
     /**
      * To find a booking by its user email
-     * @param userName userName the user's booking
+     * @param user user of the booking
      * @return Booking
      */
-    Booking findBookingByUserName(User userName) throws BookingNotFoundException, UserNotFoundException;
+    Booking findBookingByUser(User user) throws BookingNotFoundException;
 
     /**
      * To find all bookings

@@ -1,6 +1,7 @@
 package com.example.wroom.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -16,7 +17,8 @@ import java.util.UUID;
 
 @Entity
 @Data
-public class Car implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class Car extends Auditable<String> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
