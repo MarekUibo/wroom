@@ -60,8 +60,8 @@ public class BookingServiceImpl implements BookingService {
     public Booking findBookingByUser(User user) throws BookingNotFoundException {
         Optional<Booking> optionalBooking = bookingRepository.findByUser(user);
 
-
         if (optionalBooking.isEmpty()) {
+
 
             throw new BookingNotFoundException(user.getUserName());
         }
