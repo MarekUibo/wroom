@@ -2,15 +2,14 @@ package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.BookingNotFoundException;
 import com.example.wroom.exceptions.CarNotFoundException;
-import com.example.wroom.models.Booking;
-import com.example.wroom.models.Car;
-import com.example.wroom.models.CarBodyType;
-import com.example.wroom.models.CarStatus;
+import com.example.wroom.models.*;
 import com.example.wroom.services.BookingService;
 import com.example.wroom.services.BranchService;
 import com.example.wroom.services.CarService;
 import com.example.wroom.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -77,6 +76,9 @@ public class BookingController {
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/booking/create";
         } catch (BookingNotFoundException e) {
+            User user = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+            booking.setUser(user);
+
             bookingService.createBooking(booking);
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) created successfully!", booking.getId()));

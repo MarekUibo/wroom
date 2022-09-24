@@ -40,11 +40,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public void createBooking(Booking booking) {
         booking.setActive(true);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserName = authentication.getName();
-        User user = new User();
-        user.setUserName(currentUserName);
-        booking.setUser(user);
+
         bookingRepository.saveAndFlush(booking);
     }
 
@@ -60,11 +56,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking findBookingByUserName(User userName) throws BookingNotFoundException {
-        Optional<Booking> optionalBooking = bookingRepository.findByUserName(userName);
+    public Booking findBookingByUser(User user) throws BookingNotFoundException {
+        Optional<Booking> optionalBooking = bookingRepository.findByUser(user);
 
         if(optionalBooking.isEmpty()) {
-            throw new BookingNotFoundException(String.valueOf(userName));
+            throw new BookingNotFoundException(user.getUserName());
         }
 
         return optionalBooking.get();

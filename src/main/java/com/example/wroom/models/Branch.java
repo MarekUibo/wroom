@@ -4,19 +4,18 @@ package com.example.wroom.models;
  */
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
 @Data
-public class Branch implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class Branch extends Auditable<String> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -31,5 +30,9 @@ public class Branch implements Serializable {
     private String phoneNumber;
     private String email;
     private String city;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private RentalOffice rentalOffice;
+
     private boolean isActive;
 }

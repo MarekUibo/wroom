@@ -1,6 +1,7 @@
 package com.example.wroom.repository;
 
 import com.example.wroom.models.Booking;
+import com.example.wroom.models.Car;
 import com.example.wroom.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,11 +16,10 @@ import java.util.UUID;
  */
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, UUID> {
-    Optional<Booking> findByUser(String email);
+    Optional<Booking> findByUser(User user);
 
-    Optional<Booking> findByUserName(User userName);
+    Optional<Booking> findByUserAndCar(User user, Car car);
 
-    Optional<Booking> findById(UUID id);
 }
 
 
