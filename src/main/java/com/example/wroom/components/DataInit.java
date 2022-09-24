@@ -161,9 +161,13 @@ public class DataInit {
             booking.setAmount(BigDecimal.valueOf(199.99));
             booking.setRentalBranch(branchService.findRandomActiveBranch());
             booking.setReturnBranch(branchService.findRandomActiveBranch());
+
             bookingService.createBooking(booking);
+
         } catch (CarNotFoundException | UserNotFoundException | BranchNotFoundException e) {
             System.out.println("Cannot pre-initialize booking: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Cannot pre-initialize booking! Booking already exists!");
         }
     }
 

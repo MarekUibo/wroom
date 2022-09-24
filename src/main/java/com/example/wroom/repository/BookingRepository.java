@@ -6,6 +6,7 @@ import com.example.wroom.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,8 +19,7 @@ import java.util.UUID;
 public interface BookingRepository extends JpaRepository<Booking, UUID> {
     Optional<Booking> findByUser(User user);
 
-    Optional<Booking> findByUserAndCar(User user, Car car);
-
+    List<Booking> findByUserAndCar(User user, Car car);
 }
 
 
