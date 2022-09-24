@@ -165,8 +165,6 @@ public class DataInit {
 
 
             User user = new User();
-
-
             booking.setUser(userService.findUserByUserName("admin22"));
             booking.setCar(carService.findCarByRegistrationNumber("123ABC"));
             booking.setDateFrom(LocalDate.parse("2022-09-25"));
@@ -174,6 +172,18 @@ public class DataInit {
 
             booking.setAdditionalPayment(BigDecimal.ZERO);
             booking.setComments("Test booking");
+
+            booking.setAmount(BigDecimal.valueOf(199.99));
+            booking.setRentalBranch(branchService.findRandomActiveBranch());
+            booking.setReturnBranch(branchService.findRandomActiveBranch());
+
+            bookingService.createBooking(booking);
+
+        } catch (CarNotFoundException | UserNotFoundException | BranchNotFoundException e) {
+            System.out.println("Cannot pre-initialize booking: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Cannot pre-initialize booking! Booking already exists!");
+
             booking.setAmount(BigDecimal.valueOf(199.99));
             booking.setRentalBranch(branchService.findRandomActiveBranch());
             booking.setReturnBranch(branchService.findRandomActiveBranch());
@@ -206,7 +216,6 @@ public class DataInit {
             }
         } catch (CarNotFoundException | UserNotFoundException e) {
             System.out.println("No booking found. Cannot pre-initialize booking: " + e.getMessage());
-
 
         }
     }

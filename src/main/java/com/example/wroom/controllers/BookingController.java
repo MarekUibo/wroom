@@ -29,7 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.UUID;
 
 /**
- * @author:Marek Uibo
+ * @author Marek Uibo
  */
 @Controller
 @RequestMapping("/booking")
@@ -86,13 +86,25 @@ public class BookingController {
             Car car = carService.findCarById(booking.getCar().getId());
             booking.setCar(car);
 
-
             Booking searchBooking = bookingService.findBookingById(booking.getId());
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) already exists!", searchBooking.getId()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/booking/create";
         } catch (BookingNotFoundException e) {
+            User user = null;
+            try {
+                user = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+            } catch (UserNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            booking.setUser(user);
+
+            try {
+                bookingService.createBooking(booking);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
             User user = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
             booking.setUser(user);
 
