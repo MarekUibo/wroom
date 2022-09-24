@@ -4,6 +4,7 @@ package com.example.wroom.models;
  */
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -16,7 +17,8 @@ import java.util.UUID;
 
 @Entity
 @Data
-public class RentalOffice implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class RentalOffice extends Auditable<String> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -28,16 +30,15 @@ public class RentalOffice implements Serializable {
 
     private String name;
     private String internetDomain;
-    private String contactAddress;
 
     @OneToOne(cascade = CascadeType.MERGE)
     private User owner;
 
     private String logoUrl;
-
-    @OneToOne(cascade = CascadeType.MERGE)
-    private Branch branches;
-
+    private String fullAddress;
+    private String phoneNumber;
+    private String email;
+    private String city;
     private BigDecimal sumOfAmountsForCarRental;
     private boolean isActive;
 }

@@ -1,6 +1,7 @@
 package com.example.wroom.models;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,7 +19,8 @@ import java.util.Calendar;
  */
 @Entity
 @Data
-public class Booking implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class Booking extends Auditable<String> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -28,10 +30,6 @@ public class Booking implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    private Calendar rightNow = Calendar.getInstance();
-    private LocalDate dateOfBooking = LocalDate.now();
-    //private LocalDate dateFrom;
-    //private LocalDate dateTo;
     private BigDecimal additionalPayment;
     private String comments;
     private BigDecimal amount;
@@ -47,21 +45,11 @@ public class Booking implements Serializable {
     private Car car;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    private Car registrationNumber;
-
-    @OneToOne(cascade = CascadeType.MERGE)
     private Branch rentalBranch;
 
     @OneToOne(cascade = CascadeType.MERGE)
     private Branch returnBranch;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    private Branch homeBranch;
-
-    @OneToOne(cascade = CascadeType.MERGE)
     private User user;
-
-    @OneToOne(cascade = CascadeType.MERGE)
-    private User userName;
-
 }

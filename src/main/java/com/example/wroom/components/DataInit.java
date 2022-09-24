@@ -2,18 +2,13 @@ package com.example.wroom.components;
 
 import com.example.wroom.exceptions.*;
 import com.example.wroom.models.*;
-import com.example.wroom.models.Car;
 import com.example.wroom.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
 
 import static com.example.wroom.utils.Constants.Security.*;
 
@@ -48,7 +43,7 @@ public class DataInit {
         initCar();
         initUser();
         initRentalOffice();
-        //initBooking();
+        initBooking();
     }
 
     private void initUser() {
@@ -64,7 +59,7 @@ public class DataInit {
             user.setPassword("123456");
             user.setAuthority(authority);
             branch.setName("Tallinn");
-            //user.setHomeBranch(branchService.findBranchByName(name));
+            user.setHomeBranch(branchService.findRandomActiveBranch());
 
             try {
                 User resultUser = userService.findUserByUserName(user.getUserName());
@@ -74,9 +69,12 @@ public class DataInit {
             }
         } catch (AuthorityNotFoundException e) {
             System.out.println(e.getLocalizedMessage());
+        } catch (BranchNotFoundException e) {
+            System.out.println("No branch found. Cannot pre-initialize User: " + e.getMessage());
         }
 
     }
+
     private void initBranch() {
         System.out.println("Starting initializing Branch..");
         Branch branch = new Branch();
@@ -119,16 +117,23 @@ public class DataInit {
             System.out.println("No branch found. Cannot pre-initialize Car: " + e.getMessage());
         }
     }
+
     private void initRentalOffice() {
         System.out.println("Starting initializing RentalOffice..");
 
         try {
+            User user = userService.findUserByUserName("admin22");
+
             RentalOffice rentalOffice = new RentalOffice();
             rentalOffice.setName("Tallinn");
             rentalOffice.setInternetDomain("http://www.wroom-rental-car.ee");
-            rentalOffice.setContactAddress("Weizenbergi 12 10150 Tallinn");
             rentalOffice.setLogoUrl("https://upww.screenrec.com/images/f_GubritL5psP3ITwR0klX2EZxa6j9V4ho.png");
-            rentalOffice.setBranches(branchService.findRandomActiveBranch());
+            rentalOffice.setOwner(user);
+            rentalOffice.setFullAddress("Talinn, Parnu mnt 27");
+            rentalOffice.setEmail("123@gmail.com");
+            rentalOffice.setPhoneNumber("123456789");
+            rentalOffice.setCity("Tallinn");
+            rentalOffice.setSumOfAmountsForCarRental(BigDecimal.ZERO);
 
             try {
                 RentalOffice searchRentalOffice = rentalOfficeService.findRentalOfficeByName(rentalOffice.getName());
@@ -136,33 +141,29 @@ public class DataInit {
             } catch (RentalOfficeNotFoundException e) {
                 rentalOfficeService.createRentalOffice(rentalOffice);
             }
-        } catch (BranchNotFoundException e) {
-            System.out.println("No branch found. Cannot pre-initialize branch: " + e.getMessage());
+        } catch (UserNotFoundException e) {
+            System.out.println("No user found. Cannot pre-initialize user: " + e.getMessage());
         }
-        }
+    }
 
-   private void initBooking() {
+    private void initBooking() {
         System.out.println("Starting initializing Booking...");
 
         try {
 
             Booking booking = new Booking();
-            User user = new User();
             booking.setUser(userService.findUserByUserName("admin22"));
             booking.setCar(carService.findCarByRegistrationNumber("123ABC"));
             booking.setDateFrom(LocalDate.parse("2022-09-25"));
             booking.setDateTo(LocalDate.parse("2022-09-30"));
-            booking.setActive(true);
-            booking.setComments("test");
+            booking.setAdditionalPayment(BigDecimal.ZERO);
+            booking.setComments("Test booking");
             booking.setAmount(BigDecimal.valueOf(199.99));
-            try {
-              Booking searchBooking = bookingService.findBookingByUserName(booking.getUserName());
-                  System.out.println("Cannot pre-initialize Booking: " + searchBooking);
-            } catch (BookingNotFoundException e) {
-                bookingService.createBooking(booking);
-            }
-        } catch (CarNotFoundException | UserNotFoundException e) {
-            System.out.println("No booking found. Cannot pre-initialize booking: " + e.getMessage());
+            booking.setRentalBranch(branchService.findRandomActiveBranch());
+            booking.setReturnBranch(branchService.findRandomActiveBranch());
+            bookingService.createBooking(booking);
+        } catch (CarNotFoundException | UserNotFoundException | BranchNotFoundException e) {
+            System.out.println("Cannot pre-initialize booking: " + e.getMessage());
         }
     }
 
@@ -189,11 +190,12 @@ public class DataInit {
         authorityCustomer.setName(AUTHORITY_CUSTOMER);
         createAuthority(authorityCustomer);
     }
+
     private void createAuthority(Authority authority) {
         try {
             Authority resultAuthority = authorityService.findAuthorityByName(authority.getName());
             System.out.println("Cannot pre-initialize authority:" + resultAuthority.getName());
-        } catch(AuthorityNotFoundException authorityNotFoundException) {
+        } catch (AuthorityNotFoundException authorityNotFoundException) {
             authorityService.createAuthority(authority);
         }
     }
