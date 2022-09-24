@@ -43,7 +43,7 @@ public class DataInit {
         initCar();
         initUser();
         initRentalOffice();
-        //initBooking();
+        initBooking();
     }
 
     private void initUser() {
@@ -62,7 +62,11 @@ public class DataInit {
 
             user.setHomeBranch(branchService.findRandomActiveBranch());
 
+
+            user.setHomeBranch(branchService.findRandomActiveBranch());
+
             //user.setHomeBranch(branchService.findBranchByName(name));
+
 
 
             try {
@@ -150,7 +154,7 @@ public class DataInit {
         }
     }
 
-   private void initBooking() {
+    private void initBooking() {
         System.out.println("Starting initializing Booking...");
 
         try {
@@ -158,12 +162,29 @@ public class DataInit {
             Booking booking = new Booking();
 
 
+
+
             User user = new User();
+
 
             booking.setUser(userService.findUserByUserName("admin22"));
             booking.setCar(carService.findCarByRegistrationNumber("123ABC"));
             booking.setDateFrom(LocalDate.parse("2022-09-25"));
             booking.setDateTo(LocalDate.parse("2022-09-30"));
+
+            booking.setAdditionalPayment(BigDecimal.ZERO);
+            booking.setComments("Test booking");
+            booking.setAmount(BigDecimal.valueOf(199.99));
+            booking.setRentalBranch(branchService.findRandomActiveBranch());
+            booking.setReturnBranch(branchService.findRandomActiveBranch());
+
+            bookingService.createBooking(booking);
+
+        } catch (CarNotFoundException | UserNotFoundException | BranchNotFoundException e) {
+            System.out.println("Cannot pre-initialize booking: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Cannot pre-initialize booking! Booking already exists!");
+
 
             booking.setAdditionalPayment(BigDecimal.ZERO);
             booking.setComments("Test booking");
@@ -185,6 +206,7 @@ public class DataInit {
             }
         } catch (CarNotFoundException | UserNotFoundException e) {
             System.out.println("No booking found. Cannot pre-initialize booking: " + e.getMessage());
+
 
         }
     }

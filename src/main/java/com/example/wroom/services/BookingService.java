@@ -20,7 +20,7 @@ public interface BookingService {
      * To create a new booking
      * @param booking Booking
      */
-    void createBooking(Booking booking);
+    void createBooking(Booking booking) throws Exception;
 
     /**
      * To find a booking by its ID

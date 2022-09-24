@@ -2,13 +2,24 @@ package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.BookingNotFoundException;
 import com.example.wroom.exceptions.CarNotFoundException;
+
+import com.example.wroom.exceptions.UserNotFoundException;
+import com.example.wroom.models.Booking;
+import com.example.wroom.models.Car;
+import com.example.wroom.models.CarStatus;
+import com.example.wroom.models.User;
+
 import com.example.wroom.models.*;
+
 import com.example.wroom.services.BookingService;
 import com.example.wroom.services.BranchService;
 import com.example.wroom.services.CarService;
 import com.example.wroom.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+
 import org.springframework.security.core.Authentication;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +27,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.UUID;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 /**
  * @author:Marek Uibo
@@ -61,8 +70,8 @@ public class BookingController {
                                         @ModelAttribute("message") String message,
                                         @ModelAttribute("messageType") String messageType,
                                         Model model) {
-        model.addAttribute("carRegistrationNumber", carService.findAllCars());
-        model.addAttribute("homeBranch", branchService.findAllBranches());
+        model.addAttribute("cars", carService.findAllCars());
+        model.addAttribute("branches", branchService.findAllBranches());
 
         return "booking/create-booking";
     }
@@ -70,6 +79,14 @@ public class BookingController {
     @PostMapping
     public String createBooking(Booking booking, RedirectAttributes redirectAttributes) {
         try {
+
+            User user = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+            booking.setUser(user);
+
+            Car car = carService.findCarById(booking.getCar().getId());
+            booking.setCar(car);
+
+
             Booking searchBooking = bookingService.findBookingById(booking.getId());
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) already exists!", searchBooking.getId()));
@@ -79,16 +96,30 @@ public class BookingController {
             User user = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
             booking.setUser(user);
 
+
             bookingService.createBooking(booking);
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) created successfully!", booking.getId()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/booking";
+        } catch (UserNotFoundException userNotFoundException){
+            redirectAttributes.addFlashAttribute("message", "Technical error with user!");
+            redirectAttributes.addFlashAttribute("messageType", "error");
+            return "redirect:/booking/create";
+        }
+        catch (CarNotFoundException carNotFoundException){
+            redirectAttributes.addFlashAttribute("message", "Technical error with car!");
+            redirectAttributes.addFlashAttribute("messageType", "error");
+            return "redirect:/booking/create";
+        } catch(Exception e){
+            redirectAttributes.addFlashAttribute("message", "Booking already exists!");
+            redirectAttributes.addFlashAttribute("messageType", "error");
+            return "redirect:/booking/create";
         }
     }
 
     @GetMapping("/update/{id}")
-    public String showUpdateBookingPage(@PathVariable UUID id, String registrationNumber , Model model, RedirectAttributes redirectAttributes,
+    public String showUpdateBookingPage(@PathVariable UUID id, String registrationNumber, Model model, RedirectAttributes redirectAttributes,
                                         @RequestParam(value = "booking", required = false) Booking booking) throws BookingNotFoundException {
         if (booking == null) {
             try {
@@ -110,17 +141,18 @@ public class BookingController {
 
     @GetMapping("/update")
     public String updateBooking(Booking booking, RedirectAttributes redirectAttributes) {
-            try {
-               bookingService.updateBooking(booking);
-               redirectAttributes.addFlashAttribute("message",
-                       String.format("Booking(%s) updated successfully!", booking.getId()));
-            } catch (BookingNotFoundException e) {
-                redirectAttributes.addFlashAttribute("message", e.getMessage());
-                redirectAttributes.addFlashAttribute("messageType", "error");
-                return "redirect:/booking";
-    }
+        try {
+            bookingService.updateBooking(booking);
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("Booking(%s) updated successfully!", booking.getId()));
+        } catch (BookingNotFoundException e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+            redirectAttributes.addFlashAttribute("messageType", "error");
+            return "redirect:/booking";
+        }
         return null;
     }
+
     @GetMapping("/delete/{id}")
     public String deleteBooking(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
@@ -130,9 +162,10 @@ public class BookingController {
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/booking";
         } catch (BookingNotFoundException e) {
-           return handleBookingNotFoundExceptionById(id, redirectAttributes);
+            return handleBookingNotFoundExceptionById(id, redirectAttributes);
         }
     }
+
     @GetMapping("/restore/{id}")
     public String restoreBooking(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
