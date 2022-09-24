@@ -59,7 +59,15 @@ public class DataInit {
             user.setPassword("123456");
             user.setAuthority(authority);
             branch.setName("Tallinn");
+
             user.setHomeBranch(branchService.findRandomActiveBranch());
+
+
+            user.setHomeBranch(branchService.findRandomActiveBranch());
+
+            //user.setHomeBranch(branchService.findBranchByName(name));
+
+
 
             try {
                 User resultUser = userService.findUserByUserName(user.getUserName());
@@ -152,10 +160,18 @@ public class DataInit {
         try {
 
             Booking booking = new Booking();
+
+
+
+
+            User user = new User();
+
+
             booking.setUser(userService.findUserByUserName("admin22"));
             booking.setCar(carService.findCarByRegistrationNumber("123ABC"));
             booking.setDateFrom(LocalDate.parse("2022-09-25"));
             booking.setDateTo(LocalDate.parse("2022-09-30"));
+
             booking.setAdditionalPayment(BigDecimal.ZERO);
             booking.setComments("Test booking");
             booking.setAmount(BigDecimal.valueOf(199.99));
@@ -168,6 +184,30 @@ public class DataInit {
             System.out.println("Cannot pre-initialize booking: " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Cannot pre-initialize booking! Booking already exists!");
+
+
+            booking.setAdditionalPayment(BigDecimal.ZERO);
+            booking.setComments("Test booking");
+            booking.setAmount(BigDecimal.valueOf(199.99));
+            booking.setRentalBranch(branchService.findRandomActiveBranch());
+            booking.setReturnBranch(branchService.findRandomActiveBranch());
+            bookingService.createBooking(booking);
+        } catch (CarNotFoundException | UserNotFoundException | BranchNotFoundException e) {
+            System.out.println("Cannot pre-initialize booking: " + e.getMessage());
+
+            booking.setActive(true);
+            booking.setComments("test");
+            booking.setAmount(BigDecimal.valueOf(199.99));
+            try {
+              Booking searchBooking = bookingService.findBookingByUserName(booking.getUserName());
+                  System.out.println("Cannot pre-initialize Booking: " + searchBooking);
+            } catch (BookingNotFoundException e) {
+                bookingService.createBooking(booking);
+            }
+        } catch (CarNotFoundException | UserNotFoundException e) {
+            System.out.println("No booking found. Cannot pre-initialize booking: " + e.getMessage());
+
+
         }
     }
 

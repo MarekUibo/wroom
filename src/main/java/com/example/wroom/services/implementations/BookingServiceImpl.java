@@ -33,11 +33,16 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public void createBooking(Booking booking) throws Exception {
         booking.setActive(true);
+
         if (isBookingValid(booking)) {
             bookingRepository.saveAndFlush(booking);
         } else {
             throw new Exception("Cannot book! Booking already exists!");
         }
+
+
+        bookingRepository.saveAndFlush(booking);
+
     }
 
     @Override
@@ -55,7 +60,11 @@ public class BookingServiceImpl implements BookingService {
     public Booking findBookingByUser(User user) throws BookingNotFoundException {
         Optional<Booking> optionalBooking = bookingRepository.findByUser(user);
 
+
         if (optionalBooking.isEmpty()) {
+
+        if(optionalBooking.isEmpty()) {
+
             throw new BookingNotFoundException(user.getUserName());
         }
 
