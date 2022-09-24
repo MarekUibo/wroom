@@ -16,14 +16,10 @@
                 <div th:replace="fragments/alert-box"></div>
 
                 <form action="#" method="post" th:action="@{/booking}" th:object="${booking}">
-                        <!--<div class="form-group mb-3">
-                            <label for="userName">User name</label>
-                            <input class="form-control" id="userName" th:field="*{userName}" type="text" required>
-                        </div>-->
                         <div class="form-group mb-3">
-                            <label >Car registration number :</label>
+                            <label >Car:</label>
                             <select class="form-control" id="carRegistrationNumber" th:field="*{car.id}" required>
-                                <option th:each="car: ${carRegistrationNumber}" th:text="${car.registrationNumber}"
+                                <option th:each="car: ${cars}" th:text="${car.registrationNumber}"
                                         th:value="${car.id}" ></option>
                             </select>
                         </div>
@@ -41,31 +37,28 @@
 
                         <div class="form-group mb-3">
                             <label >The branch where you rent the car :</label>
-                            <select class="form-select" aria-label="homeBranch" th:field="*{homeBranch}">
-                                <option th:each="branch: ${homeBranch}" th:text="${branch.name}"
+                            <select class="form-select" aria-label="rentalBranch" th:field="*{rentalBranch}">
+                                <option th:each="branch: ${branches}" th:text="${branch.name}"
                                         th:value="${branch.id}"></option>
                             </select>
                         </div>
                         <div class="form-group mb-3">
                             <label >The branch where you return the rented car:</label>
-                            <select class="form-select" aria-label="homeBranch" th:field="*{homeBranch}">
-                                <option th:each="branch: ${homeBranch}" th:text="${branch.name}"
+                            <select class="form-select" aria-label="rerturnBranch" th:field="*{returnBranch}">
+                                <option th:each="branch: ${branches}" th:text="${branch.name}"
                                         th:value="${branch.id}"></option>
                             </select>
                         </div>
-                            <!--<div class="form-group mb-3">
+                            <div class="form-group mb-3">
                                 <label for="amount">Price for rental</label>
-                                <input class="form-control" id="amount" th:field="*{amount}" type="text" required>
+                                <input class="form-control" id="amount" th:field="*{amount}" type="text" readonly>
                             </div>
-                            -->
-                        <!--<div class="form-group mb-3">
-                            <label for="additionalPayment">Additional payment</label>
-                            <input class="form-control" id="additionalPayment" th:field="*{additionalPayment}" type="text" required>
-                        </div>-->
-                        <!--<div class="form-group mb-3">
+
+                        <div class="form-group mb-3">
                             <label for="comments">Comments</label>
                             <input class="form-control" id="comments" th:field="*{comments}" type="text" required>
-                        </div>-->
+                        </div>
+
                         <a class="btn btn-light mb-3" type="button" href="/car">Cancel</a>
                         <button class="btn btn-outline-primary mb-3" type="submit">Create</button>
                     </form>

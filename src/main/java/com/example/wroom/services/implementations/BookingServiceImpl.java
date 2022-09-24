@@ -2,22 +2,15 @@ package com.example.wroom.services.implementations;
 
 import com.example.wroom.exceptions.BookingNotFoundException;
 import com.example.wroom.models.Booking;
+import com.example.wroom.models.User;
 import com.example.wroom.repository.BookingRepository;
 import com.example.wroom.services.BookingService;
-import com.example.wroom.models.User;
 import com.example.wroom.services.UserService;
-//import org.apache.catalina.User;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,17 +31,20 @@ public class BookingServiceImpl implements BookingService {
     private UserService userService;
 
     @Override
-    public void createBooking(Booking booking) {
+    public void createBooking(Booking booking) throws Exception {
         booking.setActive(true);
-
-        bookingRepository.saveAndFlush(booking);
+        if (isBookingValid(booking)) {
+            bookingRepository.saveAndFlush(booking);
+        } else {
+            throw new Exception("Cannot book! Booking already exists!");
+        }
     }
 
     @Override
     public Booking findBookingById(UUID id) throws BookingNotFoundException {
         Optional<Booking> optionalBooking = bookingRepository.findById(id);
 
-        if(optionalBooking.isEmpty()) {
+        if (optionalBooking.isEmpty()) {
             throw new BookingNotFoundException(id);
         }
 
@@ -59,7 +55,7 @@ public class BookingServiceImpl implements BookingService {
     public Booking findBookingByUser(User user) throws BookingNotFoundException {
         Optional<Booking> optionalBooking = bookingRepository.findByUser(user);
 
-        if(optionalBooking.isEmpty()) {
+        if (optionalBooking.isEmpty()) {
             throw new BookingNotFoundException(user.getUserName());
         }
 
@@ -73,7 +69,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void updateBooking(Booking booking) throws BookingNotFoundException {
-        if(findBookingById(booking.getId()) !=null) {
+        if (findBookingById(booking.getId()) != null) {
             bookingRepository.saveAndFlush(booking);
         }
     }
@@ -90,5 +86,25 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = findBookingById(id);
         booking.setActive(true);
         bookingRepository.saveAndFlush(booking);
+    }
+
+    // PRIVATE METHODS
+    private boolean isBookingValid(Booking booking) {
+        List<Booking> bookings = bookingRepository.findByUserAndCar(booking.getUser(), booking.getCar());
+
+        long bookingCount = bookings.stream()
+                .filter(booking1 -> booking1.isActive() && isValidBookingDate(booking.getDateFrom(), booking1.getDateFrom(), true)
+                        && isValidBookingDate(booking.getDateTo(), booking1.getDateTo(), false))
+                .count();
+
+        return bookingCount == 0;
+    }
+
+    private boolean isValidBookingDate(LocalDate bookingDate, LocalDate existingBookingDate, boolean isFromDate) {
+        if (isFromDate) {
+            return existingBookingDate.isAfter(bookingDate) || existingBookingDate.isEqual(bookingDate);
+        } else {
+            return existingBookingDate.isBefore(bookingDate) || existingBookingDate.isEqual(bookingDate);
+        }
     }
 }
