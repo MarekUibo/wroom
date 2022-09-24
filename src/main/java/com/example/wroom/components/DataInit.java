@@ -59,7 +59,15 @@ public class DataInit {
             user.setPassword("123456");
             user.setAuthority(authority);
             branch.setName("Tallinn");
+
             user.setHomeBranch(branchService.findRandomActiveBranch());
+
+
+            user.setHomeBranch(branchService.findRandomActiveBranch());
+
+            //user.setHomeBranch(branchService.findBranchByName(name));
+
+
 
             try {
                 User resultUser = userService.findUserByUserName(user.getUserName());
@@ -152,10 +160,13 @@ public class DataInit {
         try {
 
             Booking booking = new Booking();
+            User user = new User();
+
             booking.setUser(userService.findUserByUserName("admin22"));
             booking.setCar(carService.findCarByRegistrationNumber("123ABC"));
             booking.setDateFrom(LocalDate.parse("2022-09-25"));
             booking.setDateTo(LocalDate.parse("2022-09-30"));
+
             booking.setAdditionalPayment(BigDecimal.ZERO);
             booking.setComments("Test booking");
             booking.setAmount(BigDecimal.valueOf(199.99));

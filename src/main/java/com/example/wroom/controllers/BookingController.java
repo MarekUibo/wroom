@@ -2,16 +2,24 @@ package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.BookingNotFoundException;
 import com.example.wroom.exceptions.CarNotFoundException;
+
 import com.example.wroom.exceptions.UserNotFoundException;
 import com.example.wroom.models.Booking;
 import com.example.wroom.models.Car;
 import com.example.wroom.models.CarStatus;
 import com.example.wroom.models.User;
+
+import com.example.wroom.models.*;
+
 import com.example.wroom.services.BookingService;
 import com.example.wroom.services.BranchService;
 import com.example.wroom.services.CarService;
 import com.example.wroom.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+
+import org.springframework.security.core.Authentication;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.UUID;
 
 /**
- * @author:Marek Uibo
+ * @author Marek Uibo
  */
 @Controller
 @RequestMapping("/booking")
@@ -71,13 +79,32 @@ public class BookingController {
     @PostMapping
     public String createBooking(Booking booking, RedirectAttributes redirectAttributes) {
         try {
+
             User user = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
             booking.setUser(user);
 
             Car car = carService.findCarById(booking.getCar().getId());
             booking.setCar(car);
 
-            bookingService.createBooking(booking);
+            Booking searchBooking = bookingService.findBookingById(booking.getId());
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("Booking(%s) already exists!", searchBooking.getId()));
+            redirectAttributes.addFlashAttribute("messageType", "error");
+            return "redirect:/booking/create";
+        } catch (BookingNotFoundException e) {
+            User user = null;
+            try {
+                user = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+            } catch (UserNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            booking.setUser(user);
+
+            try {
+                bookingService.createBooking(booking);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) created successfully!", booking.getId()));
             redirectAttributes.addFlashAttribute("messageType", "success");
