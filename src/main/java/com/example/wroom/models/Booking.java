@@ -52,4 +52,7 @@ public class Booking extends Auditable<String> implements Serializable {
 
     @OneToOne(cascade = CascadeType.MERGE)
     private User user;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    private User userName;
 }
