@@ -62,9 +62,6 @@ public class DataInit {
 
             user.setHomeBranch(branchService.findRandomActiveBranch());
 
-
-            user.setHomeBranch(branchService.findRandomActiveBranch());
-
             //user.setHomeBranch(branchService.findBranchByName(name));
 
 
