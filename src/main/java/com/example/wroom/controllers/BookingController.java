@@ -105,11 +105,6 @@ public class BookingController {
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            User user = userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
-            booking.setUser(user);
-
-
-            bookingService.createBooking(booking);
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) created successfully!", booking.getId()));
             redirectAttributes.addFlashAttribute("messageType", "success");
