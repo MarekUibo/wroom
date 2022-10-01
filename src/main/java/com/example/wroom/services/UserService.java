@@ -26,7 +26,7 @@ public interface UserService {
      *
      * @param user User
      */
-    //void createCustomer(User user);
+    void createCustomer(User user) throws AuthorityNotFoundException, BranchNotFoundException;
 
     /**
      * To find user by username

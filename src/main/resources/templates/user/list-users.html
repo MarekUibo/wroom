@@ -40,13 +40,13 @@
             <td th:text="${user.getHomeBranch().getName()}"></td>
 
             <td>
-              <a class="btn btn-primary" style="margin-right:15px;" role="button" href="#" th:if="${user.isActive()}">
+              <a class="btn btn-primary" style="margin-right:15px;" role="button" th:href="@{/user/update/{id}(id=${user.id})}" th:if="${user.isActive()}">
                 <i class="bi bi-pencil-fill"></i>
               </a>
-              <a class="btn btn-danger" role="button" href="#" th:if="${user.isActive()}">
+              <a class="btn btn-danger" role="button" th:href="@{/user/delete/{id}(id=${user.id})}" th:if="${user.isActive()}">
                 <i class="bi bi-trash-fill"></i>
               </a>
-              <a class="btn btn-warning" role="button" href="#" th:if="${!user.isActive()}">
+              <a class="btn btn-warning" role="button" th:href="@{/user/restore/{id}(id=${user.id})}" th:if="${!user.isActive()}">
                 <i class="bi bi-arrow-counterclockwise"></i>
               </a>
             </td>

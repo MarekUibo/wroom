@@ -1,11 +1,15 @@
 package com.example.wroom.services.implementations;
 
 import com.example.wroom.exceptions.AuthorityNotFoundException;
+import com.example.wroom.exceptions.BranchNotFoundException;
 import com.example.wroom.exceptions.UserNotFoundException;
 import com.example.wroom.models.Authority;
+import com.example.wroom.models.Branch;
+import com.example.wroom.models.Car;
 import com.example.wroom.models.User;
 import com.example.wroom.repository.UserRepository;
 import com.example.wroom.services.AuthorityService;
+import com.example.wroom.services.BranchService;
 import com.example.wroom.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,12 +38,29 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private BranchService branchService;
+
+    @Autowired
+    private AuthorityService authorityService;
 
     @Override
     public void createUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public void createCustomer(User user) throws AuthorityNotFoundException, BranchNotFoundException {
+        Authority authority = authorityService.findAuthorityByName(AUTHORITY_CUSTOMER);
+        Branch branch = branchService.findBranchByName("Tallinn autorent");
+
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setAuthority(authority);
+        user.setHomeBranch(branch);
+        user.setActive(true);
+        userRepository.saveAndFlush(user);
     }
 
 

@@ -70,6 +70,8 @@ public class UserController {
     @GetMapping("/update/{id}")
     public String showUpdateUserPage(@PathVariable UUID id, Model model, RedirectAttributes redirectAttributes,
                                      @RequestParam(value = "user", required = false) User user) {
+        model.addAttribute("authorities", authorityService.findAllAuthorities());
+        model.addAttribute("homeBranches", branchService.findAllBranches());
         if (user == null) {
             try {
                 model.addAttribute("user", userService.findUserById(id));
