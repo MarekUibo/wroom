@@ -90,7 +90,7 @@ public class DataInit {
             rentalOffice.setEmail("123@gmail.com");
             rentalOffice.setPhoneNumber("123456789");
             rentalOffice.setCity("Tallinn");
-            rentalOffice.setSumOfAmountsForCarRental(BigDecimal.ZERO);
+            rentalOffice.setSumOfAmountsForCarRental(BigDecimal.valueOf(0.00));
 
             try {
                 RentalOffice searchRentalOffice = rentalOfficeService.findRentalOfficeByName(rentalOffice.getName());
@@ -159,6 +159,8 @@ public class DataInit {
         System.out.println("Starting initializing Car..");
 
         try {
+            Branch returnBranch = branchService.findBranchByName("Tallinn autorent");
+
             Car car = new Car();
             car.setRegistrationNumber("123ABC");
             car.setMark("Audi");
@@ -188,8 +190,8 @@ public class DataInit {
         try {
             User user = userService.findUserByUserName("admin22");
             Car car = carService.findCarByRegistrationNumber("123ABC");
-            Branch startBranch = branchService.findBranchByName("Tallinn autorent");
-            Branch returnBranch = branchService.findBranchByName("Tallinn autorent");
+            Branch branch = branchService.findBranchByName("Tallinn autorent");
+
 
             Booking booking = new Booking();
             booking.setUser(user);
@@ -200,8 +202,8 @@ public class DataInit {
             booking.setAdditionalPayment(BigDecimal.ZERO);
             booking.setComments("Test booking");
             booking.setAmount(BigDecimal.valueOf(199.99));
-            booking.setRentalBranch(startBranch);
-            booking.setReturnBranch(returnBranch);
+            booking.setRentalBranch(branch);
+            booking.setReturnBranch(branch);
 
             try {
                 Booking resultBooking = bookingService.findBookingByUser(booking.getUser());
@@ -219,10 +221,9 @@ public class DataInit {
 
         try {
             User user = userService.findUserByUserName("admin22");
-            RentalOffice rentalOffice = rentalOfficeService.findRentalOfficeByName("Tallinn");
-            rentalOffice.setOwner(user);
-
-            rentalOfficeService.updateRentalOffice(rentalOffice);
+            RentalOffice rentalOfficeOwner = rentalOfficeService.findRentalOfficeByName("Tallinn");
+            rentalOfficeOwner.setOwner(user);
+            rentalOfficeService.updateRentalOffice(rentalOfficeOwner);
         } catch (UserNotFoundException | RentalOfficeNotFoundException e) {
             System.out.println(e.getLocalizedMessage());
         }
