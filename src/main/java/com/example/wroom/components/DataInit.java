@@ -217,7 +217,6 @@ public class DataInit {
             System.out.println(e.getLocalizedMessage());
         }
     }
-
     private void initOwnerRentalOffice() {
         System.out.println("Starting initializing RentalOffice owner...");
 
