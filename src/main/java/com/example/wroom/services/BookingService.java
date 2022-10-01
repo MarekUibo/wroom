@@ -20,7 +20,7 @@ public interface BookingService {
      * To create a new booking
      * @param booking Booking
      */
-    void createBooking(Booking booking) throws Exception;
+    void createBooking(Booking booking);
 
     /**
      * To find a booking by its ID
@@ -35,6 +35,13 @@ public interface BookingService {
      * @return Booking
      */
     Booking findBookingByUser(User user) throws BookingNotFoundException;
+
+    /**
+     * To find a booking by its bookingReferenceNumber
+     * @param  bookingReferenceNumber BookingReferenceNumber of the booking
+     * @return Booking
+     */
+    Booking findBookingByReferenceNumber(String bookingReferenceNumber) throws BookingNotFoundException;
 
     /**
      * To find all bookings

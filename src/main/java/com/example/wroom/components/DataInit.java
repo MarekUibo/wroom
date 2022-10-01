@@ -83,6 +83,7 @@ public class DataInit {
         System.out.println("Starting initializing RentalOffice..");
 
             RentalOffice rentalOffice = new RentalOffice();
+
             rentalOffice.setName("Tallinn");
             rentalOffice.setInternetDomain("http://www.wroom-rental-car.ee");
             rentalOffice.setLogoUrl("https://upww.screenrec.com/images/f_GubritL5psP3ITwR0klX2EZxa6j9V4ho.png");
@@ -94,7 +95,7 @@ public class DataInit {
 
             try {
                 RentalOffice searchRentalOffice = rentalOfficeService.findRentalOfficeByName(rentalOffice.getName());
-                System.out.println("Already exists ! Cannot pre-initialize RentalOffice: " + searchRentalOffice);
+                System.out.println("Already exists ! Cannot pre-initialize RentalOffice: " + searchRentalOffice.getName());
             } catch (RentalOfficeNotFoundException e) {
                 rentalOfficeService.createRentalOffice(rentalOffice);
             }
@@ -175,7 +176,7 @@ public class DataInit {
 
             try {
                 Car searchCar = carService.findCarByRegistrationNumber(car.getRegistrationNumber());
-                System.out.println("Already exists ! Cannot pre-initialize Car: " + searchCar);
+                System.out.println("Already exists ! Cannot pre-initialize Car: " + searchCar.getRegistrationNumber());
             } catch (CarNotFoundException e) {
                 carService.createCar(car);
             }
@@ -204,14 +205,15 @@ public class DataInit {
             booking.setAmount(BigDecimal.valueOf(199.99));
             booking.setRentalBranch(branch);
             booking.setReturnBranch(branch);
+            booking.setBookingReferenceNumber("202210010001");
 
             try {
-                Booking resultBooking = bookingService.findBookingByUser(booking.getUser());
-                System.out.println("Already exists ! Cannot pre-initialize booking :" + resultBooking.getUser());
+                Booking resultBooking = bookingService.findBookingByReferenceNumber(booking.getBookingReferenceNumber());
+                System.out.println("Already exists ! Cannot pre-initialize booking :" + resultBooking.getBookingReferenceNumber());
             } catch (BookingNotFoundException e) {
                 bookingService.createBooking(booking);
             }
-        } catch (Exception e) {
+        } catch (UserNotFoundException | CarNotFoundException | BranchNotFoundException e) {
             System.out.println(e.getLocalizedMessage());
         }
     }

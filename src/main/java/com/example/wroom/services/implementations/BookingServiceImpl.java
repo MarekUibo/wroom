@@ -1,7 +1,9 @@
 package com.example.wroom.services.implementations;
 
 import com.example.wroom.exceptions.BookingNotFoundException;
+import com.example.wroom.exceptions.CarNotFoundException;
 import com.example.wroom.models.Booking;
+import com.example.wroom.models.Car;
 import com.example.wroom.models.User;
 import com.example.wroom.repository.BookingRepository;
 import com.example.wroom.services.BookingService;
@@ -31,18 +33,9 @@ public class BookingServiceImpl implements BookingService {
     private UserService userService;
 
     @Override
-    public void createBooking(Booking booking) throws Exception {
+    public void createBooking(Booking booking)  {
         booking.setActive(true);
-
-        if (isBookingValid(booking)) {
-            bookingRepository.saveAndFlush(booking);
-        } else {
-            throw new Exception("Cannot book! Booking already exists!");
-        }
-
-
         bookingRepository.saveAndFlush(booking);
-
     }
 
     @Override
@@ -66,6 +59,16 @@ public class BookingServiceImpl implements BookingService {
             throw new BookingNotFoundException(user.getUserName());
         }
 
+        return optionalBooking.get();
+    }
+
+    @Override
+    public Booking findBookingByReferenceNumber(String bookingReferenceNumber) throws BookingNotFoundException {
+        Optional<Booking> optionalBooking = bookingRepository.findByBookingReferenceNumber(bookingReferenceNumber);
+
+        if(optionalBooking.isEmpty()) {
+        throw new BookingNotFoundException(bookingReferenceNumber);
+    }
         return optionalBooking.get();
     }
 

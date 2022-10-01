@@ -30,6 +30,7 @@ public class Booking extends Auditable<String> implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
+    private String bookingReferenceNumber;
     private BigDecimal additionalPayment;
     private String comments;
     private BigDecimal amount;

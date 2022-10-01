@@ -14,7 +14,7 @@ public class BookingNotFoundException extends Exception {
         super(String.format("Booking not found for id: %s", id));
     }
 
-    public BookingNotFoundException(String email) {
-        super(String.format("Booking not found for user id: %s", email));
+    public BookingNotFoundException(String bookingReferenceNumber) {
+        super(String.format("Booking not found for the booking reference number id: %s", bookingReferenceNumber));
     }
 }
