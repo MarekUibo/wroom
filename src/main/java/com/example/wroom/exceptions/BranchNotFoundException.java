@@ -17,7 +17,7 @@ public class BranchNotFoundException extends Exception {
         super(String.format("Branch not found for id: %s", id));
     }
 
-    public BranchNotFoundException(String address) {
-        super(String.format("Branch not found for address: %s", address));
+    public BranchNotFoundException(String name) {
+        super(String.format("Branch not found for name: %s", name));
     }
 }

@@ -41,8 +41,8 @@ public class DataInit {
         initAuthority();
         initBranch();
         initCar();
-        initUser();
         initRentalOffice();
+        initUser();
         initBooking();
     }
 
@@ -51,36 +51,24 @@ public class DataInit {
 
         try {
             Authority authority = authorityService.findAuthorityByName(AUTHORITY_ADMIN);
+            Branch branch = branchService.findBranchByName("Tallinn autorent");
 
             User user = new User();
-            Branch branch = new Branch();
             user.setUserName("admin22");
             user.setEmail("admin@wroom.com");
             user.setPassword("123456");
             user.setAuthority(authority);
-            branch.setName("Tallinn");
-
-            user.setHomeBranch(branchService.findRandomActiveBranch());
-
-
-            user.setHomeBranch(branchService.findRandomActiveBranch());
-
-            //user.setHomeBranch(branchService.findBranchByName(name));
-
-
+            user.setHomeBranch(branch);
 
             try {
                 User resultUser = userService.findUserByUserName(user.getUserName());
-                System.out.println("Cannot pre-initialize user:" + resultUser.getUserName());
+                System.out.println("Already exists ! Cannot pre-initialize user:" + resultUser.getUserName());
             } catch (UserNotFoundException e) {
                 userService.createUser(user);
             }
-        } catch (AuthorityNotFoundException e) {
+        } catch (AuthorityNotFoundException | BranchNotFoundException e) {
             System.out.println(e.getLocalizedMessage());
-        } catch (BranchNotFoundException e) {
-            System.out.println("No branch found. Cannot pre-initialize User: " + e.getMessage());
         }
-
     }
 
     private void initBranch() {
@@ -95,7 +83,7 @@ public class DataInit {
 
         try {
             Branch searchBranch = branchService.findBranchByFullAddress(branch.getFullAddress());
-            System.out.println("Cannot pre-initialize Booking: " + searchBranch.getFullAddress());
+            System.out.println("Already exists ! Cannot pre-initialize Branch : " + searchBranch.getFullAddress());
         } catch (BranchNotFoundException e) {
             branchService.createBranch(branch);
         }
@@ -117,7 +105,7 @@ public class DataInit {
 
             try {
                 Car searchCar = carService.findCarByRegistrationNumber(car.getRegistrationNumber());
-                System.out.println("Cannot pre-initialize Car: " + searchCar);
+                System.out.println("Already exists ! Cannot pre-initialize Car: " + searchCar);
             } catch (CarNotFoundException e) {
                 carService.createCar(car);
             }
@@ -145,7 +133,7 @@ public class DataInit {
 
             try {
                 RentalOffice searchRentalOffice = rentalOfficeService.findRentalOfficeByName(rentalOffice.getName());
-                System.out.println("Cannot pre-initialize RentalOffice: " + searchRentalOffice);
+                System.out.println("Already exists ! Cannot pre-initialize RentalOffice: " + searchRentalOffice);
             } catch (RentalOfficeNotFoundException e) {
                 rentalOfficeService.createRentalOffice(rentalOffice);
             }
@@ -158,27 +146,31 @@ public class DataInit {
         System.out.println("Starting initializing Booking...");
 
         try {
+            User user = userService.findUserByUserName("admin22");
+            Car car = carService.findCarByRegistrationNumber("123ABC");
+            Branch startBranch = branchService.findBranchByName("Tallinn autorent");
+            Branch returnBranch = branchService.findBranchByName("Tallinn autorent");
 
             Booking booking = new Booking();
-            User user = new User();
-
-            booking.setUser(userService.findUserByUserName("admin22"));
-            booking.setCar(carService.findCarByRegistrationNumber("123ABC"));
+            booking.setUser(user);
+            booking.setCar(car);
             booking.setDateFrom(LocalDate.parse("2022-09-25"));
             booking.setDateTo(LocalDate.parse("2022-09-30"));
 
             booking.setAdditionalPayment(BigDecimal.ZERO);
             booking.setComments("Test booking");
             booking.setAmount(BigDecimal.valueOf(199.99));
-            booking.setRentalBranch(branchService.findRandomActiveBranch());
-            booking.setReturnBranch(branchService.findRandomActiveBranch());
+            booking.setRentalBranch(startBranch);
+            booking.setReturnBranch(returnBranch);
 
-            bookingService.createBooking(booking);
-
-        } catch (CarNotFoundException | UserNotFoundException | BranchNotFoundException e) {
-            System.out.println("Cannot pre-initialize booking: " + e.getMessage());
+            try {
+                Booking resultBooking = bookingService.findBookingByUser(booking.getUser());
+                System.out.println("Already exists ! Cannot pre-initialize booking :" + resultBooking.getUser());
+            } catch (BookingNotFoundException e) {
+                bookingService.createBooking(booking);
+            }
         } catch (Exception e) {
-            System.out.println("Cannot pre-initialize booking! Booking already exists!");
+            System.out.println(e.getLocalizedMessage());
         }
     }
 
@@ -209,7 +201,7 @@ public class DataInit {
     private void createAuthority(Authority authority) {
         try {
             Authority resultAuthority = authorityService.findAuthorityByName(authority.getName());
-            System.out.println("Cannot pre-initialize authority:" + resultAuthority.getName());
+            System.out.println("Already created. Cannot pre-initialize authority:" + resultAuthority.getName());
         } catch (AuthorityNotFoundException authorityNotFoundException) {
             authorityService.createAuthority(authority);
         }

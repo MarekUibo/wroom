@@ -34,34 +34,14 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private AuthorityService authorityService;
-
-    @Autowired
-    private UserService userService;
 
     @Override
-    public void createUser(User user) throws AuthorityNotFoundException {
+    public void createUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);
-
-        Authority authority = new Authority();
-
-      /*if(userService.findAllUsers().isEmpty()) {
-            authorityService.findAuthorityByName(AUTHORITY_ADMIN);
-        } else {
-            authorityService.findAuthorityByName(AUTHORITY_CUSTOMER);
-        }*/
-        user.setAuthority(authority);
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
     }
 
-   // @Override
-   // public void createCustomer(User user) {
-    //    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-     //   user.setActive(true);
-     //   userRepository.saveAndFlush(user);
-   // }
 
     @Override
     public List<User> findAllUsers() {

@@ -10,8 +10,10 @@ import java.util.UUID;
 public class UserNotFoundException extends Exception {
     private static final long serialVersionUID = 1L;
 
-    public UserNotFoundException(String email) {
-        super(String.format("User not found for email: %s!", email));
+
+
+    public UserNotFoundException(String userName) {
+        super(String.format("User not found for username: %s!", userName));
     }
 
     public UserNotFoundException(String userName, String password) {
