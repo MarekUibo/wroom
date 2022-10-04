@@ -2,10 +2,7 @@ package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.BranchNotFoundException;
 import com.example.wroom.exceptions.CarNotFoundException;
-import com.example.wroom.models.Branch;
-import com.example.wroom.models.Car;
-import com.example.wroom.models.CarBodyType;
-import com.example.wroom.models.CarStatus;
+import com.example.wroom.models.*;
 import com.example.wroom.services.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,7 +43,9 @@ public class BranchController {
     @GetMapping("/create")
     public String showCreateBranchPage(@ModelAttribute("branch") Branch branch,
                                        @ModelAttribute("message") String message,
-                                       @ModelAttribute("messageType") String messageType) {
+                                       @ModelAttribute("messageType") String messageType,
+                                       Model model) {
+        model.addAttribute("branchCityList", BranchCityList.values());
         return "branch/create-branch";
     }
 
@@ -73,6 +72,7 @@ public class BranchController {
         if (branch == null) {
             try {
                 model.addAttribute("branch", branchService.findBranchById(id));
+                model.addAttribute("branchCityList", BranchCityList.values());
             } catch (BranchNotFoundException e) {
                 return handleBranchNotFoundExceptionById(id, redirectAttributes);
             }

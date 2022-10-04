@@ -86,9 +86,9 @@ public class BookingController {
             Car car = carService.findCarById(booking.getCar().getId());
             booking.setCar(car);
 
-            Booking searchBooking = bookingService.findBookingById(booking.getId());
+            Booking searchBooking = bookingService.findBookingByReferenceNumber(booking.getBookingReferenceNumber());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Booking(%s) already exists!", searchBooking.getId()));
+                    String.format("Booking (%s) already exists !", searchBooking.getBookingReferenceNumber()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/booking/create";
         } catch (BookingNotFoundException e) {
@@ -106,7 +106,7 @@ public class BookingController {
                 throw new RuntimeException(ex);
             }
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Booking(%s) created successfully!", booking.getId()));
+                    String.format("Booking(%s) created successfully!", booking.getBookingReferenceNumber()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/booking";
         } catch (UserNotFoundException userNotFoundException){
@@ -126,12 +126,13 @@ public class BookingController {
     }
 
     @GetMapping("/update/{id}")
-    public String showUpdateBookingPage(@PathVariable UUID id, String registrationNumber, Model model, RedirectAttributes redirectAttributes,
+    public String showUpdateBookingPage(@PathVariable UUID id, Model model, RedirectAttributes redirectAttributes,
                                         @RequestParam(value = "booking", required = false) Booking booking) throws BookingNotFoundException {
         if (booking == null) {
             try {
                 model.addAttribute("booking", bookingService.findBookingById(id));
                 model.addAttribute("carStatus", CarStatus.values());
+                model.addAttribute("branches", branchService.findAllBranches());
                 //model.addAttribute("registrationNumber", carService.findCarByRegistrationNumber(registrationNumber));
                 //model.addAttribute("dateFrom", booking.getDateFrom());
                 //model.addAttribute("dateTo", booking.getDateTo());
@@ -146,18 +147,17 @@ public class BookingController {
     }
 
 
-    @GetMapping("/update")
+    @PostMapping("/update")
     public String updateBooking(Booking booking, RedirectAttributes redirectAttributes) {
         try {
             bookingService.updateBooking(booking);
             redirectAttributes.addFlashAttribute("message",
                     String.format("Booking(%s) updated successfully!", booking.getId()));
-        } catch (BookingNotFoundException e) {
-            redirectAttributes.addFlashAttribute("message", e.getMessage());
-            redirectAttributes.addFlashAttribute("messageType", "error");
+            redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/booking";
+        } catch (BookingNotFoundException e) {
+            return handleBookingNotFoundExceptionById(booking.getId(),redirectAttributes);
         }
-        return null;
     }
 
     @GetMapping("/delete/{id}")

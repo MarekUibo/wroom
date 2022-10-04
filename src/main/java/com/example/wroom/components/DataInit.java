@@ -111,7 +111,7 @@ public class DataInit {
             branch.setFullAddress("27 Parnu mnt, Tallinn");
             branch.setPhoneNumber("123456789");
             branch.setEmail("tallinn@autorent.ee");
-            branch.setCity("Tallinn");
+            branch.setCity(BranchCityList.TALLINN);
             branch.setRentalOffice(rentalOffice);
 
 

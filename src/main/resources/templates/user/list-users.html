@@ -33,7 +33,9 @@
           <tbody>
           <tr th:each="user: ${users}">
             <th scope="row">
+              <a href="#" class="text-decoration-none" th:href="@{/user/{id}(id=${user.id})}">
                 <span class="d-inline-block text-truncate" style="max-width: 70px;" th:text="${user.id}"></span>
+              </a>
             </th>
             <td th:text="${user.userName}"></td>
             <td th:text="${user.authority.getName()}"></td>

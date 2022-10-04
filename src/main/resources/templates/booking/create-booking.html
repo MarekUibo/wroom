@@ -16,13 +16,7 @@
                 <div th:replace="fragments/alert-box"></div>
 
                 <form action="#" method="post" th:action="@{/booking}" th:object="${booking}">
-                        <div class="form-group mb-3">
-                            <label >Car:</label>
-                            <select class="form-control" id="carRegistrationNumber" th:field="*{car.id}" required>
-                                <option th:each="car: ${cars}" th:text="${car.registrationNumber}"
-                                        th:value="${car.id}" ></option>
-                            </select>
-                        </div>
+
                         <div class="form-group mb-3">
                                 <label for="dateFrom">Date from</label>
                                 <div class="col-sm-6">
@@ -44,7 +38,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label >The branch where you return the rented car:</label>
-                            <select class="form-select" aria-label="rerturnBranch" th:field="*{returnBranch}">
+                            <select class="form-select" aria-label="returnBranch" th:field="*{returnBranch}">
                                 <option th:each="branch: ${branches}" th:text="${branch.name}"
                                         th:value="${branch.id}"></option>
                             </select>
@@ -56,7 +50,7 @@
 
                         <div class="form-group mb-3">
                             <label for="comments">Comments</label>
-                            <input class="form-control" id="comments" th:field="*{comments}" type="text" required>
+                            <input class="form-control" id="comments" th:field="*{comments}" type="text" >
                         </div>
 
                         <a class="btn btn-light mb-3" type="button" href="/car">Cancel</a>

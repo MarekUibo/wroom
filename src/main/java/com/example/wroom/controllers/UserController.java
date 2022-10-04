@@ -1,6 +1,7 @@
 package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.AuthorityNotFoundException;
+import com.example.wroom.exceptions.CarNotFoundException;
 import com.example.wroom.exceptions.UserNotFoundException;
 import com.example.wroom.models.User;
 import com.example.wroom.services.AuthorityService;
@@ -39,6 +40,17 @@ public class UserController {
         return "user/list-users";
     }
 
+    @GetMapping("/{id}")
+    public String showUserViewPage(@PathVariable UUID id, Model model,
+                                  RedirectAttributes redirectAttributes) {
+        try {
+            model.addAttribute("user", userService.findUserById(id));
+            return "user/view-user";
+        } catch (UserNotFoundException e) {
+            return handleUserNotFoundExceptionByID(id, redirectAttributes);
+        }
+    }
+
     @GetMapping("/create")
     public String showCreateUserPage(@ModelAttribute("user") User user,
                                      @ModelAttribute("message") String message,
@@ -52,9 +64,9 @@ public class UserController {
     @PostMapping
     public String createUser(User user, RedirectAttributes redirectAttributes) throws AuthorityNotFoundException {
         try {
-            User searchUser = userService.findUserById(user.getId());
+            User searchUser = userService.findUserByUserName(user.getUserName());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("User(id=%d) already exists!", searchUser.getId()));
+                    String.format("User(id=%s) already exists!", searchUser.getUserName()));
             redirectAttributes.addFlashAttribute("messageType", "error");
 
             return "redirect:/user/create";
@@ -62,7 +74,7 @@ public class UserController {
 
             userService.createUser(user);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("User(id=%d) created successfully!", user.getId()));
+                    String.format("User(id=%s) created successfully!", user.getUserName()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/user/create";
         }
@@ -90,12 +102,12 @@ public class UserController {
         try {
             userService.updateUser(user);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("User(id=%d) updated successfully!", user.getId()));
+                    String.format("User(id=%s) updated successfully!", user.getUserName()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/user";
         } catch (UserNotFoundException e) {
             redirectAttributes.addFlashAttribute("message",
-                    String.format("User(id=%d) not found!", user.getId()));
+                    String.format("User(id=%s) not found!", user.getUserName()));
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/user";
         }
@@ -106,7 +118,7 @@ public class UserController {
         try {
             userService.deleteUserById(id);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("User(id=%d) deleted successfully!", id));
+                    String.format("User(id=%s) deleted successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/user";
         } catch (UserNotFoundException e) {
@@ -119,7 +131,7 @@ public class UserController {
         try {
             userService.restoreUserById(id);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("User(id=%d) restored successfully!", id));
+                    String.format("User(id=%s) restored successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/user";
         } catch (UserNotFoundException e) {
