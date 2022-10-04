@@ -57,6 +57,7 @@ public class UserController {
                                      @ModelAttribute("messageType") String messageType,
                                      Model model) {
         model.addAttribute("authorities", authorityService.findAllAuthorities());
+        model.addAttribute("authority", authorityService.findAllAuthorities());
         model.addAttribute("homeBranches", branchService.findAllBranches());
         return "user/create-user";
     }
@@ -82,10 +83,12 @@ public class UserController {
     @GetMapping("/update/{id}")
     public String showUpdateUserPage(@PathVariable UUID id, Model model, RedirectAttributes redirectAttributes,
                                      @RequestParam(value = "user", required = false) User user) {
-        model.addAttribute("authorities", authorityService.findAllAuthorities());
-        model.addAttribute("homeBranches", branchService.findAllBranches());
+
         if (user == null) {
             try {
+                model.addAttribute("authorities", authorityService.findAllAuthorities());
+                model.addAttribute("authority", authorityService.findAllAuthorities());
+                model.addAttribute("homeBranches", branchService.findAllBranches());
                 model.addAttribute("user", userService.findUserById(id));
                 model.addAttribute("homeBranch", branchService.findAllBranches());
             } catch (UserNotFoundException e) {
@@ -106,10 +109,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/user";
         } catch (UserNotFoundException e) {
-            redirectAttributes.addFlashAttribute("message",
-                    String.format("User(id=%s) not found!", user.getUserName()));
-            redirectAttributes.addFlashAttribute("messageType", "error");
-            return "redirect:/user";
+            return handleUserNotFoundExceptionByID(user.getId(),redirectAttributes);
         }
     }
 

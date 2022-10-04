@@ -102,6 +102,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(User user) throws UserNotFoundException {
         if (findUserById(user.getId()) != null) {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             userRepository.saveAndFlush(user);
         }
     }

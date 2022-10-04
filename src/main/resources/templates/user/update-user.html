@@ -45,14 +45,14 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="homeBranches">Branch</label>
-                        <select class="form-select" id="homeBranches" th:field="*{homeBranch.id}">
+                        <select class="form-select" id="homeBranches" th:field="*{homeBranch.id}" type="text" required>
                             <option th:each="homeBranch: ${homeBranches}" th:text="${homeBranch.name}"
                                     th:value="${homeBranch.id}"></option>
                         </select>
                     </div>
                     <div class="form-group mb-3">
                         <label for="authorities">Role</label>
-                        <select class="form-select" id="authorities" th:field="*{authority.id}">
+                        <select class="form-select" id="authorities" th:field="*{authority.id}" type="text" required>
                             <option th:each="authority: ${authorities}" th:text="${authority.name.replace('_', ' ')}"
                                     th:value="${authority.id}"></option>
                         </select>
