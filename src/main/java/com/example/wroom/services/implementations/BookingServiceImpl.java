@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.Random;
 
 /**
  * Implementation of Booking Service
@@ -36,6 +37,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public void createBooking(Booking booking)  {
         booking.setActive(true);
+        booking.setBookingReferenceNumber(new Random().nextInt(1000000));
         bookingRepository.saveAndFlush(booking);
     }
 
@@ -57,14 +59,14 @@ public class BookingServiceImpl implements BookingService {
         if (optionalBooking.isEmpty()) {
 
 
-            throw new BookingNotFoundException(user.getUserName());
+            throw new BookingNotFoundException(UUID.fromString(user.getUserName()));
         }
 
         return optionalBooking.get();
     }
 
     @Override
-    public Booking findBookingByReferenceNumber(String bookingReferenceNumber) throws BookingNotFoundException {
+    public Booking findBookingByReferenceNumber(Integer bookingReferenceNumber) throws BookingNotFoundException {
         Optional<Booking> optionalBooking = bookingRepository.findByBookingReferenceNumber(bookingReferenceNumber);
 
         if(optionalBooking.isEmpty()) {

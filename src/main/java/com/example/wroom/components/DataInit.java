@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Random;
 
 import static com.example.wroom.utils.Constants.Security.*;
 
@@ -205,7 +206,7 @@ public class DataInit {
             booking.setAmount(BigDecimal.valueOf(199.99));
             booking.setRentalBranch(branch);
             booking.setReturnBranch(branch);
-            booking.setBookingReferenceNumber("202210010001");
+            booking.setBookingReferenceNumber(new Random().nextInt(1000000));
 
             try {
                 Booking resultBooking = bookingService.findBookingByReferenceNumber(booking.getBookingReferenceNumber());

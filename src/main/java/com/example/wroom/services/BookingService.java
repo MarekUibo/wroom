@@ -41,7 +41,7 @@ public interface BookingService {
      * @param  bookingReferenceNumber BookingReferenceNumber of the booking
      * @return Booking
      */
-    Booking findBookingByReferenceNumber(String bookingReferenceNumber) throws BookingNotFoundException;
+    Booking findBookingByReferenceNumber(Integer bookingReferenceNumber) throws BookingNotFoundException;
 
     /**
      * To find all bookings
