@@ -28,7 +28,7 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public void createBranch(Branch branch) {
         branch.setActive(true);
-        branchRepository.saveAndFlush(branch);
+        branchRepository.save(branch);
     }
 
     @Override
