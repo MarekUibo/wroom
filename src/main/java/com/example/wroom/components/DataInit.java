@@ -206,7 +206,7 @@ public class DataInit {
             booking.setAmount(BigDecimal.valueOf(199.99));
             booking.setRentalBranch(branch);
             booking.setReturnBranch(branch);
-            booking.setBookingReferenceNumber(new Random().nextInt(1000000));
+            booking.setBookingReferenceNumber(Integer.valueOf(100000));
 
             try {
                 Booking resultBooking = bookingService.findBookingByReferenceNumber(booking.getBookingReferenceNumber());

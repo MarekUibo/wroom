@@ -139,6 +139,7 @@ public class BookingController {
                 //model.addAttribute("homeBranch", branchService.findAllBranches());
             } catch (BookingNotFoundException e) {
                 throw new RuntimeException(e);
+                //return handleBookingNotFoundExceptionById(id, redirectAttributes);
             }
 
 
