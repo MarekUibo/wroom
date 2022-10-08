@@ -145,6 +145,7 @@ public class DataInit {
             user.setAuthority(authority);
             user.setHomeBranch(branch);
 
+
             try {
                 User resultUser = userService.findUserByUserName(user.getUserName());
                 System.out.println("Already exists ! Cannot pre-initialize user:" + resultUser.getUserName());
