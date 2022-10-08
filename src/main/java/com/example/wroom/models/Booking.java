@@ -36,6 +36,7 @@ public class Booking extends Auditable<String> implements Serializable {
     private String comments;
     private BigDecimal amount;
     private boolean isActive;
+    private BigDecimal totalAmount;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateFrom;

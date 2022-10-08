@@ -20,7 +20,7 @@
                     <div class="form-group mb-3">
                         <label>Car registration number :</label>
                         <select class="form-select" aria-label="registrationNumber"
-                                th:field="*{car.id}">
+                                th:field="*{car.id}" id="car">
                             <option th:each="car: ${cars}" th:text="${car.registrationNumber}"
                                     th:value="${car.id}"></option>
                         </select>
@@ -54,9 +54,11 @@
                                     th:value="${branch.id}"></option>
                         </select>
                     </div>
+
                     <div class="form-group mb-3">
-                        <label for="amount">Price for rental</label>
-                        <input class="form-control" id="amount" th:field="*{amount}" type="text" readonly>
+                        <label for="totalAmount">Price for rental</label>
+                        <input class="form-control" id="totalAmount" th:field="*{totalAmount}" type="text" readonly>
+                        <a type="button" href="#" class="btn btn-primary" onclick="getTotalAmount();">Calculate amount</a>
                     </div>
 
                     <div class="form-group mb-3">

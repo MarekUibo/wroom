@@ -19,6 +19,9 @@ import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -73,8 +76,8 @@ public class BookingController {
     public String showCreateBookingPage(@ModelAttribute("booking") Booking booking,
                                         @ModelAttribute("message") String message,
                                         @ModelAttribute("messageType") String messageType,
-                                        @RequestParam(name="carId") UUID carId, RedirectAttributes redirectAttributes,
-                                        Model model)  {
+                                        @RequestParam(name = "carId") UUID carId, RedirectAttributes redirectAttributes,
+                                        Model model) {
         try {
             booking.setCar(carService.findCarById(carId));
             booking.setDateFrom(LocalDate.now());
@@ -124,16 +127,15 @@ public class BookingController {
                     String.format("Booking(%s) created successfully!", booking.getBookingReferenceNumber()));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/booking";
-        } catch (UserNotFoundException userNotFoundException){
+        } catch (UserNotFoundException userNotFoundException) {
             redirectAttributes.addFlashAttribute("message", "Technical error with user!");
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/booking/create";
-        }
-        catch (CarNotFoundException carNotFoundException){
+        } catch (CarNotFoundException carNotFoundException) {
             redirectAttributes.addFlashAttribute("message", "Technical error with car!");
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/booking/create";
-        } catch(Exception e){
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", "Booking already exists!");
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/booking/create";
@@ -172,7 +174,7 @@ public class BookingController {
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/booking";
         } catch (BookingNotFoundException e) {
-            return handleBookingNotFoundExceptionById(booking.getId(),redirectAttributes);
+            return handleBookingNotFoundExceptionById(booking.getId(), redirectAttributes);
         }
     }
 
@@ -200,6 +202,13 @@ public class BookingController {
         } catch (BookingNotFoundException e) {
             return handleBookingNotFoundExceptionById(id, redirectAttributes);
         }
+    }
+
+    @GetMapping("/get-total-amount")
+    public ResponseEntity<?> getTotalAmount(@RequestParam(name = "carId") UUID carId, @RequestParam(name = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+                                         @RequestParam(name = "dateTo")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) throws CarNotFoundException {
+        Car car = carService.findCarById(carId);
+        return new ResponseEntity<>(getPrice(car.getAmount(), dateFrom, dateTo).toString(), HttpStatus.OK);
     }
 
     //Private methods//
