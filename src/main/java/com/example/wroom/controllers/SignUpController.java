@@ -1,6 +1,7 @@
 package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.AuthorityNotFoundException;
+import com.example.wroom.exceptions.BranchNotFoundException;
 import com.example.wroom.exceptions.UserNotFoundException;
 import com.example.wroom.models.Authority;
 import com.example.wroom.models.User;
@@ -34,19 +35,18 @@ public class SignUpController {
     @GetMapping
     public String showSignupPage(@ModelAttribute("user") User user, @ModelAttribute("message") String message,
                                  @ModelAttribute("messageType") String messageType, Model model) {
-        model.addAttribute("authorities", authorityService.findAllAuthorities());
         return "auth/signup";
     }
 
     @PostMapping
-    public String postSignup(User user, RedirectAttributes redirectAttributes) throws AuthorityNotFoundException {
+    public String postSignup(User user, RedirectAttributes redirectAttributes) throws AuthorityNotFoundException, BranchNotFoundException {
         try {
             userService.findUserByUserName(user.getUserName());
             redirectAttributes.addFlashAttribute("message", "User already exists!");
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/signup";
         } catch(UserNotFoundException userNotFoundException) {
-            userService.createUser(user);
+            userService.createCustomer(user);
             redirectAttributes.addFlashAttribute("message", "Signup successful!");
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/";

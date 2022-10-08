@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 //import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 import java.util.Calendar;
 
@@ -30,6 +31,7 @@ public class Booking extends Auditable<String> implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
+    private Integer bookingReferenceNumber = new Random().nextInt(1000000);
     private BigDecimal additionalPayment;
     private String comments;
     private BigDecimal amount;
@@ -52,7 +54,4 @@ public class Booking extends Auditable<String> implements Serializable {
 
     @OneToOne(cascade = CascadeType.MERGE)
     private User user;
-
-    @OneToOne(cascade = CascadeType.MERGE)
-    private User userName;
 }

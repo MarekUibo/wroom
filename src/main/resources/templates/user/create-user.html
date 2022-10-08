@@ -45,13 +45,15 @@
                         <input class="form-control" id="address" th:field="*{address}" type="text" required>
                     </div>
                     <div class="form-group mb-3">
-                        <select class="form-select" aria-label="homeBranches" th:field="*{homeBranch.id}">
+                        <label for="homeBranches">Branch</label>
+                        <select class="form-select" id="homeBranches" th:field="*{homeBranch.id}">
                             <option th:each="homeBranch: ${homeBranches}" th:text="${homeBranch.name}"
                                     th:value="${homeBranch.id}"></option>
                         </select>
                     </div>
                     <div class="form-group mb-3">
-                        <select class="form-select" aria-label="authorities" th:field="*{authority.id}">
+                        <label for="authorities">Role</label>
+                        <select class="form-select" id="authorities" th:field="*{authority.id}">
                             <option th:each="authority: ${authorities}" th:text="${authority.name.replace('_', ' ')}"
                                     th:value="${authority.id}"></option>
                         </select>

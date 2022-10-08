@@ -29,7 +29,9 @@ public class Branch extends Auditable<String> implements Serializable {
     private String fullAddress;
     private String phoneNumber;
     private String email;
-    private String city;
+
+    @Enumerated(EnumType.STRING)
+    private BranchCityList city;
 
     @OneToOne(cascade = CascadeType.MERGE)
     private RentalOffice rentalOffice;

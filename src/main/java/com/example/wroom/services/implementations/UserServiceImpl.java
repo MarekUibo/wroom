@@ -1,11 +1,15 @@
 package com.example.wroom.services.implementations;
 
 import com.example.wroom.exceptions.AuthorityNotFoundException;
+import com.example.wroom.exceptions.BranchNotFoundException;
 import com.example.wroom.exceptions.UserNotFoundException;
 import com.example.wroom.models.Authority;
+import com.example.wroom.models.Branch;
+import com.example.wroom.models.Car;
 import com.example.wroom.models.User;
 import com.example.wroom.repository.UserRepository;
 import com.example.wroom.services.AuthorityService;
+import com.example.wroom.services.BranchService;
 import com.example.wroom.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,33 +39,30 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    private AuthorityService authorityService;
+    private BranchService branchService;
 
     @Autowired
-    private UserService userService;
+    private AuthorityService authorityService;
 
     @Override
-    public void createUser(User user) throws AuthorityNotFoundException {
+    public void createUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);
+        userRepository.save(user);
+    }
 
-        Authority authority = new Authority();
+    @Override
+    public void createCustomer(User user) throws AuthorityNotFoundException, BranchNotFoundException {
+        Authority authority = authorityService.findAuthorityByName(AUTHORITY_CUSTOMER);
+        Branch branch = branchService.findBranchByName("Tallinn autorent");
 
-      /*if(userService.findAllUsers().isEmpty()) {
-            authorityService.findAuthorityByName(AUTHORITY_ADMIN);
-        } else {
-            authorityService.findAuthorityByName(AUTHORITY_CUSTOMER);
-        }*/
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setAuthority(authority);
+        user.setHomeBranch(branch);
+        user.setActive(true);
         userRepository.saveAndFlush(user);
     }
 
-   // @Override
-   // public void createCustomer(User user) {
-    //    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-     //   user.setActive(true);
-     //   userRepository.saveAndFlush(user);
-   // }
 
     @Override
     public List<User> findAllUsers() {
@@ -99,8 +100,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) throws UserNotFoundException {
+    public void updateUser(User user) throws UserNotFoundException, AuthorityNotFoundException, BranchNotFoundException {
         if (findUserById(user.getId()) != null) {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            user.setAuthority(authorityService.findAuthorityById(user.getAuthority().getId()));
+            user.setHomeBranch(branchService.findBranchById(user.getHomeBranch().getId()));
             userRepository.saveAndFlush(user);
         }
     }

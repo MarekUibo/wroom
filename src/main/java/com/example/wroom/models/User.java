@@ -14,8 +14,9 @@ import java.util.UUID;
  *
  * @author Kristiina Lindre
  */
-@Data
+
 @Entity
+@Data
 @EqualsAndHashCode(callSuper = true)
 public class User extends Auditable<String> implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -37,6 +38,7 @@ public class User extends Auditable<String> implements Serializable {
 
     @OneToOne(cascade = CascadeType.MERGE)
     private Branch homeBranch;
+
 
     @OneToOne(cascade = CascadeType.MERGE)
     private Authority authority;

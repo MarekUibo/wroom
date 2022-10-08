@@ -1,19 +1,23 @@
 package com.example.wroom.services.implementations;
 
 import com.example.wroom.exceptions.BookingNotFoundException;
+import com.example.wroom.exceptions.CarNotFoundException;
 import com.example.wroom.models.Booking;
+import com.example.wroom.models.Car;
 import com.example.wroom.models.User;
 import com.example.wroom.repository.BookingRepository;
 import com.example.wroom.services.BookingService;
 import com.example.wroom.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.Random;
 
 /**
  * Implementation of Booking Service
@@ -31,18 +35,10 @@ public class BookingServiceImpl implements BookingService {
     private UserService userService;
 
     @Override
-    public void createBooking(Booking booking) throws Exception {
+    public void createBooking(Booking booking)  {
         booking.setActive(true);
-
-        if (isBookingValid(booking)) {
-            bookingRepository.saveAndFlush(booking);
-        } else {
-            throw new Exception("Cannot book! Booking already exists!");
-        }
-
-
+        booking.setBookingReferenceNumber(new Random().nextInt(1000000));
         bookingRepository.saveAndFlush(booking);
-
     }
 
     @Override
@@ -63,9 +59,19 @@ public class BookingServiceImpl implements BookingService {
         if (optionalBooking.isEmpty()) {
 
 
-            throw new BookingNotFoundException(user.getUserName());
+            throw new BookingNotFoundException(UUID.fromString(user.getUserName()));
         }
 
+        return optionalBooking.get();
+    }
+
+    @Override
+    public Booking findBookingByReferenceNumber(Integer bookingReferenceNumber) throws BookingNotFoundException {
+        Optional<Booking> optionalBooking = bookingRepository.findByBookingReferenceNumber(bookingReferenceNumber);
+
+        if(optionalBooking.isEmpty()) {
+        throw new BookingNotFoundException(bookingReferenceNumber);
+    }
         return optionalBooking.get();
     }
 

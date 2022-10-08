@@ -26,7 +26,7 @@ public interface UserService {
      *
      * @param user User
      */
-    //void createCustomer(User user);
+    void createCustomer(User user) throws AuthorityNotFoundException, BranchNotFoundException;
 
     /**
      * To find user by username
@@ -66,7 +66,7 @@ public interface UserService {
      *
      */
 
-    void updateUser(User employee) throws UserNotFoundException;
+    void updateUser(User employee) throws UserNotFoundException, AuthorityNotFoundException, BranchNotFoundException;
 
     /**
      * To delete an user by its ID

@@ -19,17 +19,19 @@
                         <input type="text" readonly class="form-control-plaintext" id="bookingId" th:value="${booking.id}">
                     </div>
                     <div class="mb-3 row">
-                    <label for="userName" class="col-sm-2 col-form-label fw-bold">User name</label>
-                    <div class="col-sm-10">
-                        <input type="text" readonly class="form-control-plaintext" id="userName" th:value="${booking.userName}">
-                    </div>
-                </div>
-                    <div class="mb-3 row">
                     <label for="registrationNumber" class="col-sm-2 col-form-label fw-bold">Car registration number</label>
                     <div class="col-sm-10">
-                        <input type="text" readonly class="form-control-plaintext" id="registrationNumber" th:value="${booking.registrationNumber}">
+                        <input type="text" readonly class="form-control-plaintext" id="registrationNumber" th:value="${booking.car.getRegistrationNumber()}">
                     </div>
                 </div>
+
+                    <div class="mb-3 row">
+                        <label for="bookingReferenceNumber" class="col-sm-2 col-form-label fw-bold">Booking reference number </label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" id="bookingReferenceNumber"
+                                   th:value="${booking.bookingReferenceNumber}">
+                        </div>
+                    </div>
 
                 <div class="mb-3 row">
                     <label for="dateFrom" class="col-sm-2 col-form-label fw-bold">Date from</label>
@@ -46,7 +48,7 @@
                 <div class="mb-3 row">
                     <label for="rentalBranch" class="col-sm-2 col-form-label fw-bold">Branch of the car</label>
                     <div class="col-sm-10">
-                        <input type="text" readonly class="form-control-plaintext" id="rentalBranch" th:value="${booking.rentalBranch}">
+                        <input type="text" readonly class="form-control-plaintext" id="rentalBranch" th:value="${booking.rentalBranch.getName()}">
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -56,7 +58,7 @@
                     </div>
                 </div>
 
-                <a class="btn btn-outline-info mb-3" type="button" href="/car">Back</a>
+                <a class="btn btn-outline-info mb-3" type="button" href="/booking">Back</a>
                 <a class="btn btn-outline-info mb-3" href="/booking/update" role="button">Update booking</a>
             </div>
         </div>

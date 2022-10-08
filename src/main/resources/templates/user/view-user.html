@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View user</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid">
+    <div th:replace="fragments/navbar"></div>
+    <div class="container py-4">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">User info</h1>
+                <div class="mb-3 row">
+                    <label for="userName" class="col-sm-2 col-form-label fw-bold">Username</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="userName" th:value="${user.userName}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="email" class="col-sm-2 col-form-label fw-bold">Email</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="email" th:value="${user.email}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="firstName" class="col-sm-2 col-form-label fw-bold">Firstname</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="firstName" th:value="${user.firstName}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="lastName" class="col-sm-2 col-form-label fw-bold">Lastname</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="lastName" th:value="${user.lastName}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="phoneNumber" class="col-sm-2 col-form-label fw-bold">Phone number</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="phoneNumber"
+                               th:value="${user.phoneNumber}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="address" class="col-sm-2 col-form-label fw-bold">Address</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="address" th:value="${user.address}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="authority" class="col-sm-2 col-form-label fw-bold">Role of the User</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="authority"
+                               th:value="${user.authority.name}">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="homeBranch" class="col-sm-2 col-form-label fw-bold">Branch of the User</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="homeBranch"
+                               th:value="${user.homeBranch.name}">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="Active" class="col-sm-2 col-form-label fw-bold">Active</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" id="active" th:value="${user.active} ? 'Yes' : 'No'">
+                    </div>
+                </div>
+                <a class="btn btn-outline-info mb-3" type="button" href="/user">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/script-fragment"></div>
+</body>
+</html>
