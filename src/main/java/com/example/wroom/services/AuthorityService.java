@@ -4,6 +4,7 @@ import com.example.wroom.exceptions.AuthorityNotFoundException;
 import com.example.wroom.models.Authority;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Service to handle authority related operations
@@ -34,4 +35,6 @@ public interface AuthorityService {
      * @return list of authorities
      */
     List<Authority> findAllAuthorities();
+
+    Authority findAuthorityById(UUID id) throws AuthorityNotFoundException;
 }

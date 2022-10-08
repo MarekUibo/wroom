@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Implementation of Authority Service
@@ -44,5 +45,16 @@ public class AuthorityServiceImpl implements AuthorityService {
     @Override
     public List<Authority> findAllAuthorities() {
         return authorityRepository.findAll();
+    }
+
+    @Override
+    public Authority findAuthorityById(UUID id) throws AuthorityNotFoundException {
+        Optional<Authority> optionalAuthority = authorityRepository.findById(id);
+
+        if(optionalAuthority.isEmpty()) {
+            throw new AuthorityNotFoundException(id);
+        }
+
+        return optionalAuthority.get();
     }
 }

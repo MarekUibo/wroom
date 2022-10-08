@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <a class="btn btn-outline-info mb-3" type="button" href="/car">Back</a>
-                <a class="btn btn-outline-info mb-3" href="/booking/create" role="button">Create booking</a>
+                <a class="btn btn-outline-info mb-3" th:href="@{/booking/create?carId={id}(id=${car.id})}" role="button">Create booking</a>
             </div>
         </div>
     </div>

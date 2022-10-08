@@ -1,6 +1,7 @@
 package com.example.wroom.controllers;
 
 import com.example.wroom.exceptions.AuthorityNotFoundException;
+import com.example.wroom.exceptions.BranchNotFoundException;
 import com.example.wroom.exceptions.CarNotFoundException;
 import com.example.wroom.exceptions.UserNotFoundException;
 import com.example.wroom.models.User;
@@ -87,10 +88,8 @@ public class UserController {
         if (user == null) {
             try {
                 model.addAttribute("authorities", authorityService.findAllAuthorities());
-                model.addAttribute("authority", authorityService.findAllAuthorities());
-                model.addAttribute("homeBranches", branchService.findAllBranches());
+                model.addAttribute("branches", branchService.findAllBranches());
                 model.addAttribute("user", userService.findUserById(id));
-                model.addAttribute("homeBranch", branchService.findAllBranches());
             } catch (UserNotFoundException e) {
                 return handleUserNotFoundExceptionByID(id, redirectAttributes);
             }
@@ -110,6 +109,16 @@ public class UserController {
             return "redirect:/user";
         } catch (UserNotFoundException e) {
             return handleUserNotFoundExceptionByID(user.getId(),redirectAttributes);
+        } catch(AuthorityNotFoundException authorityNotFoundException) {
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("Selected authority(id=%s) not found!", user.getAuthority().getId()));
+            redirectAttributes.addFlashAttribute("messageType", "error");
+            return "redirect:/user";
+        } catch (BranchNotFoundException branchNotFoundException) {
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("Selected branch(id=%s) not found!", user.getHomeBranch().getId()));
+            redirectAttributes.addFlashAttribute("messageType", "error");
+            return "redirect:/user";
         }
     }
 

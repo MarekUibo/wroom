@@ -66,7 +66,7 @@ public interface UserService {
      *
      */
 
-    void updateUser(User employee) throws UserNotFoundException;
+    void updateUser(User employee) throws UserNotFoundException, AuthorityNotFoundException, BranchNotFoundException;
 
     /**
      * To delete an user by its ID

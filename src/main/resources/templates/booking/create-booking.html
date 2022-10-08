@@ -17,57 +17,60 @@
 
                 <form action="#" method="post" th:action="@{/booking}" th:object="${booking}">
 
-                   <div class="form-group mb-3">
-                    <label >Car registration number :</label>
-                    <select class="form-select" aria-label="registrationNumber" th:field="*{car.registrationNumber}">
-                        <option th:each="car: ${cars}" th:text="${car.registrationNumber}"
-                                th:value="${car.registrationNumber}"></option>
-                    </select>
+                    <div class="form-group mb-3">
+                        <label>Car registration number :</label>
+                        <select class="form-select" aria-label="registrationNumber"
+                                th:field="*{car.id}">
+                            <option th:each="car: ${cars}" th:text="${car.registrationNumber}"
+                                    th:value="${car.id}"></option>
+                        </select>
                     </div>
 
-                        <div class="form-group mb-3">
-                                <label for="dateFrom">Date from</label>
-                                <div class="col-sm-6">
-                        <input type="date" class="form-control" id="dateFrom" name="dateFrom" placeholder="Date From" required>
+                    <div class="form-group mb-3">
+                        <label for="dateFrom">Date from</label>
+                        <div class="col-sm-6">
+                            <input type="date" class="form-control" id="dateFrom" name="dateFrom"
+                                   placeholder="Date From" th:field="*{dateFrom}" required>
                         </div>
-                        <div class="form-group mb-3">
-                                <label for="dateTo">Date to</label>
-                                <div class="col-sm-6">
-                        <input type="date" class="form-control" id="dateTo" name="dateFrom" placeholder="Date From" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="dateTo">Date to</label>
+                        <div class="col-sm-6">
+                            <input type="date" class="form-control" id="dateTo" name="dateTo"
+                                   placeholder="Date To"  th:field="*{dateTo}" required>
                         </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>The branch where you rent the car :</label>
+                        <select class="form-select" aria-label="rentalBranch" th:field="*{rentalBranch.id}">
+                            <option th:each="branch: ${branches}" th:text="${branch.name}"
+                                    th:value="${branch.id}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>The branch where you return the rented car:</label>
+                        <select class="form-select" aria-label="returnBranch" th:field="*{returnBranch.id}">
+                            <option th:each="branch: ${branches}" th:text="${branch.name}"
+                                    th:value="${branch.id}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="amount">Price for rental</label>
+                        <input class="form-control" id="amount" th:field="*{amount}" type="text" readonly>
+                    </div>
 
+                    <div class="form-group mb-3">
+                        <label for="comments">Comments</label>
+                        <input class="form-control" id="comments" th:field="*{comments}" type="text">
+                    </div>
 
-                        <div class="form-group mb-3">
-                            <label >The branch where you rent the car :</label>
-                            <select class="form-select" aria-label="rentalBranch" th:field="*{rentalBranch}">
-                                <option th:each="branch: ${branches}" th:text="${branch.name}"
-                                        th:value="${branch.id}"></option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label >The branch where you return the rented car:</label>
-                            <select class="form-select" aria-label="returnBranch" th:field="*{returnBranch}">
-                                <option th:each="branch: ${branches}" th:text="${branch.name}"
-                                        th:value="${branch.id}"></option>
-                            </select>
-                        </div>
-                            <div class="form-group mb-3">
-                                <label for="amount">Price for rental</label>
-                                <input class="form-control" id="amount" th:field="*{amount}" type="text" readonly>
-                            </div>
-
-                        <div class="form-group mb-3">
-                            <label for="comments">Comments</label>
-                            <input class="form-control" id="comments" th:field="*{comments}" type="text" >
-                        </div>
-
-                        <a class="btn btn-light mb-3" type="button" href="/car">Cancel</a>
-                        <button class="btn btn-outline-primary mb-3" type="submit">Create</button>
-                        </form>
-                </div>
+                    <a class="btn btn-light mb-3" type="button" href="/car">Cancel</a>
+                    <button class="btn btn-outline-primary mb-3" type="submit">Create</button>
+                </form>
             </div>
         </div>
     </div>
-    <div th:replace="fragments/script-fragment"></div>
-    </body>
-    </html>
+</div>
+<div th:replace="fragments/script-fragment"></div>
+</body>
+</html>

@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="email">Email</label>
-                        <input class="form-control" id="email" th:field="*{email}" type="text" required>
+                        <input class="form-control" id="email" th:field="*{email}" type="email" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="firstName">Firstname</label>
@@ -44,15 +44,15 @@
                         <input class="form-control" id="address" th:field="*{address}" type="text" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="homeBranches">Branch</label>
-                        <select class="form-select" id="homeBranches" th:field="*{homeBranch.id}" type="text" required>
-                            <option th:each="homeBranch: ${homeBranches}" th:text="${homeBranch.name}"
-                                    th:value="${homeBranch.id}"></option>
+                        <label for="homeBranch">Branch</label>
+                        <select class="form-select" id="homeBranch" th:field="*{homeBranch.id}" type="text" required>
+                            <option th:each="branch: ${branches}" th:text="${branch.name}"
+                                    th:value="${branch.id}"></option>
                         </select>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="authorities">Role</label>
-                        <select class="form-select" id="authorities" th:field="*{authority.id}" type="text" required>
+                        <label for="authority">Role</label>
+                        <select class="form-select" id="authority" th:field="*{authority.id}" type="text" required>
                             <option th:each="authority: ${authorities}" th:text="${authority.name.replace('_', ' ')}"
                                     th:value="${authority.id}"></option>
                         </select>

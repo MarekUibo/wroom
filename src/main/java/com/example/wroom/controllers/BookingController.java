@@ -15,6 +15,7 @@ import com.example.wroom.services.BookingService;
 import com.example.wroom.services.BranchService;
 import com.example.wroom.services.CarService;
 import com.example.wroom.services.UserService;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -26,6 +27,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 /**
@@ -69,9 +73,20 @@ public class BookingController {
     public String showCreateBookingPage(@ModelAttribute("booking") Booking booking,
                                         @ModelAttribute("message") String message,
                                         @ModelAttribute("messageType") String messageType,
-                                        Model model) {
-        model.addAttribute("cars", carService.findAllCars());
-        model.addAttribute("branches", branchService.findAllBranches());
+                                        @RequestParam(name="carId") UUID carId, RedirectAttributes redirectAttributes,
+                                        Model model)  {
+        try {
+            booking.setCar(carService.findCarById(carId));
+            booking.setDateFrom(LocalDate.now());
+            booking.setDateTo(LocalDate.now().plusDays(1));
+            booking.setAmount(getPrice(booking.getCar().getAmount(), booking.getDateFrom(), booking.getDateTo()));
+            model.addAttribute("cars", carService.findAllCars());
+            model.addAttribute("branches", branchService.findAllBranches());
+        } catch (CarNotFoundException e) {
+            redirectAttributes.addFlashAttribute("message", "Technical error with car!");
+            redirectAttributes.addFlashAttribute("messageType", "error");
+            return "redirect:/booking";
+        }
 
         return "booking/create-booking";
     }
@@ -193,5 +208,10 @@ public class BookingController {
                 String.format("Booking(%s) not found!", id));
         redirectAttributes.addFlashAttribute("messageType", "error");
         return "redirect:/booking";
+    }
+
+    private BigDecimal getPrice(BigDecimal carPricePerDay, LocalDate dateFrom, LocalDate dateTo) {
+        long numOfDays = ChronoUnit.DAYS.between(dateFrom, dateTo);
+        return carPricePerDay.multiply(BigDecimal.valueOf(numOfDays));
     }
 }

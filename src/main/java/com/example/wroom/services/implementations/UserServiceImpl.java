@@ -100,9 +100,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(User user) throws UserNotFoundException {
+    public void updateUser(User user) throws UserNotFoundException, AuthorityNotFoundException, BranchNotFoundException {
         if (findUserById(user.getId()) != null) {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            user.setAuthority(authorityService.findAuthorityById(user.getAuthority().getId()));
+            user.setHomeBranch(branchService.findBranchById(user.getHomeBranch().getId()));
             userRepository.saveAndFlush(user);
         }
     }
